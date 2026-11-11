@@ -33,9 +33,10 @@ original game may use `.dat`.
 
 ## Sprite sheet
 
-- `darthnox.bmp` — 340×75, 4 cells of 84×74, laid out 4 across × 1 down.
-  Stock fighters use 79×79 cells and stand ~73px tall; DarthNox is scaled to
-  match (the original 67×59 export was ~80% of stock height).
+- `darthnox.bmp` — 404×75, 4 cells of 100×74, laid out 4 across × 1 down.
+  Stock fighters use 79×79 cells and stand ~73px tall. DarthNox's 67×59 export
+  was ~80% of stock height and slim for LF2's stocky style, so it is scaled
+  ×1.25 tall and ×1.5 wide (`SCALE_Y` / `SCALE_X` in `tools/resize_darthnox.py`).
 - **Every cell is followed by a 1px gutter**, like stock LF2 sheets (79px cells
   at an 80px pitch, 10×80 = 800 wide). `scripts/base/game/object_data.lua`
   addresses cell (c, r) at `x = c*(w+1)`, `y = r*(h+1)`, so a sheet must be at
@@ -52,7 +53,7 @@ original game may use `.dat`.
   on RGB(0,0,0) via `SDL_SetColorKey`, so the exporter lifts any opaque pixel
   that would quantise to pure black up to (8,8,8). DarthNox's near-black cape
   and hat make this necessary — without it, parts of him render as holes.
-- `centerx: 32  centery: 73` — hip-centroid/ground-line registration, scaled with the art
+- `centerx: 39  centery: 73` — hip-centroid/ground-line registration, scaled with the art
 
 ## Portraits
 
@@ -87,4 +88,4 @@ transparent) and builds both portraits:
 python tools/resize_darthnox.py <67x59 sheet>.bmp mods/darthnox/assets/portrait.bmp <out dir>
 ```
 
-Re-exporting from the masters at 84×74 will be sharper than this upscale.
+Re-exporting from the masters at 100×74 will be sharper than this upscale.

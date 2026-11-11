@@ -4,7 +4,7 @@
     python tools/resize_darthnox.py SRC_SHEET.bmp SRC_PORTRAIT.bmp OUT_DIR
 
 Writes into OUT_DIR:
-  darthnox.bmp    sprite sheet scaled by SCALE, 1px gutter after every cell
+  darthnox.bmp    sprite sheet scaled by SCALE_X x SCALE_Y, 1px gutter after every cell
   portrait_f.bmp  120x120 'head:' image (character picker)
   portrait_s.bmp  40x45   'small:' image (in-match HUD)
 and prints the w/h/centerx/centery values to put in darthnox.txt.
@@ -19,7 +19,8 @@ blend instead of staircasing; result is mapped back to the source palette.
 """
 import struct, sys, os
 
-SCALE = 1.25            # stock fighters stand ~73px tall; DarthNox's art is 59px
+SCALE_Y = 1.25          # height: stock fighters stand ~73px tall; DarthNox's art is 59px
+SCALE_X = 1.50          # width: 20% wider than SCALE_Y for LF2's stocky proportions
 SRC_CELL = (67, 59)     # source cell size (tightly packed or guttered both work)
 SRC_COLUMNS = 4
 SRC_CENTER = (26, 58)   # centerx / centery of the source art
@@ -138,7 +139,7 @@ def main(src_sheet, src_portrait, out_dir):
     cw, ch = SRC_CELL
     pitch = cw + 1 if W >= SRC_COLUMNS * (cw + 1) - 1 else cw   # accept guttered or packed input
     rgba = to_rgba(pal, rows)
-    nw, nh = round(cw * SCALE), round(ch * SCALE)
+    nw, nh = round(cw * SCALE_X), round(ch * SCALE_Y)
     sheet_w, sheet_h = SRC_COLUMNS * (nw + 1), nh + 1
     sheet = [[0] * sheet_w for _ in range(sheet_h)]
     bottom = 0
@@ -159,8 +160,8 @@ def main(src_sheet, src_portrait, out_dir):
     small = quantise(resample(prgba, x0, y0, x1 - x0, y1 - y0, *SMALL_SIZE), ppal)
     write_bmp(os.path.join(out_dir, 'portrait_s.bmp'), *SMALL_SIZE, ppal, small)
 
-    cx = round(SRC_CENTER[0] * SCALE)
-    cy = round((SRC_CENTER[1] + 0.5) * SCALE - 0.5)
+    cx = round((SRC_CENTER[0] + 0.5) * SCALE_X - 0.5)
+    cy = round((SRC_CENTER[1] + 0.5) * SCALE_Y - 0.5)
     print(f'sheet {sheet_w}x{sheet_h}  cells {nw}x{nh}  lowest opaque row {bottom}')
     print(f'darthnox.txt:  w: {nw}  h: {nh}  row: {SRC_COLUMNS}  col: 1   centerx: {cx}  centery: {cy}')
 

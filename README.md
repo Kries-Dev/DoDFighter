@@ -34,7 +34,7 @@ no Lua changes required.
 
 ## Sprite conventions
 
-- `assets/darthnox.bmp` — 340×75, four 84×74 cells with 1px gutters, `row: 4  col: 1`
+- `assets/darthnox.bmp` — 404×75, four 100×74 cells with 1px gutters, `row: 4  col: 1`
 - `assets/portrait_f.bmp` 120×120 (`head:`), `assets/portrait_s.bmp` 40×45 (`small:`)
 - 8-bit indexed, uncompressed, bottom-up `BITMAPINFOHEADER`
 - **Palette index 0 is pure black and reserved for transparency.** OpenLF2 keys
