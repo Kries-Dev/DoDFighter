@@ -61,8 +61,14 @@ Never enable `withSound` without asking — it costs extra.
 
 ## Conversion settings
 
+**Use the pose-anchored downloads.** DarthNox's approved walk and run are
+`walk2`/`run2` (made from the Idle Lock pose). The earlier `walk`/`run` downloads
+have a smaller head, and building from them shrinks him when he moves (this
+happened once, in a62d2f5). After every rebuild, compare the walk and run rows
+with the idle row before shipping.
+
 ```
-python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,1,4 \
+python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,walk2.json,4,1,14 run2.png,run2.json,4,1,4 \
     slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground \
     hurt.png,hurt.json,@7/8/11 fall.png,fall.json,@7/9/11/14,ground
 ```

@@ -104,6 +104,9 @@ Thunder Volcano; Random can pick it), with its own music.
 
 - `catalog.lua` inserts the stage before the stock list's three unused templates,
   so the Random rule (skip the last two, third-last = Lee On Road) still holds.
+- `camera.lua` puts invisible walls at x 60 and 734 on this stage only; the
+  engine's own limits (0 and 794) let a fighter stand half off-screen on the
+  concrete barriers.
 - `match.lua` starts "Gravity Stars" when a match is on Urban Bridge, replacing
   the Versus music pick; Music OFF stays off, and the title demo keeps its music.
 - The walkable band runs from just under the guardrail to just above the rubble
@@ -115,10 +118,11 @@ Thunder Volcano; Random can pick it), with its own music.
 
 ## Rebuilding
 
-From AutoSprite (download each spritesheet's sheet PNG and atlas JSON):
+From AutoSprite (download each spritesheet's sheet PNG and atlas JSON). `walk2`/`run2`
+are the clips made from the Idle Lock pose — the older `walk`/`run` have a smaller head:
 
 ```
-python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,1,4 \
+python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,walk2.json,4,1,14 run2.png,run2.json,4,1,4 \
     slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground \
     hurt.png,hurt.json,@7/8/11 fall.png,fall.json,@7/9/11/14,ground
 python tools/autosprite_portrait.py base.png out 130,60,730,660 230,170,610,598
