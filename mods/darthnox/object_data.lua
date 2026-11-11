@@ -6,19 +6,19 @@
 -- states, itr/bdy boxes, next-wiring, catches, falls — and overrides only what
 -- we actually have:
 --
---   * frames we authored in darthnox.dat  -> our picture
+--   * frames we authored in darthnox.txt  -> our picture
 --   * every other frame                   -> IDLE_PICTURE as a placeholder
 --   * all frames                          -> our centres and our sheets
 --
 -- The character is therefore fully playable from day one; unauthored actions
 -- read as a held pose rather than a missing sprite. Replace frames in
--- darthnox.dat as the art lands and they stop falling back automatically.
+-- darthnox.txt as the art lands and they stop falling back automatically.
 
 local IDLE_PICTURE = 3
 
 return function(base)
     local load = base.load
-    local fighter_path = "mods/darthnox/darthnox.dat"
+    local fighter_path = "mods/darthnox/darthnox.txt"
     local copy
 
     function base.load(path)

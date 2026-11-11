@@ -29,7 +29,7 @@ A complete LF2 character needs roughly 214 frames. Rather than block on that,
 only the sprites and centres. Unauthored frames fall back to a held idle pose,
 so the character is playable with a fraction of the art done.
 
-Add frames to `assets/darthnox.dat` and they stop falling back automatically —
+Add frames to `assets/darthnox.txt` and they stop falling back automatically —
 no Lua changes required.
 
 ## Sprite conventions

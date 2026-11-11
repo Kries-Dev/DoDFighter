@@ -14,11 +14,22 @@ through the project's slicer.
 
 Unauthored frames fall back to `IDLE_PICTURE` (see `object_data.lua`), so the
 fighter is playable immediately and unfinished actions read as a held pose
-rather than a missing sprite. Add frames to `darthnox.dat` and they stop
+rather than a missing sprite. Add frames to `darthnox.txt` and they stop
 falling back — no Lua changes needed.
 
 Like the example character, this still needs the player's installer for the
 base game's mechanics.
+
+## Why `.txt` and not `.dat`
+
+OpenLF2 decides by file extension whether to decrypt: `read_data_text` in
+`src/resources/data_file.cpp` runs *any* path ending in `.dat` through the LF2
+cipher unconditionally. Authored mod data is plaintext, so a `.dat` extension
+makes the engine decrypt it into garbage and fail with
+`NUL or 0x1A byte in data text`.
+
+Keep authored character data as `.txt`. Only genuinely encrypted files from the
+original game may use `.dat`.
 
 ## Sprite sheet
 

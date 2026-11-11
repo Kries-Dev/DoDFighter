@@ -3,7 +3,7 @@
 
 return function(base)
     local fighter_id = 61
-    local fighter_path = "mods/darthnox/darthnox.dat"
+    local fighter_path = "mods/darthnox/darthnox.txt"
     local load, objects = base.load, base.objects
     local added_fighter, added_object = false, false
 
