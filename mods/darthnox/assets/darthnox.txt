@@ -2,8 +2,8 @@
 name: DarthNox
 head: mods/darthnox/portrait_f.bmp
 small: mods/darthnox/portrait_s.bmp
-file(0-23): mods/darthnox/darthnox.bmp
-w: 85  h: 86  row: 4  col: 6
+file(0-31): mods/darthnox/darthnox.bmp
+w: 89  h: 86  row: 4  col: 8
 walking_frame_rate 3
 walking_speed 5.000000
 walking_speedz 2.300000
@@ -36,114 +36,196 @@ rowing_distance 4.000000
 
 # Idle
 <frame> 0 standing
-   pic: 0  state: 0  wait: 3  next: 1  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 0  state: 0  wait: 3  next: 1  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 1 standing
-   pic: 1  state: 0  wait: 3  next: 2  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 1  state: 0  wait: 3  next: 2  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 2 standing
-   pic: 2  state: 0  wait: 3  next: 3  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 2  state: 0  wait: 3  next: 3  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 3 standing
-   pic: 3  state: 0  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 3  state: 0  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 
 # Walk
 <frame> 5 walking
-   pic: 4  state: 1  wait: 3  next: 6  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 4  state: 1  wait: 3  next: 6  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 6 walking
-   pic: 5  state: 1  wait: 3  next: 7  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 5  state: 1  wait: 3  next: 7  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 7 walking
-   pic: 6  state: 1  wait: 3  next: 8  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 6  state: 1  wait: 3  next: 8  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 8 walking
-   pic: 7  state: 1  wait: 3  next: 5  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 7  state: 1  wait: 3  next: 5  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 
 # Run
 <frame> 9 running
-   pic: 8  state: 2  wait: 3  next: 10  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 8  state: 2  wait: 3  next: 10  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 10 running
-   pic: 9  state: 2  wait: 3  next: 11  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 9  state: 2  wait: 3  next: 11  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 11 running
-   pic: 10  state: 2  wait: 3  next: 9  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 10  state: 2  wait: 3  next: 9  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 
 # Attack A: slash (wind-up, swing, follow-through)
 <frame> 60 punch
-   pic: 12  state: 3  wait: 3  next: 61  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 12  state: 3  wait: 3  next: 61  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 61 punch
-   pic: 13  state: 3  wait: 1  next: 62  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 13  state: 3  wait: 1  next: 62  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 62 punch
-   pic: 14  state: 3  wait: 1  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 14  state: 3  wait: 1  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 
 # Attack B: thrust (wind-up, lunge, recover)
 <frame> 65 punch
-   pic: 16  state: 3  wait: 3  next: 66  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 16  state: 3  wait: 3  next: 66  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 66 punch
-   pic: 17  state: 3  wait: 1  next: 67  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 17  state: 3  wait: 1  next: 67  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 67 punch
-   pic: 18  state: 3  wait: 1  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 18  state: 3  wait: 1  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 
 # Super attack: thrust held longer
 <frame> 70 super_punch
-   pic: 16  state: 3  wait: 4  next: 71  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 16  state: 3  wait: 4  next: 71  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 71 super_punch
-   pic: 17  state: 3  wait: 1  next: 72  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 17  state: 3  wait: 1  next: 72  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 72 super_punch
-   pic: 17  state: 3  wait: 2  next: 73  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 17  state: 3  wait: 2  next: 73  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 73 super_punch
-   pic: 18  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 18  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 
 # Jump attack: the slash, in the air
 <frame> 80 jump_attack
-   pic: 12  state: 3  wait: 1  next: 81  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 12  state: 3  wait: 1  next: 81  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 81 jump_attack
-   pic: 13  state: 3  wait: 1  next: 82  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 13  state: 3  wait: 1  next: 82  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 82 jump_attack
-   pic: 14  state: 3  wait: 11  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 14  state: 3  wait: 11  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 
 # Run attack: the slash
 <frame> 85 run_attack
-   pic: 12  state: 3  wait: 4  next: 86  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 12  state: 3  wait: 4  next: 86  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 86 run_attack
-   pic: 13  state: 3  wait: 2  next: 87  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 13  state: 3  wait: 2  next: 87  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 87 run_attack
-   pic: 14  state: 3  wait: 3  next: 88  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 14  state: 3  wait: 3  next: 88  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 88 run_attack
-   pic: 14  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 14  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 
 # Jump: crouch, rise, airborne; landing crouch reuses the crouch
 <frame> 210 jump
-   pic: 20  state: 4  wait: 1  next: 211  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 20  state: 4  wait: 1  next: 211  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 211 jump
-   pic: 21  state: 4  wait: 1  next: 212  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 21  state: 4  wait: 1  next: 212  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 212 jump
-   pic: 22  state: 4  wait: 1  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 22  state: 4  wait: 1  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>
 <frame> 215 crouch
-   pic: 20  state: 15  wait: 2  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   pic: 20  state: 15  wait: 2  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+
+
+# Crouch after landing from a fall or a jump
+<frame> 219 crouch2
+   pic: 20  state: 15  wait: 2  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+# Hurt: recoil, smaller recoil, recovering (front and back hits share them)
+<frame> 220 injured
+   pic: 24  state: 11  wait: 2  next: 221  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 221 injured
+   pic: 25  state: 11  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 222 injured
+   pic: 25  state: 11  wait: 2  next: 223  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 223 injured
+   pic: 24  state: 11  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 224 injured
+   pic: 24  state: 11  wait: 2  next: 225  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 225 injured
+   pic: 25  state: 11  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 226 injured
+   pic: 24  state: 16  wait: 6  next: 227  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 227 injured
+   pic: 26  state: 16  wait: 6  next: 228  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 228 injured
+   pic: 25  state: 16  wait: 6  next: 229  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 229 injured
+   pic: 26  state: 16  wait: 6  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+# Knocked down: tipping back, airborne, flat, lying; getting up uses the crouch.
+# Forward falls reuse the same pictures (there is no face-down art yet).
+<frame> 180 falling
+   pic: 28  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 181 falling
+   pic: 29  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 182 falling
+   pic: 30  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 183 falling
+   pic: 30  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 184 falling
+   pic: 31  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 185 falling
+   pic: 20  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 186 falling
+   pic: 28  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 187 falling
+   pic: 29  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 188 falling
+   pic: 30  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 189 falling
+   pic: 30  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 190 falling
+   pic: 31  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 191 falling
+   pic: 20  state: 12  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+# Lying on the ground
+<frame> 230 lying
+   pic: 31  state: 14  wait: 30  next: 219  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
+<frame_end>
+<frame> 231 lying
+   pic: 31  state: 14  wait: 30  next: 219  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 85
 <frame_end>

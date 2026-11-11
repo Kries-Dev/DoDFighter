@@ -62,7 +62,9 @@ Never enable `withSound` without asking — it costs extra.
 ## Conversion settings
 
 ```
-python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,1,4     slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground
+python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,1,4 \
+    slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground \
+    hurt.png,hurt.json,@7/8/11 fall.png,fall.json,@7/9/11/14,ground
 ```
 
 - DarthNox's approved size is **scale s0.345992** (his idle at 82px tall). Pass
@@ -72,7 +74,33 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk.png,wa
 - Attacks: pick the key frames by hand with `@A/B/C` (wind-up, strike,
   follow-through). Jumps: add `,ground` — the clip lifts the character, and the
   engine already does that.
-- Skip frames where AutoSprite cropped the hat or weapon at the image edge.
+- Hurt and knockdown: start from the Idle Lock too (hurt also ends on it). Knockdown
+  takes `,ground` like a jump — the engine moves the body through the air.
+- Skip frames where AutoSprite cropped the hat or weapon at the image edge, or
+  where it painted effects that are not part of the character (hit sparks, a
+  giant blade swinging in from off-screen).
 - 4 evenly spaced frames per clip, `wait: 3`.
 - Portraits: `tools/autosprite_portrait.py` — `head:` 120×120, `small:` 40×45,
   on the dark navy backdrop (22,30,58).
+
+## Stages
+
+A stage is one painted picture, side view, with a road or floor across the lower
+half. Use the same look as the fighters: bold outlines, saturated colours.
+
+```
+python tools/image_to_stage.py PICTURE.png OUT_DIR "Stage Name" ROAD_TOP ROAD_BOTTOM
+```
+
+- The picture is scaled to the 794-px screen width and bottom-aligned; the top
+  128 px of the screen sit under the HP/MP panel, so keep the sky there.
+- ROAD_TOP / ROAD_BOTTOM are source-pixel rows of the back and front edge of the
+  walkable floor; the tool prints the `zboundary`. Check the result by pasting a
+  fighter at both edges before shipping (Urban Bridge: 540 and 850 → `359 507`).
+- Every path in a bg `.txt` must be at most 29 characters — the original parser's
+  buffer. `mods/darthnox/bg/bridge.bmp` fits; `mods/darthnox/stage/urban_bridge.bmp`
+  does not.
+- Music must be **WMA 8** (format 0x161): OpenLF2's FFmpeg is built with only the
+  `wmav2` decoder and `asf` demuxer, so mp3/wav/WMA Pro fail with "Invalid data" or
+  "Decoder not found". Convert with
+  `powershell -ExecutionPolicy Bypass -File tools\to_wma.ps1 IN.mp3 OUT.wma`.

@@ -2,14 +2,14 @@
 
 `--mod mods/darthnox` adds **DarthNox** (record ID 61) to the character picker.
 
-A musketeer with idle, walk, run, two sword attacks and a jump, generated with AutoSprite
+A musketeer with idle, walk, run, two sword attacks, a jump, hurt and knockdown, generated with AutoSprite
 (character "DarthNox LF2 v4") and converted with `tools/autosprite_to_lf2.py`.
 
 ## What is authored vs inherited
 
 | | |
 |---|---|
-| Authored | sprite sheet, portraits, movement speeds, standing (0–3), walking (5–8), running (9–11), attacks (60–62, 65–67), super attack (70–73), jump attack (80–82), run attack (85–88), jump (210–212, 215) |
+| Authored | sprite sheet, portraits, movement speeds, standing (0–3), walking (5–8), running (9–11), attacks (60–62, 65–67), super attack (70–73), jump attack (80–82), run attack (85–88), jump (210–212, 215, 219), hurt (220–229), falling (180–191), lying (230–231) |
 | Inherited | every other frame's mechanics — states, `itr`/`bdy` boxes, next-wiring, catches, falls |
 
 Unauthored frames fall back to `IDLE_PICTURE` (see `object_data.lua`), so the
@@ -33,9 +33,11 @@ original game may use `.dat`.
 
 ## Sprite sheet
 
-- `darthnox.bmp` — 344×522, 24 cells of 85×86, 4 across × 6 down (`row: 4  col: 6`).
+- `darthnox.bmp` — 360×696, 32 cells of 89×86, 4 across × 8 down (`row: 4  col: 8`).
   Pictures 0–3 idle, 4–7 walk, 8–11 run, 12–14 slash, 16–18 thrust,
-  20–22 jump (crouch, rise, air). Stock fighters use
+  20–22 jump (crouch, rise, air), 24–26 hurt (recoil, smaller recoil, recovering),
+  28–31 knockdown (tipping, airborne, flat, lying). Forward falls reuse the
+  knockdown pictures until there is face-down art. Stock fighters use
   79×79 cells and stand ~73px tall; DarthNox's tallest frame is 82px because
   the hat and plume sit on top of a head as big as Davis's.
 - LF2 proportions are super-deformed: about 3 heads tall, head a third of the
@@ -61,7 +63,7 @@ original game may use `.dat`.
   on RGB(0,0,0) via `SDL_SetColorKey`, so the exporter lifts any opaque pixel
   that would quantise to pure black up to (8,8,8). DarthNox's near-black cape
   and hat make this necessary — without it, parts of him render as holes.
-- `centerx: 39  centery: 85` — AutoSprite's foot pivot; every frame is registered
+- `centerx: 44  centery: 85` — AutoSprite's foot pivot; every frame is registered
   on it, so one centre pair is right for all pictures
 
 ## Portraits
@@ -89,19 +91,45 @@ The 316px masters are kept upstream; see the pipeline notes for the 4K question.
 The look is locked — see `STYLE.md` at the repo root before generating any
 new art.
 
+## Urban Bridge stage
+
+The mod also adds **Urban Bridge** to the Versus background list (after
+Thunder Volcano; Random can pick it), with its own music.
+
+| file | what |
+|---|---|
+| `assets/bg/bridge.txt` | stage data: one layer, `width: 794`, `zboundary: 359 507`, HK Coliseum's shadow |
+| `assets/bg/bridge.bmp` | the painting, 794×447, 8-bit, at `y: 103` |
+| `assets/bg/gravity_stars.wma` | "Gravity Stars", WMA 8 |
+
+- `catalog.lua` inserts the stage before the stock list's three unused templates,
+  so the Random rule (skip the last two, third-last = Lee On Road) still holds.
+- `match.lua` starts "Gravity Stars" when a match is on Urban Bridge, replacing
+  the Versus music pick; Music OFF stays off, and the title demo keeps its music.
+- The walkable band runs from just under the guardrail to just above the rubble
+  at the front edge.
+- Paths inside the bg file must be 29 characters or less (the original parser's
+  buffer), hence the short `bg/bridge.*` names.
+- Music must be WMA 8: OpenLF2's FFmpeg only has the `wmav2` decoder. See
+  `STYLE.md` → Stages.
+
 ## Rebuilding
 
 From AutoSprite (download each spritesheet's sheet PNG and atlas JSON):
 
 ```
-python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,1,4 \n    slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground
+python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,1,4 \
+    slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground \
+    hurt.png,hurt.json,@7/8/11 fall.png,fall.json,@7/9/11/14,ground
 python tools/autosprite_portrait.py base.png out 130,60,730,660 230,170,610,598
+python tools/image_to_stage.py "urban bridge stage.png" out "Urban Bridge" 540 850
+powershell -ExecutionPolicy Bypass -File tools\to_wma.ps1 "Gravity stars.mp3" out\gravity_stars.wma
 ```
 
 The first prints the `w/h/row/col/centerx/centery` values for `darthnox.txt`.
 Add a row (e.g. `run.png,run.json,4`) to extend the sheet; pictures continue
-row by row (row 2 = 8–11, ...). The 82 is the tallest frame's height in game
-pixels — keep it the same across rebuilds so he doesn't change size.
+row by row (row 2 = 8–11, ...). `s0.345992` is his locked scale — keep it the same across rebuilds so he
+doesn't change size.
 
 `tools/resize_darthnox.py` is the older tool that rescaled the first design's
 67×59 sheet; it is kept for reference.

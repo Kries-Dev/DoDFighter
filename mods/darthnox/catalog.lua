@@ -4,8 +4,9 @@
 return function(base)
     local fighter_id = 61
     local fighter_path = "mods/darthnox/darthnox.txt"
-    local load, objects = base.load, base.objects
-    local added_fighter, added_object = false, false
+    local stage_path = "mods/darthnox/bg/bridge.txt"
+    local load, objects, backgrounds = base.load, base.objects, base.backgrounds
+    local added_fighter, added_object, added_stage = false, false, false
 
     function base.load()
         local fighters = load()
@@ -34,6 +35,22 @@ return function(base)
             added_object = true
         end
         return catalog
+    end
+
+    -- The stock list ends with three unused templates, and a random pick skips the
+    -- last two and turns the third-last into Lee On Road. Inserting before the
+    -- templates keeps that rule intact and lets Random pick Urban Bridge too.
+    function base.backgrounds()
+        local list = backgrounds()
+        if not added_stage then
+            local at = #list + 1
+            for index, entry in ipairs(list) do
+                if entry.path:find("/template/", 1, true) then at = index; break end
+            end
+            table.insert(list, at, {id = 61, path = stage_path})
+            added_stage = true
+        end
+        return list
     end
 
     return base

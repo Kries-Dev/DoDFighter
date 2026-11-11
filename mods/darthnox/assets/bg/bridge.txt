@@ -1,0 +1,11 @@
+name: Urban_Bridge
+width: 794   zboundary: 359 507
+shadow: bg\sys\hkc\s.bmp  shadowsize: 37 9
+
+# One painted picture (tools/image_to_stage.py), bottom-aligned to the 550-px
+# screen; its top 25 px of sky sit under the HP/MP panel. zboundary is the
+# asphalt between the guardrail (back) and the rubble at the front edge.
+layer:
+  mods/darthnox/bg/bridge.bmp
+  transparency: 0  width: 794  x: 0  y: 103
+layer_end

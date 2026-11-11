@@ -34,7 +34,7 @@ no Lua changes required.
 
 ## Sprite conventions
 
-- `assets/darthnox.bmp` — 344×522, 24 cells of 85×86 with 1px gutters, `row: 4  col: 6`
+- `assets/darthnox.bmp` — 360×696, 32 cells of 89×86 with 1px gutters, `row: 4  col: 8`
   (idle, walk, run, slash, thrust, jump)
 - `assets/portrait_f.bmp` 120×120 (`head:`), `assets/portrait_s.bmp` 40×45 (`small:`)
 - 8-bit indexed, uncompressed, bottom-up `BITMAPINFOHEADER`
