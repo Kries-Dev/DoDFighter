@@ -3,7 +3,7 @@
 `--mod mods/darthnox` adds **DarthNox** (record ID 61) to the character picker.
 
 A musketeer with a 4-frame idle and a 4-frame walk, generated with AutoSprite
-(character "DarthNox LF2 v3") and converted with `tools/autosprite_to_lf2.py`.
+(character "DarthNox LF2 v4") and converted with `tools/autosprite_to_lf2.py`.
 
 ## What is authored vs inherited
 
@@ -33,12 +33,14 @@ original game may use `.dat`.
 
 ## Sprite sheet
 
-- `darthnox.bmp` — 276×150, 8 cells of 68×74, 4 across × 2 down
+- `darthnox.bmp` — 284×166, 8 cells of 70×82, 4 across × 2 down
   (`row: 4  col: 2`). Pictures 0–3 = idle, 4–7 = walk. Stock fighters use
-  79×79 cells and stand ~73px tall; the tallest frame here is 74px.
-- The art is drawn stocky (large head, broad torso, thick limbs) to stand next
-  to Davis and co. A slim "young anime swordsman" version (v2) read as a stick
-  figure in game and was dropped. Black hair, clean-shaven.
+  79×79 cells and stand ~73px tall; DarthNox's tallest frame is 82px because
+  the hat and plume sit on top of a head as big as Davis's.
+- LF2 proportions are super-deformed: about 3 heads tall, head a third of the
+  body, short broad torso, big gloves and boots. Earlier designs at ~5 heads
+  (v1/v3) had heads far too small next to Davis, and a slim anime version (v2)
+  read as a stick figure. Black hair, clean-shaven.
 - Keep the rapier short and thick: a thin blade disappears at 74px, and
   AutoSprite's stock idle/walk dropped v2's thin blade entirely (custom clips
   describing the blade "fully visible in every frame" brought it back).
@@ -58,7 +60,7 @@ original game may use `.dat`.
   on RGB(0,0,0) via `SDL_SetColorKey`, so the exporter lifts any opaque pixel
   that would quantise to pure black up to (8,8,8). DarthNox's near-black cape
   and hat make this necessary — without it, parts of him render as holes.
-- `centerx: 27  centery: 74` — AutoSprite's foot pivot; every frame is registered
+- `centerx: 32  centery: 82` — AutoSprite's foot pivot; every frame is registered
   on it, so one centre pair is right for all pictures
 
 ## Portraits
@@ -86,13 +88,13 @@ The 316px masters are kept upstream; see the pipeline notes for the 4K question.
 From AutoSprite (download each spritesheet's sheet PNG and atlas JSON):
 
 ```
-python tools/autosprite_to_lf2.py out 74 idle.png,idle.json,4 walk.png,walk.json,4
-python tools/autosprite_portrait.py base.png out 190,40,670,520 340,100,620,415
+python tools/autosprite_to_lf2.py out 82 idle.png,idle.json,4 walk.png,walk.json,4
+python tools/autosprite_portrait.py base.png out 130,60,730,660 230,170,610,598
 ```
 
 The first prints the `w/h/row/col/centerx/centery` values for `darthnox.txt`.
 Add a row (e.g. `run.png,run.json,4`) to extend the sheet; pictures continue
-row by row (row 2 = 8–11, ...). The 74 is the tallest frame's height in game
+row by row (row 2 = 8–11, ...). The 82 is the tallest frame's height in game
 pixels — keep it the same across rebuilds so he doesn't change size.
 
 `tools/resize_darthnox.py` is the older tool that rescaled the first design's
