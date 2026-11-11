@@ -3,7 +3,7 @@ name: DarthNox
 head: mods/darthnox/portrait_f.bmp
 small: mods/darthnox/portrait_s.bmp
 file(0-7): mods/darthnox/darthnox.bmp
-w: 66  h: 76  row: 4  col: 2
+w: 70  h: 74  row: 4  col: 2
 walking_frame_rate 3
 walking_speed 5.000000
 walking_speedz 2.300000
@@ -24,44 +24,44 @@ rowing_height -2.000000
 rowing_distance 4.000000
 <bmp_end>
 
-# Art: AutoSprite character "DarthNox LF2" (cmwby2slz00e86sflj3epg6ux), converted
+# Art: AutoSprite character "DarthNox LF2 v2" (cmwbycmh6000vjsckjlw8s6cu), converted
 # with tools/autosprite_to_lf2.py. Pictures 0-3 = idle row, 4-7 = walk row.
 
-# Idle: 4 evenly spaced frames of the 16-frame idle clip.
+# Idle: 4 evenly spaced frames of the 16-frame custom "idle sword" clip.
 <frame> 0 standing
-   pic: 0  state: 0  wait: 3  next: 1  dvx: 0  dvy: 0  dvz: 0  centerx: 27  centery: 74
+   pic: 0  state: 0  wait: 3  next: 1  dvx: 0  dvy: 0  dvz: 0  centerx: 30  centery: 74
 <frame_end>
 <frame> 1 standing
-   pic: 1  state: 0  wait: 3  next: 2  dvx: 0  dvy: 0  dvz: 0  centerx: 27  centery: 74
+   pic: 1  state: 0  wait: 3  next: 2  dvx: 0  dvy: 0  dvz: 0  centerx: 30  centery: 74
 <frame_end>
 <frame> 2 standing
-   pic: 2  state: 0  wait: 3  next: 3  dvx: 0  dvy: 0  dvz: 0  centerx: 27  centery: 74
+   pic: 2  state: 0  wait: 3  next: 3  dvx: 0  dvy: 0  dvz: 0  centerx: 30  centery: 74
 <frame_end>
 <frame> 3 standing
-   pic: 3  state: 0  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 27  centery: 74
+   pic: 3  state: 0  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 30  centery: 74
 <frame_end>
 
-# Walk: 4 evenly spaced frames of the 16-frame walk clip.
+# Walk: 4 evenly spaced frames of the 16-frame custom "walk sword" clip.
 <frame> 5 walking
-   pic: 4  state: 1  wait: 3  next: 6  dvx: 0  dvy: 0  dvz: 0  centerx: 27  centery: 74
+   pic: 4  state: 1  wait: 3  next: 6  dvx: 0  dvy: 0  dvz: 0  centerx: 30  centery: 74
 <frame_end>
 <frame> 6 walking
-   pic: 5  state: 1  wait: 3  next: 7  dvx: 0  dvy: 0  dvz: 0  centerx: 27  centery: 74
+   pic: 5  state: 1  wait: 3  next: 7  dvx: 0  dvy: 0  dvz: 0  centerx: 30  centery: 74
 <frame_end>
 <frame> 7 walking
-   pic: 6  state: 1  wait: 3  next: 8  dvx: 0  dvy: 0  dvz: 0  centerx: 27  centery: 74
+   pic: 6  state: 1  wait: 3  next: 8  dvx: 0  dvy: 0  dvz: 0  centerx: 30  centery: 74
 <frame_end>
 <frame> 8 walking
-   pic: 7  state: 1  wait: 3  next: 5  dvx: 0  dvy: 0  dvz: 0  centerx: 27  centery: 74
+   pic: 7  state: 1  wait: 3  next: 5  dvx: 0  dvy: 0  dvz: 0  centerx: 30  centery: 74
 <frame_end>
 
 # Run: reuses the walk stride until a run clip is converted.
 <frame> 9 running
-   pic: 4  state: 2  wait: 3  next: 10  dvx: 0  dvy: 0  dvz: 0  centerx: 27  centery: 74
+   pic: 4  state: 2  wait: 3  next: 10  dvx: 0  dvy: 0  dvz: 0  centerx: 30  centery: 74
 <frame_end>
 <frame> 10 running
-   pic: 6  state: 2  wait: 3  next: 11  dvx: 0  dvy: 0  dvz: 0  centerx: 27  centery: 74
+   pic: 6  state: 2  wait: 3  next: 11  dvx: 0  dvy: 0  dvz: 0  centerx: 30  centery: 74
 <frame_end>
 <frame> 11 running
-   pic: 7  state: 2  wait: 3  next: 9  dvx: 0  dvy: 0  dvz: 0  centerx: 27  centery: 74
+   pic: 7  state: 2  wait: 3  next: 9  dvx: 0  dvy: 0  dvz: 0  centerx: 30  centery: 74
 <frame_end>

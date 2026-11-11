@@ -34,7 +34,7 @@ no Lua changes required.
 
 ## Sprite conventions
 
-- `assets/darthnox.bmp` — 268×154, eight 66×76 cells with 1px gutters, `row: 4  col: 2`
+- `assets/darthnox.bmp` — 284×150, eight 70×74 cells with 1px gutters, `row: 4  col: 2`
   (pictures 0–3 idle, 4–7 walk)
 - `assets/portrait_f.bmp` 120×120 (`head:`), `assets/portrait_s.bmp` 40×45 (`small:`)
 - 8-bit indexed, uncompressed, bottom-up `BITMAPINFOHEADER`
@@ -42,7 +42,7 @@ no Lua changes required.
   on RGB(0,0,0) via `SDL_SetColorKey`, so any opaque pixel that would quantise
   to pure black is lifted to (8,8,8). DarthNox's near-black cape and hat make
   this necessary — without it, parts of him render as holes.
-- `centerx: 27  centery: 74` — AutoSprite's foot pivot, shared by every frame
+- `centerx: 30  centery: 74` — AutoSprite's foot pivot, shared by every frame
 
 ## Scale
 
@@ -53,8 +53,8 @@ those constants and replacing the base game's own 794-scale backgrounds.
 
 ## Animation notes
 
-Art comes from AutoSprite (character "DarthNox LF2"): 16-frame idle and walk
-clips at 256px, of which 4 evenly spaced frames each are used. At `wait: 3` a
+Art comes from AutoSprite (character "DarthNox LF2 v2"): 16-frame custom idle
+and walk clips at 256px, of which 4 evenly spaced frames each are used. At `wait: 3` a
 4-frame cycle runs 12 ticks. `tools/autosprite_to_lf2.py` does the conversion —
 foot-pivot registration, uniform downscale, 255-colour palette with index 0
 kept for the colour key, and 1px cell gutters.

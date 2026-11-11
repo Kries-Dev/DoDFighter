@@ -3,7 +3,7 @@
 `--mod mods/darthnox` adds **DarthNox** (record ID 61) to the character picker.
 
 A musketeer with a 4-frame idle and a 4-frame walk, generated with AutoSprite
-(character "DarthNox LF2") and converted with `tools/autosprite_to_lf2.py`.
+(character "DarthNox LF2 v2") and converted with `tools/autosprite_to_lf2.py`.
 
 ## What is authored vs inherited
 
@@ -33,13 +33,14 @@ original game may use `.dat`.
 
 ## Sprite sheet
 
-- `darthnox.bmp` — 268×154, 8 cells of 66×76, 4 across × 2 down
+- `darthnox.bmp` — 284×150, 8 cells of 70×74, 4 across × 2 down
   (`row: 4  col: 2`). Pictures 0–3 = idle, 4–7 = walk. Stock fighters use
   79×79 cells and stand ~73px tall; the tallest frame here is 74px.
-- The art is drawn with LF2-style proportions (large head, broad torso, short
-  thick rapier) so it reads at 74px without stretching. The earlier realistic
-  design needed a ×1.8 horizontal stretch and its thin rapier vanished at this
-  size.
+- The art is drawn in LF2's anime style (young, ~4 heads tall, slim) so it sits
+  with the stock cast without stretching. Black hair, clean-shaven.
+- AutoSprite's stock idle/walk dropped the rapier blade (only the hilt
+  survived). Custom clips whose prompt describes the blade "fully visible in
+  every frame", with `first_frame_quality: pro`, keep it.
 - **Every cell is followed by a 1px gutter**, like stock LF2 sheets (79px cells
   at an 80px pitch, 10×80 = 800 wide). `scripts/base/game/object_data.lua`
   addresses cell (c, r) at `x = c*(w+1)`, `y = r*(h+1)`, so a sheet must be at
@@ -56,7 +57,7 @@ original game may use `.dat`.
   on RGB(0,0,0) via `SDL_SetColorKey`, so the exporter lifts any opaque pixel
   that would quantise to pure black up to (8,8,8). DarthNox's near-black cape
   and hat make this necessary — without it, parts of him render as holes.
-- `centerx: 27  centery: 74` — AutoSprite's foot pivot; every frame is registered
+- `centerx: 30  centery: 74` — AutoSprite's foot pivot; every frame is registered
   on it, so one centre pair is right for all pictures
 
 ## Portraits
@@ -85,7 +86,7 @@ From AutoSprite (download each spritesheet's sheet PNG and atlas JSON):
 
 ```
 python tools/autosprite_to_lf2.py out 74 idle.png,idle.json,4 walk.png,walk.json,4
-python tools/autosprite_portrait.py base.png out 190,40,670,520 340,80,620,395
+python tools/autosprite_portrait.py base.png out 260,60,680,480 380,120,620,390
 ```
 
 The first prints the `w/h/row/col/centerx/centery` values for `darthnox.txt`.
