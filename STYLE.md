@@ -62,14 +62,17 @@ Never enable `withSound` without asking — it costs extra.
 ## Conversion settings
 
 ```
-python tools/autosprite_to_lf2.py out 82 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,1,4
+python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,1,4     slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground
 ```
 
-- **82** = tallest frame in game pixels. Same number for every rebuild and every
-  character of this size, so nobody changes height between versions.
-- Check the printed `scale`: DarthNox's is **0.3460**. If adding a clip changes
-  it, a new frame is taller than the idle and the whole character shrank — trim
-  that clip's frame range or regenerate it.
+- DarthNox's approved size is **scale s0.345992** (his idle at 82px tall). Pass
+  it as `s0.345992` so raised swords and jumps can't shrink him. For a new
+  character, convert the idle alone with height `82` once, then lock the scale
+  it prints (`scale s…`) for every later rebuild.
+- Attacks: pick the key frames by hand with `@A/B/C` (wind-up, strike,
+  follow-through). Jumps: add `,ground` — the clip lifts the character, and the
+  engine already does that.
+- Skip frames where AutoSprite cropped the hat or weapon at the image edge.
 - 4 evenly spaced frames per clip, `wait: 3`.
 - Portraits: `tools/autosprite_portrait.py` — `head:` 120×120, `small:` 40×45,
   on the dark navy backdrop (22,30,58).

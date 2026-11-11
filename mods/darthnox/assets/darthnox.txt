@@ -2,8 +2,8 @@
 name: DarthNox
 head: mods/darthnox/portrait_f.bmp
 small: mods/darthnox/portrait_s.bmp
-file(0-11): mods/darthnox/darthnox.bmp
-w: 78  h: 84  row: 4  col: 3
+file(0-23): mods/darthnox/darthnox.bmp
+w: 85  h: 86  row: 4  col: 6
 walking_frame_rate 3
 walking_speed 5.000000
 walking_speedz 2.300000
@@ -25,45 +25,125 @@ rowing_distance 4.000000
 <bmp_end>
 
 # Art: AutoSprite character "DarthNox LF2 v4" (cmwbyt2s9008lsxrgic7ttmeq), converted
-# with tools/autosprite_to_lf2.py at height 82. Pictures 0-3 = idle, 4-7 = walk,
-# 8-11 = run. Walk and run start from the "Idle Lock" pose so proportions match
-# the idle exactly (see STYLE.md).
+# with tools/autosprite_to_lf2.py at fixed scale s0.345992 (see STYLE.md). Every
+# clip after the idle starts from the "Idle Lock" pose.
+#
+#   pictures  0-3  idle        4-7  walk        8-11 run
+#            12-14 slash      16-18 thrust     20-22 jump (crouch, rise, air)
+#
+# Only `pic:` and the centre are read for these frames; timing, states, hitboxes
+# and next-wiring come from the base fighter (Deep, a swordsman) via object_data.lua.
 
-# Idle: 4 evenly spaced frames of the 16-frame idle clip.
+# Idle
 <frame> 0 standing
-   pic: 0  state: 0  wait: 3  next: 1  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 83
+   pic: 0  state: 0  wait: 3  next: 1  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
 <frame_end>
 <frame> 1 standing
-   pic: 1  state: 0  wait: 3  next: 2  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 83
+   pic: 1  state: 0  wait: 3  next: 2  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
 <frame_end>
 <frame> 2 standing
-   pic: 2  state: 0  wait: 3  next: 3  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 83
+   pic: 2  state: 0  wait: 3  next: 3  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
 <frame_end>
 <frame> 3 standing
-   pic: 3  state: 0  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 83
+   pic: 3  state: 0  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
 <frame_end>
 
-# Walk: frames 1-14 of the pose-anchored walk clip, 4 evenly spaced.
+# Walk
 <frame> 5 walking
-   pic: 4  state: 1  wait: 3  next: 6  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 83
+   pic: 4  state: 1  wait: 3  next: 6  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
 <frame_end>
 <frame> 6 walking
-   pic: 5  state: 1  wait: 3  next: 7  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 83
+   pic: 5  state: 1  wait: 3  next: 7  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
 <frame_end>
 <frame> 7 walking
-   pic: 6  state: 1  wait: 3  next: 8  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 83
+   pic: 6  state: 1  wait: 3  next: 8  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
 <frame_end>
 <frame> 8 walking
-   pic: 7  state: 1  wait: 3  next: 5  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 83
+   pic: 7  state: 1  wait: 3  next: 5  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
 <frame_end>
 
-# Run: one stride (clip frames 1-4) of the pose-anchored "run sword" clip.
+# Run
 <frame> 9 running
-   pic: 8  state: 2  wait: 3  next: 10  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 83
+   pic: 8  state: 2  wait: 3  next: 10  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
 <frame_end>
 <frame> 10 running
-   pic: 9  state: 2  wait: 3  next: 11  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 83
+   pic: 9  state: 2  wait: 3  next: 11  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
 <frame_end>
 <frame> 11 running
-   pic: 10  state: 2  wait: 3  next: 9  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 83
+   pic: 10  state: 2  wait: 3  next: 9  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+
+# Attack A: slash (wind-up, swing, follow-through)
+<frame> 60 punch
+   pic: 12  state: 3  wait: 3  next: 61  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 61 punch
+   pic: 13  state: 3  wait: 1  next: 62  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 62 punch
+   pic: 14  state: 3  wait: 1  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+
+# Attack B: thrust (wind-up, lunge, recover)
+<frame> 65 punch
+   pic: 16  state: 3  wait: 3  next: 66  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 66 punch
+   pic: 17  state: 3  wait: 1  next: 67  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 67 punch
+   pic: 18  state: 3  wait: 1  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+
+# Super attack: thrust held longer
+<frame> 70 super_punch
+   pic: 16  state: 3  wait: 4  next: 71  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 71 super_punch
+   pic: 17  state: 3  wait: 1  next: 72  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 72 super_punch
+   pic: 17  state: 3  wait: 2  next: 73  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 73 super_punch
+   pic: 18  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+
+# Jump attack: the slash, in the air
+<frame> 80 jump_attack
+   pic: 12  state: 3  wait: 1  next: 81  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 81 jump_attack
+   pic: 13  state: 3  wait: 1  next: 82  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 82 jump_attack
+   pic: 14  state: 3  wait: 11  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+
+# Run attack: the slash
+<frame> 85 run_attack
+   pic: 12  state: 3  wait: 4  next: 86  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 86 run_attack
+   pic: 13  state: 3  wait: 2  next: 87  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 87 run_attack
+   pic: 14  state: 3  wait: 3  next: 88  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 88 run_attack
+   pic: 14  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+
+# Jump: crouch, rise, airborne; landing crouch reuses the crouch
+<frame> 210 jump
+   pic: 20  state: 4  wait: 1  next: 211  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 211 jump
+   pic: 21  state: 4  wait: 1  next: 212  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 212 jump
+   pic: 22  state: 4  wait: 1  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+<frame> 215 crouch
+   pic: 20  state: 15  wait: 2  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
 <frame_end>

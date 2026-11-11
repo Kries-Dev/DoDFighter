@@ -2,14 +2,14 @@
 
 `--mod mods/darthnox` adds **DarthNox** (record ID 61) to the character picker.
 
-A musketeer with 4-frame idle, walk and run cycles, generated with AutoSprite
+A musketeer with idle, walk, run, two sword attacks and a jump, generated with AutoSprite
 (character "DarthNox LF2 v4") and converted with `tools/autosprite_to_lf2.py`.
 
 ## What is authored vs inherited
 
 | | |
 |---|---|
-| Authored | sprite sheet, portraits, movement speeds, standing (0–3), walking (5–8), running (9–11) |
+| Authored | sprite sheet, portraits, movement speeds, standing (0–3), walking (5–8), running (9–11), attacks (60–62, 65–67), super attack (70–73), jump attack (80–82), run attack (85–88), jump (210–212, 215) |
 | Inherited | every other frame's mechanics — states, `itr`/`bdy` boxes, next-wiring, catches, falls |
 
 Unauthored frames fall back to `IDLE_PICTURE` (see `object_data.lua`), so the
@@ -33,8 +33,9 @@ original game may use `.dat`.
 
 ## Sprite sheet
 
-- `darthnox.bmp` — 316×255, 12 cells of 78×84, 4 across × 3 down
-  (`row: 4  col: 3`). Pictures 0–3 = idle, 4–7 = walk, 8–11 = run. Stock fighters use
+- `darthnox.bmp` — 344×522, 24 cells of 85×86, 4 across × 6 down (`row: 4  col: 6`).
+  Pictures 0–3 idle, 4–7 walk, 8–11 run, 12–14 slash, 16–18 thrust,
+  20–22 jump (crouch, rise, air). Stock fighters use
   79×79 cells and stand ~73px tall; DarthNox's tallest frame is 82px because
   the hat and plume sit on top of a head as big as Davis's.
 - LF2 proportions are super-deformed: about 3 heads tall, head a third of the
@@ -60,7 +61,7 @@ original game may use `.dat`.
   on RGB(0,0,0) via `SDL_SetColorKey`, so the exporter lifts any opaque pixel
   that would quantise to pure black up to (8,8,8). DarthNox's near-black cape
   and hat make this necessary — without it, parts of him render as holes.
-- `centerx: 39  centery: 83` — AutoSprite's foot pivot; every frame is registered
+- `centerx: 39  centery: 85` — AutoSprite's foot pivot; every frame is registered
   on it, so one centre pair is right for all pictures
 
 ## Portraits
@@ -93,7 +94,7 @@ new art.
 From AutoSprite (download each spritesheet's sheet PNG and atlas JSON):
 
 ```
-python tools/autosprite_to_lf2.py out 82 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,1,4
+python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,1,4 \n    slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground
 python tools/autosprite_portrait.py base.png out 130,60,730,660 230,170,610,598
 ```
 

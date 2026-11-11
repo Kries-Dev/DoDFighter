@@ -13,13 +13,13 @@ DarthNox appears in the Versus picker as record ID 61.
 
 ## Status
 
-A musketeer with 4-frame idle, walk and run cycles. The art set is deliberately
+A musketeer with idle, walk, run, two sword attacks and a jump. The art set is deliberately
 incomplete — see *Incremental art* below for why that still produces a fully
 playable fighter.
 
 | | |
 |---|---|
-| Authored | sprite sheet, portraits, movement speeds, standing (0–3), walking (5–8), running (9–11) |
+| Authored | sprite sheet, portraits, movement speeds, standing (0–3), walking (5–8), running (9–11), attacks (60–62, 65–67), super attack (70–73), jump attack (80–82), run attack (85–88), jump (210–212, 215) |
 | Inherited | every other frame's mechanics — states, `itr`/`bdy` boxes, next-wiring, catches, falls |
 
 ## Incremental art
@@ -34,15 +34,15 @@ no Lua changes required.
 
 ## Sprite conventions
 
-- `assets/darthnox.bmp` — 316×255, twelve 78×84 cells with 1px gutters, `row: 4  col: 3`
-  (pictures 0–3 idle, 4–7 walk, 8–11 run)
+- `assets/darthnox.bmp` — 344×522, 24 cells of 85×86 with 1px gutters, `row: 4  col: 6`
+  (idle, walk, run, slash, thrust, jump)
 - `assets/portrait_f.bmp` 120×120 (`head:`), `assets/portrait_s.bmp` 40×45 (`small:`)
 - 8-bit indexed, uncompressed, bottom-up `BITMAPINFOHEADER`
 - **Palette index 0 is pure black and reserved for transparency.** OpenLF2 keys
   on RGB(0,0,0) via `SDL_SetColorKey`, so any opaque pixel that would quantise
   to pure black is lifted to (8,8,8). DarthNox's near-black cape and hat make
   this necessary — without it, parts of him render as holes.
-- `centerx: 39  centery: 83` — AutoSprite's foot pivot, shared by every frame
+- `centerx: 39  centery: 85` — AutoSprite's foot pivot, shared by every frame
 
 ## Scale
 

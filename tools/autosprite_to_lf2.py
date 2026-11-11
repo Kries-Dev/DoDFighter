@@ -10,6 +10,17 @@ frames a pose-anchored loop starts and ends on. Example (idle, walk, run rows):
 
     python tools/autosprite_to_lf2.py out 82 idle.png,idle.json,4 walk.png,walk.json,4 run.png,run.json,4,2,13
 
+N may instead be @A/B/C -- exactly those clip frames (0-based), e.g. the
+wind-up, strike and follow-through of an attack: slash.png,slash.json,@3/6/9
+
+A trailing ,ground on a ROW_SPEC stands every frame of that row on its own
+lowest pixel instead of the clip's foot pivot -- for jumps, where the clip lifts
+the character but the engine already does that.
+
+HEIGHT may instead be sNUMBER -- a fixed scale (e.g. s0.3460) instead of
+"tallest frame = HEIGHT px". Use it once the size is approved, so a raised
+sword or a jump can't shrink the whole character.
+
 Writes OUT_DIR/darthnox.bmp and prints the darthnox.txt header values
 (w, h, row:, col:, centerx, centery). Pictures are numbered row by row:
 row 0 = pictures 0..N-1, row 1 = N..2N-1, and so on.
@@ -141,22 +152,30 @@ def nearest(pal, c, cache):
 def main(out_dir, height, specs):
     import os
     os.makedirs(out_dir, exist_ok=True)
-    height = int(height)
+    fixed_scale = float(height[1:]) if height.startswith('s') else None
+    height = None if fixed_scale else int(height)
     rows_in = []   # per output row: list of (img, cell, trim, pivot_px)
     for spec in specs:
         parts = spec.split(',')
+        ground = parts[-1] == 'ground'
+        if ground:
+            parts = parts[:-1]
         png, atlas, n = parts[0], parts[1], parts[2]
         span = (int(parts[3]), int(parts[4])) if len(parts) == 5 else None
+        explicit = [int(v) for v in n[1:].split('/')] if n.startswith('@') else None
         W, H, img = read_png(png)
         meta = json.load(open(atlas))
         frames = meta['frames']
         keys = sorted(frames, key=lambda k: int(k))
         fs = meta['meta'].get('frame_size') or frames[keys[0]]['w']
         piv = meta['meta'].get('pivot') or {'x': 0.5, 'y': 0.95}
-        n = int(n)
-        if span:
-            keys = keys[span[0]:span[1] + 1]
-        pick = [keys[round(i * len(keys) / n) % len(keys)] for i in range(n)]
+        if explicit:
+            pick = [keys[i] for i in explicit]
+        else:
+            n = int(n)
+            if span:
+                keys = keys[span[0]:span[1] + 1]
+            pick = [keys[round(i * len(keys) / n) % len(keys)] for i in range(n)]
         row = []
         for k in pick:
             f = frames[k]
@@ -166,7 +185,11 @@ def main(out_dir, height, specs):
             ys = [y for y in range(h) if any(img[y0 + y][x0 + x][3] > 32 for x in range(w))]
             xs = [x for x in range(w) if any(img[y0 + y][x0 + x][3] > 32 for y in ys)]
             trim = (xs[0], ys[0], xs[-1] + 1, ys[-1] + 1)
-            row.append((img, cell, trim, (piv['x'] * w, piv['y'] * h)))
+            # ground: stand this frame on its own lowest pixel, so a clip that
+            # moves the character up (a jump) doesn't add to the engine's own
+            # jump height.
+            foot_y = trim[3] if ground else piv['y'] * h
+            row.append((img, cell, trim, (piv['x'] * w, foot_y)))
         rows_in.append(row)
 
     # One registration box (relative to pivot) that holds every selected frame.
@@ -175,7 +198,7 @@ def main(out_dir, height, specs):
     R = max(t[2] - p[0] for r in rows_in for (_, _, t, p) in r)
     B = max(t[3] - p[1] for r in rows_in for (_, _, t, p) in r)
     tallest = max(t[3] - t[1] for r in rows_in for (_, _, t, p) in r)
-    scale = height / tallest
+    scale = fixed_scale or height / tallest
     cw, ch = math.ceil((R - L) * scale), math.ceil((B - T) * scale)
     centerx, centery = round(-L * scale), round(-T * scale)
 
@@ -200,7 +223,7 @@ def main(out_dir, height, specs):
                     if a >= 0.5:
                         sheet[ri * (ch + 1) + y][ci * (cw + 1) + x] = nearest(pal, (int(r), int(g), int(b)), cache)
     write_bmp(os.path.join(out_dir, 'darthnox.bmp'), SW, SH, [(0, 0, 0)] + pal, sheet)
-    print(f'scale {scale:.4f}  sheet {SW}x{SH}  cells {cw}x{ch}  colours {len(pal)}+key')
+    print(f'scale s{scale:.6f}  sheet {SW}x{SH}  cells {cw}x{ch}  colours {len(pal)}+key')
     print(f'darthnox.txt:  w: {cw}  h: {ch}  row: {cols}  col: {nrows}   centerx: {centerx}  centery: {centery}')
 
 
