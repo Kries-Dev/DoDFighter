@@ -3,10 +3,12 @@
 
     python tools/autosprite_to_lf2.py OUT_DIR HEIGHT ROW_SPEC [ROW_SPEC ...]
 
-ROW_SPEC is  SHEET.png,ATLAS.json,N  -- take N evenly spaced frames from that
-AutoSprite sheet as one row of the output. Example (idle row, then walk row):
+ROW_SPEC is  SHEET.png,ATLAS.json,N[,FIRST,LAST]  -- take N evenly spaced frames
+from that AutoSprite sheet as one row of the output. FIRST/LAST (inclusive,
+0-based) limit the pick to part of the clip -- e.g. 2,13 to skip the standing
+frames a pose-anchored loop starts and ends on. Example (idle, walk, run rows):
 
-    python tools/autosprite_to_lf2.py out 74 idle.png,idle.json,4 walk.png,walk.json,4
+    python tools/autosprite_to_lf2.py out 82 idle.png,idle.json,4 walk.png,walk.json,4 run.png,run.json,4,2,13
 
 Writes OUT_DIR/darthnox.bmp and prints the darthnox.txt header values
 (w, h, row:, col:, centerx, centery). Pictures are numbered row by row:
@@ -142,7 +144,9 @@ def main(out_dir, height, specs):
     height = int(height)
     rows_in = []   # per output row: list of (img, cell, trim, pivot_px)
     for spec in specs:
-        png, atlas, n = spec.rsplit(',', 2)
+        parts = spec.split(',')
+        png, atlas, n = parts[0], parts[1], parts[2]
+        span = (int(parts[3]), int(parts[4])) if len(parts) == 5 else None
         W, H, img = read_png(png)
         meta = json.load(open(atlas))
         frames = meta['frames']
@@ -150,6 +154,8 @@ def main(out_dir, height, specs):
         fs = meta['meta'].get('frame_size') or frames[keys[0]]['w']
         piv = meta['meta'].get('pivot') or {'x': 0.5, 'y': 0.95}
         n = int(n)
+        if span:
+            keys = keys[span[0]:span[1] + 1]
         pick = [keys[round(i * len(keys) / n) % len(keys)] for i in range(n)]
         row = []
         for k in pick:

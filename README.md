@@ -13,13 +13,13 @@ DarthNox appears in the Versus picker as record ID 61.
 
 ## Status
 
-A musketeer with a 4-frame idle and a 4-frame walk. The art set is deliberately
+A musketeer with 4-frame idle, walk and run cycles. The art set is deliberately
 incomplete — see *Incremental art* below for why that still produces a fully
 playable fighter.
 
 | | |
 |---|---|
-| Authored | sprite sheet, portrait, movement speeds, standing (0–3), walking (5–8), running (9–11) |
+| Authored | sprite sheet, portraits, movement speeds, standing (0–3), walking (5–8), running (9–11) |
 | Inherited | every other frame's mechanics — states, `itr`/`bdy` boxes, next-wiring, catches, falls |
 
 ## Incremental art
@@ -34,15 +34,15 @@ no Lua changes required.
 
 ## Sprite conventions
 
-- `assets/darthnox.bmp` — 284×166, eight 70×82 cells with 1px gutters, `row: 4  col: 2`
-  (pictures 0–3 idle, 4–7 walk)
+- `assets/darthnox.bmp` — 316×255, twelve 78×84 cells with 1px gutters, `row: 4  col: 3`
+  (pictures 0–3 idle, 4–7 walk, 8–11 run)
 - `assets/portrait_f.bmp` 120×120 (`head:`), `assets/portrait_s.bmp` 40×45 (`small:`)
 - 8-bit indexed, uncompressed, bottom-up `BITMAPINFOHEADER`
 - **Palette index 0 is pure black and reserved for transparency.** OpenLF2 keys
   on RGB(0,0,0) via `SDL_SetColorKey`, so any opaque pixel that would quantise
   to pure black is lifted to (8,8,8). DarthNox's near-black cape and hat make
   this necessary — without it, parts of him render as holes.
-- `centerx: 32  centery: 82` — AutoSprite's foot pivot, shared by every frame
+- `centerx: 39  centery: 83` — AutoSprite's foot pivot, shared by every frame
 
 ## Scale
 
@@ -53,8 +53,9 @@ those constants and replacing the base game's own 794-scale backgrounds.
 
 ## Animation notes
 
-Art comes from AutoSprite (character "DarthNox LF2 v4"): 16-frame idle and walk
-clips at 256px, of which 4 evenly spaced frames each are used. At `wait: 3` a
+Art comes from AutoSprite (character "DarthNox LF2 v4"): 16-frame idle, walk
+and run clips at 256px, 4 frames each. Walk and run start from the idle's
+"Idle Lock" pose so the head never changes size (see `STYLE.md`). At `wait: 3` a
 4-frame cycle runs 12 ticks. `tools/autosprite_to_lf2.py` does the conversion —
 foot-pivot registration, uniform downscale, 255-colour palette with index 0
 kept for the colour key, and 1px cell gutters.
