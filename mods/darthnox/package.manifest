@@ -6,4 +6,5 @@ extend=base/game/catalog|catalog.lua
 extend=base/game/object_data|object_data.lua
 asset=mods/darthnox/darthnox.txt|assets/darthnox.txt
 asset=mods/darthnox/darthnox.bmp|assets/darthnox.bmp
-asset=mods/darthnox/portrait.bmp|assets/portrait.bmp
+asset=mods/darthnox/portrait_f.bmp|assets/portrait_f.bmp
+asset=mods/darthnox/portrait_s.bmp|assets/portrait_s.bmp

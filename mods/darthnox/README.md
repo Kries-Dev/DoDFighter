@@ -33,7 +33,9 @@ original game may use `.dat`.
 
 ## Sprite sheet
 
-- `darthnox.bmp` — 272×60, 4 cells of 67×59, laid out 4 across × 1 down
+- `darthnox.bmp` — 340×75, 4 cells of 84×74, laid out 4 across × 1 down.
+  Stock fighters use 79×79 cells and stand ~73px tall; DarthNox is scaled to
+  match (the original 67×59 export was ~80% of stock height).
 - **Every cell is followed by a 1px gutter**, like stock LF2 sheets (79px cells
   at an 80px pitch, 10×80 = 800 wide). `scripts/base/game/object_data.lua`
   addresses cell (c, r) at `x = c*(w+1)`, `y = r*(h+1)`, so a sheet must be at
@@ -50,7 +52,19 @@ original game may use `.dat`.
   on RGB(0,0,0) via `SDL_SetColorKey`, so the exporter lifts any opaque pixel
   that would quantise to pure black up to (8,8,8). DarthNox's near-black cape
   and hat make this necessary — without it, parts of him render as holes.
-- `centerx: 26  centery: 58` — from hip-centroid/ground-line registration
+- `centerx: 32  centery: 73` — hip-centroid/ground-line registration, scaled with the art
+
+## Portraits
+
+LF2 uses two different images, and they must be different sizes:
+
+| key | file | size | where |
+|---|---|---|---|
+| `head:` | `portrait_f.bmp` | 120×120 | character picker |
+| `small:` | `portrait_s.bmp` | 40×45 | in-match HUD, beside the HP/MP bars |
+
+Pointing both at one 80×80 image makes the HUD icon spill over the bars.
+`portrait.bmp` (80×80) is kept as the source both are built from.
 
 ## Scale
 
@@ -63,3 +77,14 @@ The 316px masters are kept upstream; see the pipeline notes for the 4K question.
 ```
 python3 build_darthnox.py      # slicer -> registration -> BMP -> this folder
 ```
+
+`build_darthnox.py` lives upstream with the 316px masters. Until the sheet is
+re-exported from those at the new size, `tools/resize_darthnox.py` rescales the
+existing 1× art (supersampled, mapped back onto the same palette, index 0 kept
+transparent) and builds both portraits:
+
+```
+python tools/resize_darthnox.py <67x59 sheet>.bmp mods/darthnox/assets/portrait.bmp <out dir>
+```
+
+Re-exporting from the masters at 84×74 will be sharper than this upscale.
