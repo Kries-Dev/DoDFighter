@@ -33,7 +33,12 @@ original game may use `.dat`.
 
 ## Sprite sheet
 
-- `darthnox.bmp` — 268×59, 4 cells of 67×59, `row: 1 col: 4`
+- `darthnox.bmp` — 268×59, 4 cells of 67×59, laid out 4 across × 1 down
+- **`row:` and `col:` are named backwards in the LF2 format.** `row:` is the
+  number of pictures *per row* (columns) and `col:` is the number of rows —
+  `object_data.cpp` reads them that way (`sheet.columns = require(..., "row:")`).
+  A 4-across strip is therefore `row: 4  col: 1`. Getting it the wrong way round
+  fails with `sprite rectangle outside texture`.
 - 8-bit indexed, uncompressed, bottom-up BITMAPINFOHEADER
 - **Palette index 0 is pure black and reserved for transparency.** OpenLF2 keys
   on RGB(0,0,0) via `SDL_SetColorKey`, so the exporter lifts any opaque pixel

@@ -3,7 +3,7 @@ name: DarthNox
 head: mods/darthnox/portrait.bmp
 small: mods/darthnox/portrait.bmp
 file(0-3): mods/darthnox/darthnox.bmp
-w: 67 h: 59 row: 1 col: 4
+w: 67  h: 59  row: 4  col: 1
 walking_frame_rate 3
 walking_speed 5.000000
 walking_speedz 2.300000
