@@ -34,7 +34,7 @@ no Lua changes required.
 
 ## Sprite conventions
 
-- `assets/darthnox.bmp` — 268×59, four cells of 67×59, `row: 1 col: 4`
+- `assets/darthnox.bmp` — 272×60, four 67×59 cells with 1px gutters, `row: 4  col: 1`
 - 8-bit indexed, uncompressed, bottom-up `BITMAPINFOHEADER`
 - **Palette index 0 is pure black and reserved for transparency.** OpenLF2 keys
   on RGB(0,0,0) via `SDL_SetColorKey`, so any opaque pixel that would quantise

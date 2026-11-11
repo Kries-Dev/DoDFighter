@@ -33,12 +33,18 @@ original game may use `.dat`.
 
 ## Sprite sheet
 
-- `darthnox.bmp` — 268×59, 4 cells of 67×59, laid out 4 across × 1 down
+- `darthnox.bmp` — 272×60, 4 cells of 67×59, laid out 4 across × 1 down
+- **Every cell is followed by a 1px gutter**, like stock LF2 sheets (79px cells
+  at an 80px pitch, 10×80 = 800 wide). `scripts/base/game/object_data.lua`
+  addresses cell (c, r) at `x = c*(w+1)`, `y = r*(h+1)`, so a sheet must be at
+  least `columns*(w+1) - 1` wide. A tightly packed 268px strip puts picture 3 at
+  x 204–271, past the edge, and fails with `sprite rectangle outside texture`.
+  Gutter pixels are palette index 0 (transparent). Note: `--headless` and
+  `--input-trace` runs do not perform this check — only the windowed renderer does.
 - **`row:` and `col:` are named backwards in the LF2 format.** `row:` is the
   number of pictures *per row* (columns) and `col:` is the number of rows —
   `object_data.cpp` reads them that way (`sheet.columns = require(..., "row:")`).
-  A 4-across strip is therefore `row: 4  col: 1`. Getting it the wrong way round
-  fails with `sprite rectangle outside texture`.
+  A 4-across strip is therefore `row: 4  col: 1`.
 - 8-bit indexed, uncompressed, bottom-up BITMAPINFOHEADER
 - **Palette index 0 is pure black and reserved for transparency.** OpenLF2 keys
   on RGB(0,0,0) via `SDL_SetColorKey`, so the exporter lifts any opaque pixel
