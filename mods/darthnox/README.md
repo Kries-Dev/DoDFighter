@@ -2,8 +2,8 @@
 
 `--mod mods/darthnox` adds **DarthNox** (record ID 61) to the character picker.
 
-A musketeer with a 4-frame walk cycle, generated with AutoSprite and processed
-through the project's slicer.
+A musketeer with a 4-frame idle and a 4-frame walk, generated with AutoSprite
+(character "DarthNox LF2") and converted with `tools/autosprite_to_lf2.py`.
 
 ## What is authored vs inherited
 
@@ -33,10 +33,13 @@ original game may use `.dat`.
 
 ## Sprite sheet
 
-- `darthnox.bmp` — 488×75, 4 cells of 121×74, laid out 4 across × 1 down.
-  Stock fighters use 79×79 cells and stand ~73px tall. DarthNox's 67×59 export
-  was ~80% of stock height and slim for LF2's stocky style, so it is scaled
-  ×1.25 tall and ×1.8 wide (`SCALE_Y` / `SCALE_X` in `tools/resize_darthnox.py`).
+- `darthnox.bmp` — 268×154, 8 cells of 66×76, 4 across × 2 down
+  (`row: 4  col: 2`). Pictures 0–3 = idle, 4–7 = walk. Stock fighters use
+  79×79 cells and stand ~73px tall; the tallest frame here is 74px.
+- The art is drawn with LF2-style proportions (large head, broad torso, short
+  thick rapier) so it reads at 74px without stretching. The earlier realistic
+  design needed a ×1.8 horizontal stretch and its thin rapier vanished at this
+  size.
 - **Every cell is followed by a 1px gutter**, like stock LF2 sheets (79px cells
   at an 80px pitch, 10×80 = 800 wide). `scripts/base/game/object_data.lua`
   addresses cell (c, r) at `x = c*(w+1)`, `y = r*(h+1)`, so a sheet must be at
@@ -53,7 +56,8 @@ original game may use `.dat`.
   on RGB(0,0,0) via `SDL_SetColorKey`, so the exporter lifts any opaque pixel
   that would quantise to pure black up to (8,8,8). DarthNox's near-black cape
   and hat make this necessary — without it, parts of him render as holes.
-- `centerx: 47  centery: 73` — hip-centroid/ground-line registration, scaled with the art
+- `centerx: 27  centery: 74` — AutoSprite's foot pivot; every frame is registered
+  on it, so one centre pair is right for all pictures
 
 ## Portraits
 
@@ -65,7 +69,9 @@ LF2 uses two different images, and they must be different sizes:
 | `small:` | `portrait_s.bmp` | 40×45 | in-match HUD, beside the HP/MP bars |
 
 Pointing both at one 80×80 image makes the HUD icon spill over the bars.
-`portrait.bmp` (80×80) is kept as the source both are built from.
+Both are cropped from the AutoSprite base image by `tools/autosprite_portrait.py`,
+on a dark backdrop like the stock faces. `portrait.bmp` is the old design's
+80×80 source, kept for `tools/resize_darthnox.py`.
 
 ## Scale
 
@@ -75,17 +81,17 @@ The 316px masters are kept upstream; see the pipeline notes for the 4K question.
 
 ## Rebuilding
 
-```
-python3 build_darthnox.py      # slicer -> registration -> BMP -> this folder
-```
-
-`build_darthnox.py` lives upstream with the 316px masters. Until the sheet is
-re-exported from those at the new size, `tools/resize_darthnox.py` rescales the
-existing 1× art (supersampled, mapped back onto the same palette, index 0 kept
-transparent) and builds both portraits:
+From AutoSprite (download each spritesheet's sheet PNG and atlas JSON):
 
 ```
-python tools/resize_darthnox.py <67x59 sheet>.bmp mods/darthnox/assets/portrait.bmp <out dir>
+python tools/autosprite_to_lf2.py out 74 idle.png,idle.json,4 walk.png,walk.json,4
+python tools/autosprite_portrait.py base.png out 190,40,670,520 340,80,620,395
 ```
 
-Re-exporting from the masters at 121×74 will be sharper than this upscale.
+The first prints the `w/h/row/col/centerx/centery` values for `darthnox.txt`.
+Add a row (e.g. `run.png,run.json,4`) to extend the sheet; pictures continue
+row by row (row 2 = 8–11, ...). The 74 is the tallest frame's height in game
+pixels — keep it the same across rebuilds so he doesn't change size.
+
+`tools/resize_darthnox.py` is the older tool that rescaled the first design's
+67×59 sheet; it is kept for reference.

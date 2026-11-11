@@ -13,7 +13,7 @@ DarthNox appears in the Versus picker as record ID 61.
 
 ## Status
 
-A musketeer with a working 4-frame walk cycle. The art set is deliberately
+A musketeer with a 4-frame idle and a 4-frame walk. The art set is deliberately
 incomplete — see *Incremental art* below for why that still produces a fully
 playable fighter.
 
@@ -34,14 +34,15 @@ no Lua changes required.
 
 ## Sprite conventions
 
-- `assets/darthnox.bmp` — 488×75, four 121×74 cells with 1px gutters, `row: 4  col: 1`
+- `assets/darthnox.bmp` — 268×154, eight 66×76 cells with 1px gutters, `row: 4  col: 2`
+  (pictures 0–3 idle, 4–7 walk)
 - `assets/portrait_f.bmp` 120×120 (`head:`), `assets/portrait_s.bmp` 40×45 (`small:`)
 - 8-bit indexed, uncompressed, bottom-up `BITMAPINFOHEADER`
 - **Palette index 0 is pure black and reserved for transparency.** OpenLF2 keys
   on RGB(0,0,0) via `SDL_SetColorKey`, so any opaque pixel that would quantise
   to pure black is lifted to (8,8,8). DarthNox's near-black cape and hat make
   this necessary — without it, parts of him render as holes.
-- `centerx: 26  centery: 58` — from hip-centroid and ground-line registration
+- `centerx: 27  centery: 74` — AutoSprite's foot pivot, shared by every frame
 
 ## Scale
 
@@ -52,11 +53,11 @@ those constants and replacing the base game's own 794-scale backgrounds.
 
 ## Animation notes
 
-The walk uses source frames 3, 7, 10 and 15 of a 16-frame AutoSprite sheet,
-selected to minimise variance across the cyclic transitions (CV 0.010) rather
-than to minimise the seam. Generated motion is rarely truly cyclic; what reads
-as smooth is *uniform* steps, not small ones. At `wait: 3` the cycle runs 16
-ticks — 0.53s — matching LF2's own walk timing.
+Art comes from AutoSprite (character "DarthNox LF2"): 16-frame idle and walk
+clips at 256px, of which 4 evenly spaced frames each are used. At `wait: 3` a
+4-frame cycle runs 12 ticks. `tools/autosprite_to_lf2.py` does the conversion —
+foot-pivot registration, uniform downscale, 255-colour palette with index 0
+kept for the colour key, and 1px cell gutters.
 
 ## Licence
 

@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: MIT
 -- DarthNox — our sprites and authored frames over a base fighter's mechanics.
 --
--- The art set is incomplete (4 cells: a walk cycle). Rather than block on
+-- The art set is incomplete (8 cells: idle + walk). Rather than block on
 -- drawing ~200 more frames, this inherits a base fighter's full frame table —
 -- states, itr/bdy boxes, next-wiring, catches, falls — and overrides only what
 -- we actually have:
@@ -14,7 +14,7 @@
 -- read as a held pose rather than a missing sprite. Replace frames in
 -- darthnox.txt as the art lands and they stop falling back automatically.
 
-local IDLE_PICTURE = 3
+local IDLE_PICTURE = 0
 
 return function(base)
     local load = base.load
