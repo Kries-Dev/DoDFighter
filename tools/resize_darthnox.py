@@ -20,7 +20,7 @@ blend instead of staircasing; result is mapped back to the source palette.
 import struct, sys, os
 
 SCALE_Y = 1.25          # height: stock fighters stand ~73px tall; DarthNox's art is 59px
-SCALE_X = 1.50          # width: 20% wider than SCALE_Y for LF2's stocky proportions
+SCALE_X = 1.80          # width: 44% wider than SCALE_Y for LF2's stocky proportions
 SRC_CELL = (67, 59)     # source cell size (tightly packed or guttered both work)
 SRC_COLUMNS = 4
 SRC_CENTER = (26, 58)   # centerx / centery of the source art
