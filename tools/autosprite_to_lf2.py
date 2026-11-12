@@ -161,20 +161,23 @@ def nearest(pal, c, cache):
 
 
 # -------------------------------------------------------------- afterimages --
-TRAIL_REACH = 16                    # game px the farthest afterimage sits behind
-GHOST_TINT = (150, 205, 255)        # pale blue, mixed 50/50 into the ghost
+TRAIL_REACH = 27                    # game px the farthest afterimage sits behind
+GHOST_TINT = (110, 175, 255)        # blue, mixed 60/40 into the ghost so it reads as an echo
+BAYER = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]   # ordered-dither thresholds
 
 
-def ghost(cell, offsets, front_of=None, band=None):
+def ghost(cell, offsets, front_of=None, band=None, cover=None):
     """Draw dithered copies of the cell's opaque pixels shifted by each (dx, dy),
-    under the original. front_of / band: only copy pixels right of that x and
-    between those rows (the sword arm, not the hat brim)."""
+    under the original, nearest copy first. cover: share of pixels kept per copy
+    (default fades 0.75, 0.5, 0.25 with distance). front_of / band: only copy
+    pixels right of that x and between those rows (the sword arm, not the hat)."""
     h, w = len(cell), len(cell[0])
     src = [row[:] for row in cell]
+    cover = cover or [0.75, 0.5, 0.25, 0.25][:len(offsets)]
     for n, (dx, dy) in enumerate(offsets):
         for y in range(h):
             for x in range(w):
-                if (x + y + n) % 2:          # checkerboard: half the pixels
+                if BAYER[y % 4][x % 4] >= cover[n] * 16:
                     continue
                 sx, sy = x - dx, y - dy
                 if not (0 <= sx < w and 0 <= sy < h) or (front_of is not None and sx < front_of):
@@ -184,7 +187,7 @@ def ghost(cell, offsets, front_of=None, band=None):
                 r, g, b, a = src[sy][sx]
                 if a < 0.5 or cell[y][x][3] >= 0.5:
                     continue
-                cell[y][x] = ((r + GHOST_TINT[0]) / 2, (g + GHOST_TINT[1]) / 2, (b + GHOST_TINT[2]) / 2, 1.0)
+                cell[y][x] = (r * .4 + GHOST_TINT[0] * .6, g * .4 + GHOST_TINT[1] * .6, b * .4 + GHOST_TINT[2] * .6, 1.0)
 
 
 # ------------------------------------------------------------------- main ----
@@ -254,8 +257,9 @@ def main(out_dir, height, specs):
         cells.append(out_row)
     for ri, flags in enumerate(row_flags):
         for cell in cells[ri]:
-            if 'trail' in flags: ghost(cell, [(-TRAIL_REACH, 0), (-TRAIL_REACH // 2, 0)])
-            if 'blades' in flags: ghost(cell, [(-3, -6), (-6, 5), (-1, -11)], front_of=centerx + 6, band=(centery - 52, centery - 18))
+            if 'trail' in flags: ghost(cell, [(-9, 0), (-18, 0), (-TRAIL_REACH, 0)])
+            if 'blades' in flags: ghost(cell, [(-3, -11), (-5, 10), (-2, -20), (-6, 18)], front_of=centerx + 6,
+                                        band=(centery - 56, centery - 14), cover=[0.75, 0.75, 0.5, 0.5])
 
     opaque = [(int(c[0]), int(c[1]), int(c[2])) for row in cells for cell in row for line in cell for c in line if c[3] >= 0.5]
     pal = median_cut(opaque, 255)

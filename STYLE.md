@@ -72,7 +72,7 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,w
     slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground \
     hurt.png,hurt.json,@7/8/11 fall.png,fall.json,@7/9/11/14,ground \
     swing.png,swing.json,@3/4/12 parry.png,parry.json,@3/5/9 stab.png,stab.json,@2/4/13 \
-    stab.png,stab.json,@3/4/8,trail rise.png,rise.json,@6/10/12,ground flurry.png,flurry.json,@4/6/9,blades
+    stab.png,stab.json,@3/4/8,trail rise.png,rise.json,@6/10/12,ground flurry2.png,flurry2.json,@7/5/10,blades
 ```
 
 - DarthNox's approved size is **scale s0.345992** (his idle at 82px tall). Pass
@@ -102,6 +102,10 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,w
   and lunges) and `,blades` (ghost copies of the weapon arm for rapid hits). They
   are dithered checkerboards in pale blue (150,205,255), the only "transparency"
   LF2 sprites have.
+- Measure moves against a stock fighter before shipping (height, travel,
+  range), e.g. a jump/uppercut never higher than Davis's D^A (96 px). The engine
+  re-applies a frame's dvx and adds its dvy on every tick of the frame, so a
+  long launch frame stacks: keep dvy frames to 2 ticks.
 - Write the frame data with a generator script (`tools/darthnox_moves.py` is the
   template): one table of moves, one place for hitboxes, re-runnable.
 - Every fighter gets a profile (speed / defence / attack) before any moves are
