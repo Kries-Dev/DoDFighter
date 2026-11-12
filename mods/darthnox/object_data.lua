@@ -55,11 +55,32 @@ return function(base)
 
         -- Centres come from the slicer's registration, so every frame sits on
         -- the same root. One pair for now; per-frame once the art is authored.
-        local center_x, center_y
-        for _, frame in pairs(authored.frames) do
-            if frame.defined ~= false then
-                center_x, center_y = frame.center_x, frame.center_y
-                break
+        -- (Frame 0, standing, is always authored; undefined frames read as 0,0.)
+        local center_x, center_y = authored.frames[0].center_x, authored.frames[0].center_y
+        assert(authored.frames[0].name ~= "" and center_x > 0, "darthnox.txt needs frame 0 with its centre")
+
+        -- Deep's boxes and points are measured from Deep's picture origin; our
+        -- pictures put the feet at (center_x, center_y) instead. Moving every
+        -- coordinate by the difference of the centres keeps each box where it
+        -- was relative to the feet (combat, weapons and spawns all work from
+        -- x - center_x). Without this every inherited hitbox sat ~34 px behind him.
+        local function shifted(area, dx, dy)
+            local moved = {}
+            for key, value in pairs(area) do moved[key] = value end
+            moved.x, moved.y = (area.x or 0) + dx, (area.y or 0) + dy
+            return moved
+        end
+        local function rebase(own, frame)
+            local dx, dy = center_x - frame.center_x, center_y - frame.center_y
+            if dx == 0 and dy == 0 then return end
+            local interactions, bodies = {}, {}
+            for i, area in ipairs(frame.interactions) do interactions[i] = shifted(area, dx, dy) end
+            for i, area in ipairs(frame.bodies) do bodies[i] = shifted(area, dx, dy) end
+            own.interactions, own.bodies = interactions, bodies
+            own.interaction_bounds = shifted(frame.interaction_bounds, dx, dy)
+            own.body_bounds = shifted(frame.body_bounds, dx, dy)
+            for _, point in ipairs({"opoint", "wpoint", "cpoint", "bpoint"}) do
+                if frame[point] then own[point] = shifted(frame[point], dx, dy) end
             end
         end
 
@@ -82,6 +103,7 @@ return function(base)
                 for key, value in pairs(mine) do own[key] = value end
             else
                 for key, value in pairs(frame) do own[key] = value end
+                rebase(own, frame)
                 own.picture = (mine and mine.picture) or IDLE_PICTURE
                 if mine and has_hits(mine) then own.hits = mine.hits end
             end

@@ -334,7 +334,8 @@ rowing_distance 4.000000
    bdy_end:
 <frame_end>
 
-# D>J  Lunge: a short travelling stab, held long enough to see the afterimages (sheet row 11)
+# D>J  Lunge: a travelling stab that hits several times (re-hits every 5 ticks for
+# 11 damage) with a wide, tall blade box, held long enough to see the afterimages
 <frame> 260 lunge
    pic: 44  state: 3  wait: 2  next: 261  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85  mp: 75
    bdy:
@@ -343,9 +344,9 @@ rowing_distance 4.000000
 <frame_end>
 
 <frame> 261 lunge
-   pic: 45  state: 3  wait: 4  next: 262  dvx: 8  dvy: 0  dvz: 0  centerx: 71  centery: 85  sound: data\054.wav
+   pic: 45  state: 3  wait: 4  next: 262  dvx: 10  dvy: 0  dvz: 0  centerx: 71  centery: 85  sound: data\054.wav
    itr:
-      kind: 0  x: 75  y: 27  w: 56  h: 28  dvx: 7  dvy: 0  fall: 40  vrest: 15  arest: 0  bdefend: 30  injury: 40  effect: 1
+      kind: 0  x: 65  y: 19  w: 78  h: 46  dvx: 2  dvy: 0  fall: 14  vrest: 4  arest: 0  bdefend: 12  injury: 11  effect: 1
    itr_end:
    bdy:
       kind: 0  x: 54  y: 13  w: 34  h: 72
@@ -355,7 +356,7 @@ rowing_distance 4.000000
 <frame> 262 lunge
    pic: 46  state: 3  wait: 6  next: 263  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
    itr:
-      kind: 0  x: 75  y: 27  w: 56  h: 28  dvx: 7  dvy: 0  fall: 40  vrest: 15  arest: 0  bdefend: 30  injury: 40  effect: 1
+      kind: 0  x: 65  y: 19  w: 78  h: 46  dvx: 2  dvy: 0  fall: 14  vrest: 4  arest: 0  bdefend: 12  injury: 11  effect: 1
    itr_end:
    bdy:
       kind: 0  x: 54  y: 13  w: 34  h: 72
@@ -369,8 +370,8 @@ rowing_distance 4.000000
    bdy_end:
 <frame_end>
 
-# D^A  Rising slash: crouch, then an invincible upward sweep that launches, then fall.
-# Peaks at ~89 px, just under Davis's D^A (96): dvy -5 for 2 ticks.
+# D^A  Rising slash: crouch, launch (no hitbox, invincible, absolute dvy so hit lag
+# can't stack it), two hits, then a plain fall via next: 999.
 <frame> 270 rising
    pic: 48  state: 3  wait: 1  next: 271  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85  mp: 100
    bdy:
@@ -379,14 +380,18 @@ rowing_distance 4.000000
 <frame_end>
 
 <frame> 271 rising
-   pic: 49  state: 3  wait: 1  next: 272  dvx: 5  dvy: -5  dvz: 0  centerx: 71  centery: 85
+   pic: 49  state: 3  wait: 1  next: 272  dvx: 5  dvy: 534  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 272 rising
+   pic: 49  state: 3  wait: 1  next: 273  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
    itr:
       kind: 0  x: 63  y: -10  w: 58  h: 90  dvx: 4  dvy: -14  fall: 70  vrest: 12  arest: 0  bdefend: 60  injury: 45  effect: 1
    itr_end:
 <frame_end>
 
-<frame> 272 rising
-   pic: 50  state: 3  wait: 2  next: 273  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame> 273 rising
+   pic: 50  state: 3  wait: 2  next: 274  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
    itr:
       kind: 0  x: 67  y: -7  w: 44  h: 60  dvx: 3  dvy: -10  fall: 70  vrest: 12  arest: 0  bdefend: 60  injury: 20  effect: 1
    itr_end:
@@ -395,15 +400,16 @@ rowing_distance 4.000000
    bdy_end:
 <frame_end>
 
-<frame> 273 rising
-   pic: 50  state: 3  wait: 6  next: 212  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame> 274 rising
+   pic: 50  state: 3  wait: 6  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
    bdy:
       kind: 0  x: 54  y: 13  w: 34  h: 72
    bdy_end:
 <frame_end>
 
 # DvA  Flurry: stabs alternating high (52), low (53) and middle (54) with ghost
-# blades; press A during it to keep stabbing
+# blades. Press A during it to keep stabbing: each extra round (287) costs 20 MP,
+# and without the MP it goes on to the finisher.
 <frame> 280 flurry
    pic: 54  state: 3  wait: 1  next: 281  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85  mp: 50
    bdy:
@@ -442,7 +448,7 @@ rowing_distance 4.000000
 <frame_end>
 
 <frame> 284 flurry
-   pic: 52  state: 3  wait: 1  next: 285  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85  hit_a: 281
+   pic: 52  state: 3  wait: 1  next: 285  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85  hit_a: 287
    itr:
       kind: 0  x: 75  y: 27  w: 50  h: 28  dvx: 1  dvy: 0  fall: 8  vrest: 3  arest: 0  bdefend: 8  injury: 7  effect: 1
    itr_end:
@@ -463,6 +469,16 @@ rowing_distance 4.000000
 
 <frame> 286 flurry
    pic: 54  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 287 flurry
+   pic: 52  state: 3  wait: 1  next: 282  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85  mp: 20
+   itr:
+      kind: 0  x: 75  y: 27  w: 50  h: 28  dvx: 1  dvy: 0  fall: 8  vrest: 3  arest: 0  bdefend: 8  injury: 7  effect: 1
+   itr_end:
    bdy:
       kind: 0  x: 54  y: 13  w: 34  h: 72
    bdy_end:

@@ -27,13 +27,20 @@ MOVEMENT = {
     'jump_distance': 10.0, 'dash_distance': 19.0,
 }
 
-LUNGE_SPEED = 8                   # D>J travels ~60 px (22 travelled ~300)
-CRESCENT_DRAIN = 32               # crescent hp lost per frame: ~400 px, half a screen (20 flew 616)
+LUNGE_SPEED = 10                  # D>J travels ~100 px
+CRESCENT_SPEED = 11               # crescent dvx (half of the first version's 22)
+CRESCENT_DRAIN = 16               # crescent hp lost per frame; half the speed needs half the drain for ~420 px
+RISING_LAUNCH = 16                # D^A launch speed (absolute): peak ~98 px, 10% over Davis's D^A
 
-# The engine re-applies a frame's dvx (as a speed floor) and ADDS its dvy on
-# every tick of the frame (wait + 1 ticks). Keep launch frames short: dvy -9 for
-# 2 ticks is Davis's D^A hop; DarthNox needs -5 for the same height (his later
-# frames keep more lift); -16 for 3 ticks sent him 530 px up.
+# How the engine moves a fighter by frame data (control.lua frame_velocity,
+# animation.lua):
+#  * dvx is re-applied as a speed floor and dvy is ADDED on every tick of the
+#    frame (wait + 1 ticks) -- including ticks frozen by hit lag, so a frame with
+#    both dvy and a hitbox launches higher every time it connects. Launch on a
+#    frame without itr, and prefer absolute dvy (value > 500 sets vy = dvy - 550).
+#  * entering frame 212 (jump) from a move re-runs the jump launch; end airborne
+#    moves with next: 999, which the engine turns into a plain fall.
+ABSOLUTE = 550
 SWISH = 'data\\045.wav'           # LF2's sword-dash swish (Deep's D>J)
 SWORD = 'data\\054.wav'           # LF2's sword-special sound (Deep's jump/dash sword)
 
@@ -66,6 +73,15 @@ def blade(reach=48, **kw):
     return itr(CX + 4, CY - 58, reach, 28, **kw)
 
 
+FLURRY_EXTRA_MP = 20              # each extra flurry round (press A during it)
+
+
+def lunge_blade():
+    # wider (starts at the chest, reaches 72 px) and taller (head to hips) than a
+    # normal stab; vrest 4 = the same victim can be hit again every 5 ticks
+    return itr(CX - 6, CY - 66, 78, 46, dvx=2, fall=14, vrest=4, bdefend=12, injury=11)
+
+
 MOVES = [
     '# D>A  Crescent: a horizontal swing that launches a fast, light sword wave (crescent.txt)',
     frame(235, 'crescent', 32, 3, 2, 236, mp=60),
@@ -87,30 +103,33 @@ MOVES = [
     frame(247, 'counter', 41, 3, 6, 248),
     frame(248, 'counter', 42, 3, 3, 999),
 
-    '# D>J  Lunge: a short travelling stab, held long enough to see the afterimages (sheet row 11)',
+    '# D>J  Lunge: a travelling stab that hits several times (re-hits every 5 ticks for\n'
+    '# 11 damage) with a wide, tall blade box, held long enough to see the afterimages',
     frame(260, 'lunge', 44, 3, 2, 261, mp=75),
-    frame(261, 'lunge', 45, 3, 4, 262, dvx=LUNGE_SPEED, sound=SWORD,
-          extra=blade(56, dvx=7, fall=40, vrest=15, bdefend=30, injury=40)),
-    frame(262, 'lunge', 46, 3, 6, 263, extra=blade(56, dvx=7, fall=40, vrest=15, bdefend=30, injury=40)),
+    frame(261, 'lunge', 45, 3, 4, 262, dvx=LUNGE_SPEED, sound=SWORD, extra=lunge_blade()),
+    frame(262, 'lunge', 46, 3, 6, 263, extra=lunge_blade()),
     frame(263, 'lunge', 42, 3, 5, 999),
 
-    '# D^A  Rising slash: crouch, then an invincible upward sweep that launches, then fall.\n'
-    '# Peaks at ~89 px, just under Davis\'s D^A (96): dvy -5 for 2 ticks.',
+    '# D^A  Rising slash: crouch, launch (no hitbox, invincible, absolute dvy so hit lag\n'
+    '# can\'t stack it), two hits, then a plain fall via next: 999.',
     frame(270, 'rising', 48, 3, 1, 271, mp=100),
-    frame(271, 'rising', 49, 3, 1, 272, dvx=5, dvy=-5, body=False,
+    frame(271, 'rising', 49, 3, 1, 272, dvx=5, dvy=ABSOLUTE - RISING_LAUNCH, body=False),
+    frame(272, 'rising', 49, 3, 1, 273, body=False,
           extra=itr(CX - 8, CY - 95, 58, 90, dvx=4, dvy=-14, fall=70, vrest=12, bdefend=60, injury=45)),
-    frame(272, 'rising', 50, 3, 2, 273, extra=itr(CX - 4, CY - 92, 44, 60, dvx=3, dvy=-10, fall=70, vrest=12, bdefend=60, injury=20)),
-    frame(273, 'rising', 50, 3, 6, 212),
+    frame(273, 'rising', 50, 3, 2, 274, extra=itr(CX - 4, CY - 92, 44, 60, dvx=3, dvy=-10, fall=70, vrest=12, bdefend=60, injury=20)),
+    frame(274, 'rising', 50, 3, 6, 999),
 
     '# DvA  Flurry: stabs alternating high (52), low (53) and middle (54) with ghost\n'
-    '# blades; press A during it to keep stabbing',
+    '# blades. Press A during it to keep stabbing: each extra round (287) costs 20 MP,\n'
+    '# and without the MP it goes on to the finisher.',
     frame(280, 'flurry', 54, 3, 1, 281, mp=50),
     frame(281, 'flurry', 52, 3, 1, 282, extra=blade(50, dvx=1, fall=8, vrest=3, bdefend=8, injury=7)),
     frame(282, 'flurry', 53, 3, 1, 283, extra=blade(50, dvx=1, fall=8, vrest=3, bdefend=8, injury=7)),
     frame(283, 'flurry', 54, 3, 1, 284, extra=blade(50, dvx=1, fall=8, vrest=3, bdefend=8, injury=7)),
-    frame(284, 'flurry', 52, 3, 1, 285, hits={'a': 281}, extra=blade(50, dvx=1, fall=8, vrest=3, bdefend=8, injury=7)),
+    frame(284, 'flurry', 52, 3, 1, 285, hits={'a': 287}, extra=blade(50, dvx=1, fall=8, vrest=3, bdefend=8, injury=7)),
     frame(285, 'flurry', 53, 3, 2, 286, extra=blade(54, dvx=6, fall=30, vrest=10, bdefend=16, injury=14)),
     frame(286, 'flurry', 54, 3, 3, 999),
+    frame(287, 'flurry', 52, 3, 1, 282, mp=FLURRY_EXTRA_MP, extra=blade(50, dvx=1, fall=8, vrest=3, bdefend=8, injury=7)),
 ]
 
 BALL_CX, BALL_CY = 17, 32
@@ -122,11 +141,11 @@ def ball():
            'file(0-7): mods/darthnox/crescent.bmp  w: 34  h: 64  row: 4  col: 2',
            'weapon_hit_sound: data\\020.wav', 'weapon_drop_sound: data\\020.wav', 'weapon_broken_sound: data\\020.wav',
            '<bmp_end>', '',
-           '# DarthNox\'s crescent wave: fast (dvx 22), light damage, knocks down (fall 70).',
+           f'# DarthNox\'s crescent wave: dvx {CRESCENT_SPEED}, light damage, knocks down (fall 70).',
            f'# hit_a drains {CRESCENT_DRAIN} of its hp per frame, so it flies about half a screen.', '']
     x, y, w, h = BALL_BOX
     for n in range(4):
-        out.append(f'<frame> {n} flying\n   pic: {n}  state: 3000  wait: 1  next: {n + 1 if n < 3 else 999}  dvx: 22  dvy: 0'
+        out.append(f'<frame> {n} flying\n   pic: {n}  state: 3000  wait: 1  next: {n + 1 if n < 3 else 999}  dvx: {CRESCENT_SPEED}  dvy: 0'
                    f'  centerx: {BALL_CX}  centery: {BALL_CY}  hit_a: {CRESCENT_DRAIN}  hit_d: 40  hit_j: 0\n'
                    + itr(x, y, w, h, dvx=8, fall=70, vrest=10, bdefend=16, injury=16)
                    + bdy(x, y, w, h) + '<frame_end>\n')

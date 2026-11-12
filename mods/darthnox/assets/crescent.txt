@@ -5,11 +5,11 @@ weapon_drop_sound: data\020.wav
 weapon_broken_sound: data\020.wav
 <bmp_end>
 
-# DarthNox's crescent wave: fast (dvx 22), light damage, knocks down (fall 70).
-# hit_a drains 32 of its hp per frame, so it flies about half a screen.
+# DarthNox's crescent wave: dvx 11, light damage, knocks down (fall 70).
+# hit_a drains 16 of its hp per frame, so it flies about half a screen.
 
 <frame> 0 flying
-   pic: 0  state: 3000  wait: 1  next: 1  dvx: 22  dvy: 0  centerx: 17  centery: 32  hit_a: 32  hit_d: 40  hit_j: 0
+   pic: 0  state: 3000  wait: 1  next: 1  dvx: 11  dvy: 0  centerx: 17  centery: 32  hit_a: 16  hit_d: 40  hit_j: 0
    itr:
       kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 16  effect: 1
    itr_end:
@@ -19,7 +19,7 @@ weapon_broken_sound: data\020.wav
 <frame_end>
 
 <frame> 1 flying
-   pic: 1  state: 3000  wait: 1  next: 2  dvx: 22  dvy: 0  centerx: 17  centery: 32  hit_a: 32  hit_d: 40  hit_j: 0
+   pic: 1  state: 3000  wait: 1  next: 2  dvx: 11  dvy: 0  centerx: 17  centery: 32  hit_a: 16  hit_d: 40  hit_j: 0
    itr:
       kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 16  effect: 1
    itr_end:
@@ -29,7 +29,7 @@ weapon_broken_sound: data\020.wav
 <frame_end>
 
 <frame> 2 flying
-   pic: 2  state: 3000  wait: 1  next: 3  dvx: 22  dvy: 0  centerx: 17  centery: 32  hit_a: 32  hit_d: 40  hit_j: 0
+   pic: 2  state: 3000  wait: 1  next: 3  dvx: 11  dvy: 0  centerx: 17  centery: 32  hit_a: 16  hit_d: 40  hit_j: 0
    itr:
       kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 16  effect: 1
    itr_end:
@@ -39,7 +39,7 @@ weapon_broken_sound: data\020.wav
 <frame_end>
 
 <frame> 3 flying
-   pic: 3  state: 3000  wait: 1  next: 999  dvx: 22  dvy: 0  centerx: 17  centery: 32  hit_a: 32  hit_d: 40  hit_j: 0
+   pic: 3  state: 3000  wait: 1  next: 999  dvx: 11  dvy: 0  centerx: 17  centery: 32  hit_a: 16  hit_d: 40  hit_j: 0
    itr:
       kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 16  effect: 1
    itr_end:

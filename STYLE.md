@@ -105,7 +105,10 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,w
 - Measure moves against a stock fighter before shipping (height, travel,
   range), e.g. a jump/uppercut never higher than Davis's D^A (96 px). The engine
   re-applies a frame's dvx and adds its dvy on every tick of the frame, so a
-  long launch frame stacks: keep dvy frames to 2 ticks.
+  long launch frame stacks: keep dvy frames to 2 ticks. Hit lag repeats those
+  ticks, so never put dvy on a frame with an itr; use an absolute dvy (value > 500
+  sets the speed to dvy - 550) on a launch frame without a hitbox. End airborne
+  moves with next: 999 (a plain fall); next: 212 re-runs the jump launch.
 - Write the frame data with a generator script (`tools/darthnox_moves.py` is the
   template): one table of moves, one place for hitboxes, re-runnable.
 - Every fighter gets a profile (speed / defence / attack) before any moves are
