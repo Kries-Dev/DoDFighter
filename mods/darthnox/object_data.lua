@@ -13,6 +13,13 @@
 -- The character is therefore fully playable from day one; unauthored actions
 -- read as a held pose rather than a missing sprite. Replace frames in
 -- darthnox.txt as the art lands and they stop falling back automatically.
+--
+-- Two ways an authored frame goes further than a picture swap:
+--   * it has a bdy: or itr:, or its name differs from Deep's frame at that
+--     number           -> it replaces Deep's frame whole (his own mechanics: the
+--                         special moves; the name rule covers invincible frames
+--                         that have neither box)
+--   * it has any hit_*:  -> its hit_* fields replace Deep's (his own inputs)
 
 local IDLE_PICTURE = 0
 
@@ -56,14 +63,34 @@ return function(base)
             end
         end
 
+        local function authored_frame(index)
+            local mine = authored.frames[index]
+            if mine and mine.name ~= "" then return mine end
+        end
+        local function has_hits(frame)
+            for _, value in pairs(frame.hits) do
+                if value ~= 0 then return true end
+            end
+            return false
+        end
+
         copy.frames = {}
         for index, frame in pairs(original.frames) do
+            local mine = authored_frame(index)
             local own = {}
-            for key, value in pairs(frame) do own[key] = value end
-            local mine = authored.frames[index]
-            own.picture = (mine and mine.picture) or IDLE_PICTURE
+            if mine and (#mine.bodies > 0 or #mine.interactions > 0 or mine.name ~= frame.name) then
+                for key, value in pairs(mine) do own[key] = value end
+            else
+                for key, value in pairs(frame) do own[key] = value end
+                own.picture = (mine and mine.picture) or IDLE_PICTURE
+                if mine and has_hits(mine) then own.hits = mine.hits end
+            end
             if center_x then own.center_x, own.center_y = center_x, center_y end
             copy.frames[index] = own
+        end
+        -- Frames Deep doesn't have at all come straight from darthnox.txt.
+        for index, mine in pairs(authored.frames) do
+            if not copy.frames[index] and mine.name ~= "" then copy.frames[index] = mine end
         end
 
         return copy

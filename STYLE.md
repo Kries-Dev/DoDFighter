@@ -70,7 +70,9 @@ with the idle row before shipping.
 ```
 python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,walk2.json,4,1,14 run2.png,run2.json,4,1,4 \
     slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground \
-    hurt.png,hurt.json,@7/8/11 fall.png,fall.json,@7/9/11/14,ground
+    hurt.png,hurt.json,@7/8/11 fall.png,fall.json,@7/9/11/14,ground \
+    swing.png,swing.json,@3/4/12 parry.png,parry.json,@3/5/9 stab.png,stab.json,@2/4/13 \
+    stab.png,stab.json,@3/4/8,trail rise.png,rise.json,@6/10/12,ground flurry.png,flurry.json,@4/6/9,blades
 ```
 
 - DarthNox's approved size is **scale s0.345992** (his idle at 82px tall). Pass
@@ -88,6 +90,22 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,w
 - 4 evenly spaced frames per clip, `wait: 3`.
 - Portraits: `tools/autosprite_portrait.py` — `head:` 120×120, `small:` 40×45,
   on the dark navy backdrop (22,30,58).
+
+## Special moves
+
+- Generate each move's body animation as a custom clip from the Idle Lock pose
+  (no `last_frame_pose_id`, so it doesn't snap back). Describe only the body and
+  weapon; leave projectiles and effects out of the prompt.
+- Projectiles are separate objects with their own small sheet, drawn to match:
+  bold navy outline, flat white-to-cyan shading (`tools/make_crescent.py`).
+- Speed effects are baked in at conversion: `,trail` (body afterimages for dashes
+  and lunges) and `,blades` (ghost copies of the weapon arm for rapid hits). They
+  are dithered checkerboards in pale blue (150,205,255), the only "transparency"
+  LF2 sprites have.
+- Write the frame data with a generator script (`tools/darthnox_moves.py` is the
+  template): one table of moves, one place for hitboxes, re-runnable.
+- Every fighter gets a profile (speed / defence / attack) before any moves are
+  designed; see the DarthNox README for the format.
 
 ## Stages
 

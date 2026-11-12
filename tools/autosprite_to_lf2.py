@@ -17,6 +17,12 @@ A trailing ,ground on a ROW_SPEC stands every frame of that row on its own
 lowest pixel instead of the clip's foot pivot -- for jumps, where the clip lifts
 the character but the engine already does that.
 
+A trailing ,trail draws two dithered afterimages of the whole body behind the
+character (for dashes and lunges); ,blades draws ghost copies of the sword arm
+above and below it (for rapid stabs, like Davis's many-punch). LF2 sprites have
+no alpha, so the ghosts are a checkerboard of tinted pixels, which reads as
+see-through at game size. Flags can be combined: ...,@3/4/8,trail
+
 HEIGHT may instead be sNUMBER -- a fixed scale (e.g. s0.3460) instead of
 "tallest frame = HEIGHT px". Use it once the size is approved, so a raised
 sword or a jump can't shrink the whole character.
@@ -89,10 +95,16 @@ def write_bmp(path, W, H, pal, rows):
 
 
 # --------------------------------------------------------------- resampling --
-def area_resample(img, x0, y0, w, h, scale, ow, oh):
+def area_resample(img, x0, y0, w, h, scale, ow, oh, clip=None):
     """Box-filter img region starting at (x0, y0) by `scale` (<1) into ow x oh.
-    Premultiplied alpha so transparent pixels don't darken edges."""
+    Premultiplied alpha so transparent pixels don't darken edges. clip =
+    (x0, y0, x1, y1): source pixels outside it count as transparent (keeps a
+    neighbouring frame of the source sheet out of a widened cell)."""
     H, W = len(img), len(img[0])
+    if clip:
+        cx0, cy0, cx1, cy1 = clip
+    else:
+        cx0, cy0, cx1, cy1 = 0, 0, W, H
     inv = 1.0 / scale
     out = []
     for oy in range(oh):
@@ -108,7 +120,7 @@ def area_resample(img, x0, y0, w, h, scale, ow, oh):
                     wx = min(sx1, xx + 1) - max(sx0, xx)
                     if wx <= 0: continue
                     wgt = wx * wy; area += wgt
-                    if 0 <= xx < W and 0 <= yy < H:
+                    if cx0 <= xx < cx1 and cy0 <= yy < cy1:
                         r, g, b, a = img[yy][xx]; a /= 255.0
                         acc[0] += r * a * wgt; acc[1] += g * a * wgt; acc[2] += b * a * wgt; acc[3] += a * wgt
             a = acc[3] / area if area else 0.0
@@ -148,6 +160,33 @@ def nearest(pal, c, cache):
     return cache[c]
 
 
+# -------------------------------------------------------------- afterimages --
+TRAIL_REACH = 16                    # game px the farthest afterimage sits behind
+GHOST_TINT = (150, 205, 255)        # pale blue, mixed 50/50 into the ghost
+
+
+def ghost(cell, offsets, front_of=None, band=None):
+    """Draw dithered copies of the cell's opaque pixels shifted by each (dx, dy),
+    under the original. front_of / band: only copy pixels right of that x and
+    between those rows (the sword arm, not the hat brim)."""
+    h, w = len(cell), len(cell[0])
+    src = [row[:] for row in cell]
+    for n, (dx, dy) in enumerate(offsets):
+        for y in range(h):
+            for x in range(w):
+                if (x + y + n) % 2:          # checkerboard: half the pixels
+                    continue
+                sx, sy = x - dx, y - dy
+                if not (0 <= sx < w and 0 <= sy < h) or (front_of is not None and sx < front_of):
+                    continue
+                if band and not band[0] <= sy <= band[1]:
+                    continue
+                r, g, b, a = src[sy][sx]
+                if a < 0.5 or cell[y][x][3] >= 0.5:
+                    continue
+                cell[y][x] = ((r + GHOST_TINT[0]) / 2, (g + GHOST_TINT[1]) / 2, (b + GHOST_TINT[2]) / 2, 1.0)
+
+
 # ------------------------------------------------------------------- main ----
 def main(out_dir, height, specs):
     import os
@@ -155,11 +194,13 @@ def main(out_dir, height, specs):
     fixed_scale = float(height[1:]) if height.startswith('s') else None
     height = None if fixed_scale else int(height)
     rows_in = []   # per output row: list of (img, cell, trim, pivot_px)
+    row_flags = []
     for spec in specs:
         parts = spec.split(',')
-        ground = parts[-1] == 'ground'
-        if ground:
-            parts = parts[:-1]
+        flags = set()
+        while parts[-1] in ('ground', 'trail', 'blades'):
+            flags.add(parts.pop())
+        ground = 'ground' in flags
         png, atlas, n = parts[0], parts[1], parts[2]
         span = (int(parts[3]), int(parts[4])) if len(parts) == 5 else None
         explicit = [int(v) for v in n[1:].split('/')] if n.startswith('@') else None
@@ -191,6 +232,7 @@ def main(out_dir, height, specs):
             foot_y = trim[3] if ground else piv['y'] * h
             row.append((img, cell, trim, (piv['x'] * w, foot_y)))
         rows_in.append(row)
+        row_flags.append(flags)
 
     # One registration box (relative to pivot) that holds every selected frame.
     L = min(t[0] - p[0] for r in rows_in for (_, _, t, p) in r)
@@ -199,6 +241,8 @@ def main(out_dir, height, specs):
     B = max(t[3] - p[1] for r in rows_in for (_, _, t, p) in r)
     tallest = max(t[3] - t[1] for r in rows_in for (_, _, t, p) in r)
     scale = fixed_scale or height / tallest
+    if any('trail' in f for f in row_flags):
+        L -= TRAIL_REACH / scale       # room for the afterimages behind the body
     cw, ch = math.ceil((R - L) * scale), math.ceil((B - T) * scale)
     centerx, centery = round(-L * scale), round(-T * scale)
 
@@ -206,8 +250,12 @@ def main(out_dir, height, specs):
     for r in rows_in:
         out_row = []
         for img, (x0, y0, w, h), trim, (px, py) in r:
-            out_row.append(area_resample(img, x0 + px + L, y0 + py + T, w, h, scale, cw, ch))
+            out_row.append(area_resample(img, x0 + px + L, y0 + py + T, w, h, scale, cw, ch, clip=(x0, y0, x0 + w, y0 + h)))
         cells.append(out_row)
+    for ri, flags in enumerate(row_flags):
+        for cell in cells[ri]:
+            if 'trail' in flags: ghost(cell, [(-TRAIL_REACH, 0), (-TRAIL_REACH // 2, 0)])
+            if 'blades' in flags: ghost(cell, [(-3, -6), (-6, 5), (-1, -11)], front_of=centerx + 6, band=(centery - 52, centery - 18))
 
     opaque = [(int(c[0]), int(c[1]), int(c[2])) for row in cells for cell in row for line in cell for c in line if c[3] >= 0.5]
     pal = median_cut(opaque, 255)
