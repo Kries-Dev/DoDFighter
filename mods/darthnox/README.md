@@ -132,6 +132,12 @@ The 316px masters are kept upstream; see the pipeline notes for the 4K question.
 The look is locked — see `STYLE.md` at the repo root before generating any
 new art.
 
+## Menu music
+
+`music.lua` turns the menu music (`bgm/main.wma`, played on the title, character
+select and options screens) off: menus are silent, match and stage music play
+as normal. Set `MENU_MUSIC = true` in that file to bring it back.
+
 ## Urban Bridge stage
 
 The mod also adds **Urban Bridge** to the Versus background list (after
