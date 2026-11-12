@@ -21,9 +21,10 @@ return function(base)
             local portrait = assert(header:match("head:%s*(%S+)"))
             -- record = the fighter's 0-based position in the object list
             local record
-            for index, entry in ipairs(objects().list) do
+            for index, entry in ipairs(base.objects().list) do
                 if entry.id == fighter_id then record = index - 1; break end
             end
+            assert(record, "darthnox is missing from the object list")
             fighters[#fighters + 1] = {id = fighter_id,
                 record = record,
                 name = name, portrait = portrait,
