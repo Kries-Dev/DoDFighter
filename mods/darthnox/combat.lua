@@ -7,15 +7,14 @@
 -- Also Mathilde's tornado (object 65): it lifts each fighter once (for its ~1 s
 -- life) and its landing damage is halved.
 --
--- Also Mathilde's air carry (A during her vault, mathilde.txt 300-307): a fighter
--- her rising strikes (301, 303) knock down is marked as carried; physics.lua
--- then holds them in front of her until the slam.
+-- Also Mathilde's launcher strike (A during a vault, mathilde.txt 301/296):
+-- it launches a grounded target, but one already in the air only gets a small
+-- pop, so it starts a juggle instead of sending them sky-high.
 
 return function(base)
     local fighter_id = 61
     local TORNADO = 65   -- Mathilde's D^J tornado object
-    local MATHILDE, CARRY_HITS = 63, {[301] = true, [303] = true}
-    local character = require("base/game/constants").record_kinds.character
+    local MATHILDE, LAUNCHERS, LOW_POP = 63, {[301] = true, [296] = true}, -5.0
     local parry_first, parry_last, counter_frame = 241, 243, 245
     local objects = require("base/game/objects")
     local kinds = require("base/game/constants").attack_kinds
@@ -53,13 +52,19 @@ return function(base)
                 end
             end
         end
-        local result = apply(state, p)
-        if attacker and attacker.record.id == MATHILDE and CARRY_HITS[attacker.frame_at_pass] then
+        local launcher = attacker and attacker.record.id == MATHILDE and LAUNCHERS[attacker.frame_at_pass]
+        local airborne = {}
+        if launcher then
             for position = 1, attacker.hit_list_count do
                 local victim = objects.lookup(state, attacker.hit_list[position])
-                if victim and victim.record.kind == character and victim.frame >= 180 and victim.frame <= 191 then
-                    attacker.dod_carry = victim
-                end
+                if victim and victim.y_int < 0 then airborne[victim] = true end
+            end
+        end
+        local result = apply(state, p)
+        if launcher then
+            for victim in pairs(airborne) do
+                -- the hit set its upward impulse (-13); an airborne target pops low
+                if victim.impulse_y < LOW_POP then victim.impulse_y = LOW_POP end
             end
         end
         if tornado then

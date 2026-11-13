@@ -138,22 +138,19 @@ use 63 for Mathilde.
 
 ## Where it stands / next
 
-- **Mathilde's current kit (2026-11-13 redesign of the vault):**
-  - D>A stab → J vault (240-244, no hit). From the vault: **A = air carry**
-    (300-307: two rising strikes, the target is held in front of her by
-    `physics.lua` while she rises, then a slam), **DvA = diving stab**
-    (310-313, 45° down). The old slam / vault 2 / slam 2 chain (282-297) is gone.
-  - DvA ground combo (270-281) unchanged; J on its last frame still vaults.
-  - Verified headless vs Deep: stab → J → A lands 4 hits (~95) at every A
-    timing tried; stab → J → DvA lands (66). Starting the carry clears her hit
-    rest so the stab's 20-tick vrest can't void the first strike.
-- **Open issue, sounds:** the user hears ONLY the D^A staff cast (`m_staff.wav`).
-  Engine path is identical for all frame sounds (animation.lua → sounds.item →
-  SDL voice per file), so the suspects are the files: `m_vault/m_twist/m_clone`
-  were trimmed to 0.25-0.34 s by `prepare_sfx.py`, `m_run` peaks at only 44%.
-  **Test in place:** every move now plays `m_staff.wav`. If the user hears it on
-  all moves, re-prepare the other four from the original mp3s (longer, louder)
-  and restore their names in `mathilde_moves.py`. If not, the trigger is at fault.
+- **Mathilde's current kit (2026-11-13, second pass; the user found the air carry unfair):**
+  - D>A stab → J vault (240-244, 20 MP) → A launcher strike (300-303: grounded
+    target launched, airborne target only popped -5 by `combat.lua`) → J vault 2
+    (290-294, 20 MP) → A strike (295-298, end of chain).
+  - D>A then DJA → jump (315-316) → diving stab (310-313); DvA in a vault also dives.
+  - Strike starts clear her pair rest (`physics.lua`) so the stab's vrest can't void them.
+  - Verified headless vs Deep: all of the above; 2nd vault refused at low MP.
+- **Sounds:** with every move set to `m_staff.wav` the user heard all of them, so
+  the trigger works and the four other files were the problem (they loaded and
+  decoded fine; cause not found in code). Rebuilt from the originals in commit
+  c4510d2 as `mrun/mvault/mtwist/mclone.wav`, loudness matched. **Ask the user
+  whether these play now.** If not, next test: copy `m_staff.wav` bytes under
+  one of the new names to separate name from content.
 - The user plans **3–4 fighters** to start; the next one is a new design from
   the user.
 - **Ideas offered but not done:**

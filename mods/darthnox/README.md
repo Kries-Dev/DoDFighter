@@ -160,9 +160,10 @@ items) come from **Davis** (`object_data.lua` → `FIGHTERS`).
 | Input | Move | Frames | MP | What it does |
 |---|---|---|---|---|
 | D>A | Staff extension | 235-239 | 50 | stabs while the staff shoots out Wukong-style from her staff tip to ~200 px over ~9 ticks, holds and retracts (`m_pole.txt`, object 66, visual); the hitbox grows with it (90/150/200 px), 29-32 |
-| …then J | Vault | 240-244 | — | plants the staff and flips forward ~140 px, ~70 px high; no hit of its own. Two follow-ups while in the air: |
-| …vault, then A | Air carry | 300-307 | — | two rising strikes (18, 18) knock the target down and carry them up with her (`combat.lua` marks them, `physics.lua` holds them in front of her at her height) to ~160 px, then a slam (30) spikes them into the floor. Stab → vault → A: 4 hits, ~95 |
-| …vault, then DvA | Diving stab | 310-313 | — | a short hang, then a second stab aimed 45° down while she drops along it (34, knockdown; spikes an airborne target). Art: her extension frames tilted 35° (`tools/make_mathilde_dive.py`) |
+| …then J | Vault | 240-244 | 20 | plants the staff and flips forward ~140 px, ~70 px high; no hit of its own |
+| …vault, then A | Launcher strike | 300-303 | — | one rising staff swing (26): launches a grounded target (~55 px); a target already in the air only gets a small pop (`combat.lua`), so it starts a juggle |
+| …strike, then J | Vault 2 | 290-294 | 20 | a second vault from mid-air; its A (295-298) is the same strike and ends the chain. Stab → vault → A → vault → A: 3 hits, ~80 |
+| D>A, then DJA | Jump + diving stab | 315-316, 310-313 | 20 | (the J starts the vault, so it costs its 20) she jumps, hangs, then stabs 45° down while dropping along the staff (34, knockdown; spikes an airborne target). Also DvA during either vault. Art: her extension frames tilted 35° (`tools/make_mathilde_dive.py`) |
 | DvA | Staff combo | 270-281 | 40 | ten staff strikes from its own animation (motion arcs), 16-28 each; the final hit launches straight up and J on its last frame vaults. `physics.lua` keeps it going through a landing |
 | D^A | Homing staff | 245-248 | 75 | a conjure-and-fling cast that sends a spinning staff copy (`m_staff.txt`, object 64) after the nearest enemy like John's disc (`hit_Fa: 1`), 35 + knockdown |
 | D^J | Tornado | 250-258 | 200 | she twirls and sends a magic tornado (`m_tornado.txt`, object 65) drifting forward ~150 px; its whirlwind boxes match the drawing and lift whoever it touches once for ~1 s (`combat.lua`: no re-lifting, half landing damage), ~30-40 |
@@ -176,7 +177,7 @@ vault with a fire aura, diving stab (row 25, made by `tools/make_mathilde_dive.p
 `tools/make_mathilde_fx.py`. Her sounds (`assets/snd/`: running stab, staff cast,
 vault strike, tornado, clone) were supplied as mp3, converted with
 `tools/to_wav.ps1` and made game-ready (lead-in silence trimmed, loudness
-normalised, ~1.2 s max) with `tools/prepare_sfx.py`. **Sound test in progress:** only the staff-cast sound is heard in game, so every move currently plays `m_staff.wav` (see `mathilde_moves.py`); her grab-and-hit keeps LF2's punch sound. Portraits `mathilde_f.bmp` / `mathilde_s.bmp`.
+normalised, ~1.2 s max) with `tools/prepare_sfx.py`. The first prepared versions of the other four (`m_run`, `m_vault`, `m_twist`, `m_clone`) loaded but were never heard in game while `m_staff.wav` played on every move, so they were rebuilt from the original uploads as `mrun`, `mvault`, `mtwist`, `mclone` (loudness matched to `m_staff`); her grab-and-hit keeps LF2's punch sound. Portraits `mathilde_f.bmp` / `mathilde_s.bmp`.
 
 Verified headless vs Deep: combo chain into the smash, extension 28, vault 89 px,
 homing staff curving onto a target 400 px away and off her line, tornado lifting
