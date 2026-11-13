@@ -17,6 +17,7 @@ A trailing ,ground on a ROW_SPEC stands every frame of that row on its own
 lowest pixel instead of the clip's foot pivot -- for jumps, where the clip lifts
 the character but the engine already does that.
 
+,aura draws a shimmering blue glow around the silhouette (the parry stance);
 ,ice recolours the row as frozen solid and ,burn as charred and on fire (for
 the engine's ice and fire frames).
 
@@ -193,6 +194,37 @@ def ghost(cell, offsets, front_of=None, band=None, cover=None):
                 cell[y][x] = (r * .4 + GHOST_TINT[0] * .6, g * .4 + GHOST_TINT[1] * .6, b * .4 + GHOST_TINT[2] * .6, 1.0)
 
 
+# -------------------------------------------------------------------- aura ---
+AURA_REACH = 4
+AURA = [((185, 240, 255), 1.0), ((110, 195, 255), 0.75), ((60, 140, 245), 0.5), ((40, 100, 220), 0.25)]  # by distance
+
+
+def aura(cell, phase):
+    """A soft blue glow around the silhouette (the parry stance): rings 1-4 px out,
+    bright at the edge and dithered away outwards; `phase` shifts the dither so
+    the glow shimmers between frames."""
+    h, w = len(cell), len(cell[0])
+    solid = [[cell[y][x][3] >= 0.5 for x in range(w)] for y in range(h)]
+    dist = [[0 if solid[y][x] else 99 for x in range(w)] for y in range(h)]
+    frontier = [(x, y) for y in range(h) for x in range(w) if solid[y][x]]
+    for d in range(1, AURA_REACH + 1):
+        nxt = []
+        for x, y in frontier:
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, -1), (1, -1), (-1, 1)):
+                X, Y = x + dx, y + dy
+                if 0 <= X < w and 0 <= Y < h and dist[Y][X] == 99:
+                    dist[Y][X] = d
+                    nxt.append((X, Y))
+        frontier = nxt
+    for y in range(h):
+        for x in range(w):
+            d = dist[y][x]
+            if 1 <= d <= AURA_REACH:
+                colour, cover = AURA[d - 1]
+                if BAYER[(y + phase) % 4][(x + phase) % 4] < cover * 16:
+                    cell[y][x] = colour + (1.0,)
+
+
 # ------------------------------------------------------- frozen / burning ---
 def _edge(cell, x, y):
     # transparent pixel touching an opaque one
@@ -263,7 +295,7 @@ def main(out_dir, height, specs):
     for spec in specs:
         parts = spec.split(',')
         flags = set()
-        while parts[-1] in ('ground', 'trail', 'blades', 'ice', 'burn'):
+        while parts[-1] in ('ground', 'trail', 'blades', 'ice', 'burn', 'aura'):
             flags.add(parts.pop())
         ground = 'ground' in flags
         png, atlas, n = parts[0], parts[1], parts[2]
@@ -308,6 +340,9 @@ def main(out_dir, height, specs):
     scale = fixed_scale or height / tallest
     if any('trail' in f for f in row_flags):
         L -= TRAIL_REACH / scale       # room for the afterimages behind the body
+    if any('aura' in f for f in row_flags):
+        T -= AURA_REACH / scale        # room for the glow above the hat
+        R += AURA_REACH / scale
     cw, ch = math.ceil((R - L) * scale), math.ceil((B - T) * scale)
     centerx, centery = round(-L * scale), round(-T * scale)
 
@@ -325,6 +360,7 @@ def main(out_dir, height, specs):
         for i, cell in enumerate(cells[ri]):
             if 'ice' in flags: frost(cell)
             if 'burn' in flags: burn(cell, i)
+            if 'aura' in flags: aura(cell, i)
 
     opaque = [(int(c[0]), int(c[1]), int(c[2])) for row in cells for cell in row for line in cell for c in line if c[3] >= 0.5]
     pal = median_cut(opaque, 255)

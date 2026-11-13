@@ -74,7 +74,7 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,w
     swing.png,swing.json,@3/4/12 parry.png,parry.json,@3/5/9 stab.png,stab.json,@2/4/13 \
     stab.png,stab.json,@3/4/8,trail rise.png,rise.json,@6/10/12,ground flurry2.png,flurry2.json,@7/5/10,blades \
     roll.png,roll.json,@4/6/9/11,ground hurt.png,hurt.json,@7/8,ice fall.png,fall.json,@7/9/11,ground,burn \
-    grab.png,grab.json,@4/5/9/10 throw.png,throw.json,@9/10/12
+    grab.png,grab.json,@4/5/9/10 throw.png,throw.json,@9/10/12 parry.png,parry.json,@3/5/9,aura
 ```
 
 - DarthNox's approved size is **scale s0.345992** (his idle at 82px tall). Pass
@@ -111,6 +111,13 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,w
   ticks, so never put dvy on a frame with an itr; use an absolute dvy (value > 500
   sets the speed to dvy - 550) on a launch frame without a hitbox. End airborne
   moves with next: 999 (a plain fall); next: 212 re-runs the jump launch.
+- Stances that should glow (a parry, a power-up) get `,aura`: a 4 px blue glow,
+  bright at the edge and dithered outwards, shimmering between frames. Give them
+  their own row so the plain pose stays available (DarthNox blocks with 37 and
+  parries with the aura copy 77).
+- Rapid multi-hits: keep each hit's `fall` small (~5) and space the hits ~8 ticks
+  apart, or the engine's stun counter (stepped 20/40/60, draining 1 per tick)
+  floors the victim after 3-4 hits. Let a finisher do the knockdown.
 - Frozen and burning pictures are recoloured, not generated: `,ice` (icy blues,
   frost rim) on a hurt pose, `,burn` (charred, flames rising off the top edges)
   on knockdown poses. Free, and they match the character exactly.
