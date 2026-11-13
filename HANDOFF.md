@@ -138,21 +138,24 @@ use 63 for Mathilde.
 
 ## Where it stands / next
 
-- **Mathilde's current kit (b67a5da and later, verified headless):**
-  - D>A stab: 170 px reach, plays her own sound (`m_run`).
-  - J during the stab: vault with an ice strike built in (freezes, 19).
-  - J while still in the air: a higher fire vault with a longer burning strike
-    and Firen's ground fire.
-  - DvA: ten hits at 0.24 × Louis EX (~89), no freeze; the last hit launches
-    straight up (dvy −20). J right after it goes into the vault, so the ice
-    strike hits them in the air (aerial combo).
-  - `physics.lua` only keeps the combo (270–281) through landings.
-- **Open issue, sounds:** the user hears only `m_staff` (the homing cast).
-  - All five are sent by the engine and load without decode errors.
-  - They're now converted to LF2's exact effect format: 22050 Hz, mono,
-    16-bit. That was the last difference from the working stock sounds.
-  - If they still aren't heard, ask the user which ones are missing, and test
-    by swapping `m_staff.wav` onto another frame.
+- **Mathilde's current kit (latest; user-requested aerial chain):**
+  - The chain: DvA (~82, ten hits, launcher straight up; J only on the end
+    frame 281, a 13-tick window) → J vault 240–244 (no hit) → A staff slam
+    295–297 (20, pops the target up; J window) → J vault 2 (290–294, higher)
+    → A slam 282–284 (24, knockdown).
+  - No freeze or fire anywhere any more.
+  - Verified headless: DvA → J → A slam works. Slam → J → vault 2 → A has had
+    its window lengthened but is **not yet re-tested**.
+- **Open issue, sounds:** the user hears ONLY the homing projectile; that may
+  even be the stock ball hit sound (`data/020.wav`), not our `m_staff`.
+  Ruled out so far:
+  - the engine sends our sounds at full volume;
+  - they load without decode errors in the windowed game;
+  - they're converted to 22 kHz mono 16-bit.
+
+  Next idea: check `src/adapters/sdl/platform.cpp` `play()`/voice cache, and
+  test a stock wav copied into the mod under a mod path, to see whether any
+  mod-path sound ever plays.
 - The user plans **3–4 fighters** to start; the next one is a new design from
   the user.
 - **Ideas offered but not done:**

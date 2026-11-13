@@ -103,7 +103,7 @@ def staff(reach=54, **kw):        # staff hitbox in front of the chest
 
 
 PICK_UP = itr(CX - 19, CY - 22, 37, 24, vrest=1, kind=2)
-VAULT1 = {'j': 290, 'Da': 270}        # during the vault: J = fire vault, DvA = combo
+VAULT1 = {'a': 295}                   # during the vault: A = staff slam
 
 
 def louis(injury):                # Louis EX's DvA hit, scaled
@@ -133,10 +133,9 @@ for k, (picture, injury, reach, dvx, dvy) in enumerate(COMBO_HITS):
     last = k == len(COMBO_HITS) - 1
     COMBO.append(frame(271 + k, 'staff_combo', picture, 3, 1 if not last else 2, 272 + k, dvx=2,
                        sound=SWISH if k % 2 == 0 or last else None,
-                       hits={'j': 240} if last else None,
                        extra=staff(reach, dvx=dvx, dvy=dvy or -10, fall=70 if last else 1, vrest=6,
                                    bdefend=60 if last else 16, injury=louis(injury))))
-COMBO.append(frame(271 + len(COMBO_HITS), 'staff_combo', C[7], 3, 6, 999, hits={'j': 240}))   # J: vault after the launcher
+COMBO.append(frame(271 + len(COMBO_HITS), 'staff_combo', C[7], 3, 12, 999, hits={'j': 240}))   # J: vault after the launcher
 
 FRAMES = [
     '# Standing, walking, running (inputs live on standing, walking and defend)',
@@ -222,26 +221,31 @@ FRAMES = [
     frame(238, 'staff_ext', EXTEND[2], 3, 3, 239, hits={'j': 240}, extra=staff(POLE_REACH, dvx=6, fall=40, vrest=20, bdefend=30, injury=32)),
     frame(239, 'staff_ext', EXTEND[2], 3, 4, 999, hits={'j': 240}),   # same staff line as 236-238 while the pole retracts
 
-    '# Vault (J during the stab, or right after the DvA launcher): a flip with an ICE\n'
-    '# strike built in (freezes). J while still in the air: the higher fire vault.',
-    frame(240, 'vault', VAULT_ICE[0], 3, 1, 241, dvx=3, body=False),
-    frame(241, 'vault', VAULT_ICE[1], 3, 1, 242, dvx=VAULT_SPEED, dvy=ABSOLUTE - VAULT_LAUNCH, body=False),
-    frame(242, 'vault', VAULT_ICE[2], 3, 2, 243, sound=VAULT_SND, hits=VAULT1,
-          extra=itr(CX - 20, CY - 60, 80, 110, dvx=2, fall=20, vrest=12, bdefend=30, injury=22, effect=3)),
-    frame(243, 'vault', VAULT_ICE[3], 3, 3, 244, hits=VAULT1,
-          extra=itr(CX - 20, CY - 50, 72, 110, dvx=2, fall=20, vrest=12, bdefend=30, injury=22, effect=3)),
-    frame(244, 'vault', VAULT_ICE[3], 3, 4, 999, hits=VAULT1),
+    '# Vault (J after the stab, or at the end of the DvA launcher): a flip, no hit of\n'
+    '# its own. A during it = staff slam (295). The slam pops the target up (dvy -8)\n'
+    '# and J after it = the second vault (290), whose A = a second slam (282).',
+    frame(240, 'vault', VAULT[0], 3, 1, 241, dvx=3, body=False, hits=VAULT1),
+    frame(241, 'vault', VAULT[1], 3, 1, 242, dvx=VAULT_SPEED, dvy=ABSOLUTE - VAULT_LAUNCH, body=False, hits=VAULT1),
+    frame(242, 'vault', VAULT[2], 3, 3, 243, body=False, hits=VAULT1),
+    frame(243, 'vault', VAULT[3], 3, 3, 244, hits=VAULT1),
+    frame(244, 'vault', VAULT[3], 3, 4, 999, hits=VAULT1),
 
-    '# Fire vault (J during the first): higher, with a longer FIRE strike that burns\n'
-    '# and leaves Firen\'s ground fire (and his fire-trail sound).',
-    frame(290, 'vault2', VAULT_FIRE[0], 3, 1, 291, dvx=3, body=False),
-    frame(291, 'vault2', VAULT_FIRE[1], 3, 1, 292, dvx=4, dvy=ABSOLUTE - VAULT2_LAUNCH, body=False),
-    frame(292, 'vault2', VAULT_FIRE[2], 3, 3, 293, sound=FIRE_SND, hits={'Da': 270},
-          extra=itr(CX - 25, CY - 70, 90, 130, dvx=4, fall=30, vrest=8, bdefend=30, injury=14, effect=2)),
-    frame(293, 'vault2', VAULT_FIRE[3], 3, 4, 294, hits={'Da': 270},
-          extra=itr(CX - 25, CY - 50, 90, 120, dvx=7, fall=70, vrest=8, bdefend=30, injury=18, effect=2)
-          + opoint(FIREN_FLAME, CX + 30, CY + 2, action=GROUND_FIRE)),
-    frame(294, 'vault2', VAULT_FIRE[3], 3, 4, 999),
+    '# Staff slam 1 (A during the vault): overhead slam in the air; J after it = vault 2',
+    frame(295, 'slam', SMASH[0], 3, 1, 296, body=False, hits={'j': 290}),
+    frame(296, 'slam', SMASH[1], 3, 2, 297, sound=VAULT_SND, hits={'j': 290},
+          extra=itr(CX - 15, CY - 80, 85, 120, dvx=3, dvy=-8, fall=40, vrest=12, bdefend=30, injury=20)),
+    frame(297, 'slam', SMASH[2], 3, 10, 999, hits={'j': 290}),
+
+    '# Vault 2: higher flip, no hit of its own; A during it = staff slam 2 (knockdown)',
+    frame(290, 'vault2', VAULT[0], 3, 1, 291, dvx=3, body=False, hits={'a': 282}),
+    frame(291, 'vault2', VAULT[1], 3, 1, 292, dvx=4, dvy=ABSOLUTE - VAULT2_LAUNCH, body=False, hits={'a': 282}),
+    frame(292, 'vault2', VAULT[2], 3, 3, 293, body=False, hits={'a': 282}),
+    frame(293, 'vault2', VAULT[3], 3, 3, 294, hits={'a': 282}),
+    frame(294, 'vault2', VAULT[3], 3, 4, 999, hits={'a': 282}),
+    frame(282, 'slam2', SMASH[0], 3, 1, 283, body=False),
+    frame(283, 'slam2', SMASH[1], 3, 2, 284, sound=VAULT_SND,
+          extra=itr(CX - 15, CY - 80, 85, 120, dvx=8, dvy=6, fall=70, vrest=12, bdefend=60, injury=24)),
+    frame(284, 'slam2', SMASH[2], 3, 4, 999),
 
     '# D^A  Homing staff: a throwing motion that sends a spinning copy of the staff\n'
     '# (m_staff.txt, object 64) after the nearest enemy, like John\'s disc.',

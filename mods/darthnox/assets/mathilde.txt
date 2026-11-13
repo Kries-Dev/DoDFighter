@@ -782,78 +782,100 @@ rowing_distance 5.000000
    bdy_end:
 <frame_end>
 
-# Vault (J during the stab, or right after the DvA launcher): a flip with an ICE
-# strike built in (freezes). J while still in the air: the higher fire vault.
+# Vault (J after the stab, or at the end of the DvA launcher): a flip, no hit of
+# its own. A during it = staff slam (295). The slam pops the target up (dvy -8)
+# and J after it = the second vault (290), whose A = a second slam (282).
 <frame> 240 vault
-   pic: 80  state: 3  wait: 1  next: 241  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 44  state: 3  wait: 1  next: 241  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 295
 <frame_end>
 
 <frame> 241 vault
-   pic: 81  state: 3  wait: 1  next: 242  dvx: 5  dvy: 537  dvz: 0  centerx: 44  centery: 89
+   pic: 45  state: 3  wait: 1  next: 242  dvx: 5  dvy: 537  dvz: 0  centerx: 44  centery: 89  hit_a: 295
 <frame_end>
 
 <frame> 242 vault
-   pic: 82  state: 3  wait: 2  next: 243  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_vault.wav  hit_j: 290  hit_Da: 270
-   itr:
-      kind: 0  x: 24  y: 29  w: 80  h: 110  dvx: 2  dvy: 0  fall: 20  vrest: 12  arest: 0  bdefend: 30  injury: 22  effect: 3
-   itr_end:
-   bdy:
-      kind: 0  x: 29  y: 17  w: 30  h: 72
-   bdy_end:
+   pic: 46  state: 3  wait: 3  next: 243  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 295
 <frame_end>
 
 <frame> 243 vault
-   pic: 83  state: 3  wait: 3  next: 244  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 290  hit_Da: 270
-   itr:
-      kind: 0  x: 24  y: 39  w: 72  h: 110  dvx: 2  dvy: 0  fall: 20  vrest: 12  arest: 0  bdefend: 30  injury: 22  effect: 3
-   itr_end:
+   pic: 47  state: 3  wait: 3  next: 244  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 295
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 244 vault
-   pic: 83  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 290  hit_Da: 270
+   pic: 47  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 295
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
-# Fire vault (J during the first): higher, with a longer FIRE strike that burns
-# and leaves Firen's ground fire (and his fire-trail sound).
+# Staff slam 1 (A during the vault): overhead slam in the air; J after it = vault 2
+<frame> 295 slam
+   pic: 32  state: 3  wait: 1  next: 296  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 290
+<frame_end>
+
+<frame> 296 slam
+   pic: 33  state: 3  wait: 2  next: 297  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_vault.wav  hit_j: 290
+   itr:
+      kind: 0  x: 29  y: 9  w: 85  h: 120  dvx: 3  dvy: -8  fall: 40  vrest: 12  arest: 0  bdefend: 30  injury: 20  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 297 slam
+   pic: 34  state: 3  wait: 10  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 290
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+# Vault 2: higher flip, no hit of its own; A during it = staff slam 2 (knockdown)
 <frame> 290 vault2
-   pic: 96  state: 3  wait: 1  next: 291  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 44  state: 3  wait: 1  next: 291  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 282
 <frame_end>
 
 <frame> 291 vault2
-   pic: 97  state: 3  wait: 1  next: 292  dvx: 4  dvy: 535  dvz: 0  centerx: 44  centery: 89
+   pic: 45  state: 3  wait: 1  next: 292  dvx: 4  dvy: 535  dvz: 0  centerx: 44  centery: 89  hit_a: 282
 <frame_end>
 
 <frame> 292 vault2
-   pic: 98  state: 3  wait: 3  next: 293  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\070.wav  hit_Da: 270
-   itr:
-      kind: 0  x: 19  y: 19  w: 90  h: 130  dvx: 4  dvy: 0  fall: 30  vrest: 8  arest: 0  bdefend: 30  injury: 14  effect: 2
-   itr_end:
-   bdy:
-      kind: 0  x: 29  y: 17  w: 30  h: 72
-   bdy_end:
+   pic: 46  state: 3  wait: 3  next: 293  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 282
 <frame_end>
 
 <frame> 293 vault2
-   pic: 99  state: 3  wait: 4  next: 294  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
-   itr:
-      kind: 0  x: 19  y: 39  w: 90  h: 120  dvx: 7  dvy: 0  fall: 70  vrest: 8  arest: 0  bdefend: 30  injury: 18  effect: 2
-   itr_end:
-   opoint:
-      kind: 1  x: 74  y: 91  action: 50  dvx: 0  dvy: 0  oid: 211  facing: 0
-   opoint_end:
+   pic: 47  state: 3  wait: 3  next: 294  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 282
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 294 vault2
-   pic: 99  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 47  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 282
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 282 slam2
+   pic: 32  state: 3  wait: 1  next: 283  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+<frame_end>
+
+<frame> 283 slam2
+   pic: 33  state: 3  wait: 2  next: 284  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_vault.wav
+   itr:
+      kind: 0  x: 29  y: 9  w: 85  h: 120  dvx: 8  dvy: 6  fall: 70  vrest: 12  arest: 0  bdefend: 60  injury: 24  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 284 slam2
+   pic: 34  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
@@ -1116,7 +1138,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 280 staff_combo
-   pic: 95  state: 3  wait: 2  next: 281  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav  hit_j: 240
+   pic: 95  state: 3  wait: 2  next: 281  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
    itr:
       kind: 0  x: 46  y: 33  w: 68  h: 26  dvx: 0  dvy: -20  fall: 70  vrest: 6  arest: 0  bdefend: 60  injury: 17  effect: 0
    itr_end:
@@ -1126,7 +1148,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 281 staff_combo
-   pic: 95  state: 3  wait: 6  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 240
+   pic: 95  state: 3  wait: 12  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 240
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
