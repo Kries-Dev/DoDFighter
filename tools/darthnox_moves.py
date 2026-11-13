@@ -182,7 +182,29 @@ BASICS = [
     frame(205, 'fire', 66, 18, 1, 206, body=False),
     frame(206, 'fire', 65, 18, 1, 205, body=False),
     frame(207, 'tired', 26, 15, 2, 0, body=False),
-]
+
+    '# Grab (120-123) and throw (232-234; also the item throws 45-54) keep Deep\'s\n'
+    '# mechanics and hold points; pictures only. Grab row: reach 68, grip 69, stab\n'
+    '# wind-up 70, stab 71 (A while holding). Throw row: wind-up 72, hurl 73, follow 74.',
+    frame(120, 'catching', 68, 9, 2, 121, body=False),
+    frame(121, 'catching', 69, 9, 0, 0, body=False),
+    frame(122, 'catching', 70, 9, 5, 123, body=False),
+    frame(123, 'catching', 71, 9, 3, 121, body=False),
+    frame(232, 'throw_lying_man', 72, 9, 3, 233, body=False),
+    frame(233, 'throw_lying_man', 73, 9, 1, 234, body=False),
+    frame(234, 'throw_lying_man', 74, 9, 4, 999, body=False),
+    frame(45, 'light_weapon_thw', 72, 15, 3, 46, body=False),
+    frame(46, 'light_weapon_thw', 73, 15, 1, 47, body=False),
+    frame(47, 'light_weapon_thw', 74, 15, 9, 999, body=False),
+    frame(50, 'heavy_weapon_thw', 72, 15, 4, 51, body=False),
+    frame(51, 'heavy_weapon_thw', 73, 15, 7, 999, body=False),
+    frame(52, 'sky_lgt_wp_thw', 72, 15, 3, 53, body=False),
+    frame(53, 'sky_lgt_wp_thw', 73, 15, 1, 54, body=False),
+    frame(54, 'sky_lgt_wp_thw', 74, 15, 9, 999, body=False),
+
+    '# Being held by someone else (picked_caught): his own hurt and knockdown pictures',
+] + [frame(n, 'picked_caught', pic, 10, 3, 0, body=False)
+     for n, pic in zip(range(130, 145), (24, 25, 26, 28, 29, 30, 30, 31, 29, 28, 29, 30, 30, 31, 29))]
 
 BALL_CX, BALL_CY = 17, 32
 BALL_BOX = (3, 4, 28, 56)

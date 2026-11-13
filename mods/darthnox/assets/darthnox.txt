@@ -2,8 +2,8 @@
 name: DarthNox
 head: mods/darthnox/portrait_f.bmp
 small: mods/darthnox/portrait_s.bmp
-file(0-67): mods/darthnox/darthnox.bmp
-w: 116  h: 86  row: 4  col: 17
+file(0-75): mods/darthnox/darthnox.bmp
+w: 116  h: 86  row: 4  col: 19
 walking_frame_rate 3
 walking_speed 6.000000
 walking_speedz 2.800000
@@ -418,6 +418,130 @@ rowing_distance 4.000000
 
 <frame> 207 tired
    pic: 26  state: 15  wait: 2  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+# Grab (120-123) and throw (232-234; also the item throws 45-54) keep Deep's
+# mechanics and hold points; pictures only. Grab row: reach 68, grip 69, stab
+# wind-up 70, stab 71 (A while holding). Throw row: wind-up 72, hurl 73, follow 74.
+<frame> 120 catching
+   pic: 68  state: 9  wait: 2  next: 121  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 121 catching
+   pic: 69  state: 9  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 122 catching
+   pic: 70  state: 9  wait: 5  next: 123  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 123 catching
+   pic: 71  state: 9  wait: 3  next: 121  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 232 throw_lying_man
+   pic: 72  state: 9  wait: 3  next: 233  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 233 throw_lying_man
+   pic: 73  state: 9  wait: 1  next: 234  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 234 throw_lying_man
+   pic: 74  state: 9  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 45 light_weapon_thw
+   pic: 72  state: 15  wait: 3  next: 46  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 46 light_weapon_thw
+   pic: 73  state: 15  wait: 1  next: 47  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 47 light_weapon_thw
+   pic: 74  state: 15  wait: 9  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 50 heavy_weapon_thw
+   pic: 72  state: 15  wait: 4  next: 51  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 51 heavy_weapon_thw
+   pic: 73  state: 15  wait: 7  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 52 sky_lgt_wp_thw
+   pic: 72  state: 15  wait: 3  next: 53  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 53 sky_lgt_wp_thw
+   pic: 73  state: 15  wait: 1  next: 54  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 54 sky_lgt_wp_thw
+   pic: 74  state: 15  wait: 9  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+# Being held by someone else (picked_caught): his own hurt and knockdown pictures
+<frame> 130 picked_caught
+   pic: 24  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 131 picked_caught
+   pic: 25  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 132 picked_caught
+   pic: 26  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 133 picked_caught
+   pic: 28  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 134 picked_caught
+   pic: 29  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 135 picked_caught
+   pic: 30  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 136 picked_caught
+   pic: 30  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 137 picked_caught
+   pic: 31  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 138 picked_caught
+   pic: 29  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 139 picked_caught
+   pic: 28  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 140 picked_caught
+   pic: 29  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 141 picked_caught
+   pic: 30  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 142 picked_caught
+   pic: 30  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 143 picked_caught
+   pic: 31  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 144 picked_caught
+   pic: 29  state: 10  wait: 3  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
 <frame_end>
 
 # D>A  Crescent: a horizontal swing that launches a fast, light sword wave (crescent.txt)

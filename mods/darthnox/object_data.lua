@@ -22,9 +22,10 @@
 --   * it has any hit_*:  -> its hit_* fields replace Deep's (his own inputs)
 
 local IDLE_PICTURE = 0
--- He fights with a sword: frames kept from Deep that play LF2's punch sound
--- (dash attack, grab throws ...) play the weapon swish instead.
-local SOUND_SWAP = {["data\\007.wav"] = "data\\008.wav"}
+-- He fights with a sword: frames kept from Deep that play LF2's punch sounds
+-- (007: dash attack, grab throw; 014: hitting a held opponent) play the weapon
+-- swish instead.
+local SOUND_SWAP = {["data\\007.wav"] = "data\\008.wav", ["data\\014.wav"] = "data\\008.wav"}
 
 return function(base)
     local load = base.load
