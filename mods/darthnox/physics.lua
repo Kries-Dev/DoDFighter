@@ -12,10 +12,10 @@ local KEEP_ON_LANDING = {
 }
 local CROUCH_ALTERNATE = 219
 
--- Mathilde's launcher strikes (300, 295) clear her hit rest on everyone when
--- they start: the stab she vaulted from leaves a 20-tick rest that would void
--- an early strike.
-local MATHILDE, STRIKE_START = 63, {[300] = true, [295] = true}
+-- Mathilde's launcher strikes (300, 295) and her DJA air extension (320) clear
+-- her hit rest on everyone when they start: the stab she went up from leaves a
+-- 20-tick rest that would void an early hit.
+local MATHILDE, STRIKE_START = 63, {[300] = true, [295] = true, [320] = true}
 
 local function fresh_start(match, value)
     if not STRIKE_START[value.frame] then value.dod_fresh = nil return end

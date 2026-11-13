@@ -163,21 +163,24 @@ items) come from **Davis** (`object_data.lua` → `FIGHTERS`).
 | …then J | Vault | 240-244 | 20 | plants the staff and flips forward ~140 px, ~70 px high; no hit of its own |
 | …vault, then A | Launcher strike | 300-303 | — | one rising staff swing (26): launches a grounded target (~55 px); a target already in the air only gets a small pop (`combat.lua`), so it starts a juggle |
 | …strike, then J | Vault 2 | 290-294 | 20 | a second vault from mid-air; its A (295-298) is the same strike and ends the chain. Stab → vault → A → vault → A: 3 hits, ~80 |
-| D>A, then DJA | Jump + diving stab | 315-316, 310-313 | 20 | (the J starts the vault, so it costs its 20) she jumps, hangs, then stabs 45° down while dropping along the staff (34, knockdown; spikes an airborne target). Also DvA during either vault. Art: her extension frames tilted 35° (`tools/make_mathilde_dive.py`) |
+| D>A, then DJA | Jump + air staff extension | 315-316, 320-324 | 20 | (the J starts the vault, so it costs its 20) she jumps ~80-100 px and, hanging there, shoots the staff out 35° down-forward like the D>A (`m_pole_d.txt`, object 67, same sound); the hitboxes follow the staff down to the ground, D>A's hit (32). Reaches a standing opponent ~95-190 px ahead. Also DJA during vault 1 |
+| DvA during a vault | Diving stab | 310-313 | 0 | a short hang, then she stabs 45° down while dropping along the staff (34, knockdown; spikes an airborne target). Art: her extension frames tilted 35° (`tools/make_mathilde_dive.py`) |
 | DvA | Staff combo | 270-281 | 40 | ten staff strikes from its own animation (motion arcs), 16-28 each; the final hit launches straight up and J on its last frame vaults. `physics.lua` keeps it going through a landing |
 | D^A | Homing staff | 245-248 | 75 | a conjure-and-fling cast that sends a spinning staff copy (`m_staff.txt`, object 64) after the nearest enemy like John's disc (`hit_Fa: 1`), 35 + knockdown |
-| D^J | Tornado | 250-258 | 200 | she twirls and sends a magic tornado (`m_tornado.txt`, object 65) drifting forward ~150 px; its whirlwind boxes match the drawing and lift whoever it touches once for ~1 s (`combat.lua`: no re-lifting, half landing damage), ~30-40 |
-| DvJ | Clone | 260-266 | 300 | dance spin, then an AI copy of her appears behind her; `objects.lua` gives it 15 HP (Rudolf's clones have 10) |
+| D^J | Tornado | 250-258 | 200 | she twirls and sends a magic tornado (`m_tornado.txt`, object 65) drifting forward ~150 px; its whirlwind boxes match the drawing and lift whoever it touches once for ~1 s (`combat.lua`: no re-lifting, half landing damage), ~30-40. Sound: Freeze's whirlwind (LF2 `073.wav`) |
+| DvJ | Clone | 260-266 | 300 | dance spin in a ring of twinkling stars, then an AI copy of her appears behind her with Rudolf's clone sound (LF2 `062.wav`); `objects.lua` gives it 15 HP (Rudolf's clones have 10) |
 
-Sheet `mathilde.bmp`: 376×2444, 104 cells of 93×93 (`row: 4  col: 26`), centre 44,89.
+Sheet `mathilde.bmp`: 376×2538, 108 cells of 93×93 (`row: 4  col: 27`), centre 44,89.
 Rows: idle, walk, run, swing, poke, jump, hurt, knockdown, overhead smash, block,
 extension, vault, throwing motion, twirl, dance spin, roll, grab, throw, frozen,
 burning, vault with a frost aura, conjure-and-fling cast, staff combo (2 rows),
-vault with a fire aura, diving stab (row 25, made by `tools/make_mathilde_dive.py`). Effects (`m_staff.bmp`, `m_tornado.bmp`, `m_pole.bmp`) are drawn by
+vault with a fire aura, diving stab (row 25, made by `tools/make_mathilde_dive.py`), starry dance spin (row 26,
+`tools/make_mathilde_stars.py`, which also sets two unused palette slots to a violet glow).
+Effects (`m_staff.bmp`, `m_tornado.bmp`, `m_pole.bmp`, `m_pole_d.bmp`) are drawn by
 `tools/make_mathilde_fx.py`. Her sounds (`assets/snd/`: running stab, staff cast,
 vault strike, tornado, clone) were supplied as mp3, converted with
 `tools/to_wav.ps1` and made game-ready (lead-in silence trimmed, loudness
-normalised, ~1.2 s max) with `tools/prepare_sfx.py`. The first prepared versions of the other four (`m_run`, `m_vault`, `m_twist`, `m_clone`) loaded but were never heard in game while `m_staff.wav` played on every move, so they were rebuilt from the original uploads as `mrun`, `mvault`, `mtwist`, `mclone` (loudness matched to `m_staff`); her grab-and-hit keeps LF2's punch sound. Portraits `mathilde_f.bmp` / `mathilde_s.bmp`.
+normalised, ~1.2 s max) with `tools/prepare_sfx.py`. The first prepared versions of the other four (`m_run`, `m_vault`, `m_twist`, `m_clone`) loaded but were never heard in game while `m_staff.wav` played on every move, so they were rebuilt from the original uploads as `mrun`, `mvault`, `mtwist`, `mclone` (loudness matched to `m_staff`). Those played in game, but `mtwist` (tornado) still wasn't heard and `mclone` didn't sound magic, so LF2's Freeze whirlwind and Rudolf clone sounds replaced them (the files stay in `snd/`, unused); `mrun` had its quiet lead-in cut (`prepare_sfx.py ... 0.9 0.5`) so it hits on the stab. Her grab-and-hit keeps LF2's punch sound. Portraits `mathilde_f.bmp` / `mathilde_s.bmp`.
 
 Verified headless vs Deep: combo chain into the smash, extension 28, vault 89 px,
 homing staff curving onto a target 400 px away and off her line, tornado lifting

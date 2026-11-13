@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: MIT
 -- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63), the objects their
--- moves spawn (62, 64, 65) and the Urban Bridge stage without editing base scripts.
+-- moves spawn (62, 64-67) and the Urban Bridge stage without editing base scripts.
 
 return function(base)
     -- Our fighters (object type 0) and the objects their frames spawn (opoint
@@ -14,6 +14,7 @@ return function(base)
         {id = 64, kind = 3, path = "mods/darthnox/m_staff.txt"},    -- Mathilde's homing staff
         {id = 65, kind = 3, path = "mods/darthnox/m_tornado.txt"},  -- Mathilde's tornado
         {id = 66, kind = 3, path = "mods/darthnox/m_pole.txt"},     -- Mathilde's extending staff (visual)
+        {id = 67, kind = 3, path = "mods/darthnox/m_pole_d.txt"},   -- the same, diagonal (her DJA in the air)
     }
     local stage_path = "mods/darthnox/bg/bridge.txt"
     local load, objects, backgrounds = base.load, base.objects, base.backgrounds

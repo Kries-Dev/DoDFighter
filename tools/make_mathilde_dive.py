@@ -8,6 +8,7 @@ around her waist, for the DvA-during-the-vault diving stab. Row 25 is written
 (or rewritten, so this can be re-run after the sheet is rebuilt).
 """
 import sys
+import io
 from PIL import Image
 
 CELL, PITCH, COLS = 93, 94, 4      # 93 px cells, 1 px gutter
@@ -17,7 +18,9 @@ TILT = 35                          # degrees, clockwise = staff pointing down-fo
 
 
 def main(path):
-    sheet = Image.open(path)
+    with open(path, 'rb') as f:          # read into memory: Pillow memory-maps BMPs,
+        sheet = Image.open(io.BytesIO(f.read()))   # which blocks overwriting on Windows
+    sheet.load()
     assert sheet.mode == 'P', 'mathilde.bmp should be 8-bit palettised'
     rows = max(sheet.height // PITCH, TARGET_ROW + 1)
     if sheet.height < rows * PITCH:
@@ -31,7 +34,10 @@ def main(path):
         # Index 0 is the transparent key; NEAREST keeps the palette indices intact.
         tilted = cell.rotate(-TILT, resample=Image.NEAREST, center=PIVOT, fillcolor=0)
         sheet.paste(tilted, (col * PITCH, TARGET_ROW * PITCH))
-    sheet.save(path)
+    out = io.BytesIO()                  # built in memory, then written in one go
+    sheet.save(out, format='BMP')
+    with open(path, 'wb') as f:
+        f.write(out.getvalue())
     print(f'wrote pictures {TARGET_ROW * COLS}-{TARGET_ROW * COLS + 3}; sheet is now {rows} rows')
 
 

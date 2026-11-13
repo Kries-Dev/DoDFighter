@@ -10,10 +10,10 @@ everything here is either her own frame (has bdy/itr, or a name Davis doesn't
 use at that number) or a picture-only frame with Davis's exact name.
 Edit the tables and re-run; the whole of mathilde.txt is generated.
 """
-import os, sys
+import math, os, sys
 
 CX, CY = 44, 89                   # sheet registration (autosprite_to_lf2.py output)
-CELL = (93, 93, 26)               # w, h, rows of mathilde.bmp
+CELL = (93, 93, 27)               # w, h, rows of mathilde.bmp
 BODY = (CX - 15, CY - 72, 30, 72)
 ABSOLUTE = 550                    # dvy above 500 sets the speed: dvy - 550 (see darthnox_moves.py)
 
@@ -28,11 +28,13 @@ VAULT_ICE, CAST = (80, 81, 82, 83), (84, 85, 86)   # vault with a frost aura; co
 COMBO_PICS = (88, 89, 90, 91, 92, 93, 94, 95)     # the staff-combo clip: eight strikes with motion arcs
 VAULT_FIRE = (96, 97, 98, 99)                     # second vault, fire aura
 DIVE = (100, 101, 102, 103)                       # EXTEND tilted 35 deg down (tools/make_mathilde_dive.py)
+STARRY = (104, 105, 106, 107)                     # DANCE in a ring of stars (tools/make_mathilde_stars.py)
 
 SWISH = 'data\\008.wav'           # weapon swing
 WHOOSH = 'data\\045.wav'          # big swish (extension stab)
 FLUTE = 'data\\056.wav'           # Henry's flute start (tornado)
-CLONE = 'data\\062.wav'           # Rudolf's clone (unused now: she has her own)
+CLONE = 'data\\062.wav'           # Rudolf's clone (her clone: her own mclone.wav didn't sound magic)
+WHIRL = 'data\\073.wav'           # Freeze's whirlwind (her tornado: mtwist.wav wasn't heard)
 PUNCH = 'data\\007.wav'           # LF2's punch impact (her grab-and-hit keeps it)
 # Her own sounds (supplied as mp3, converted with tools/to_wav.ps1)
 # Rebuilt 2026-11-13 from the original uploads (resampled, loudness matched to
@@ -41,8 +43,7 @@ PUNCH = 'data\\007.wav'           # LF2's punch impact (her grab-and-hit keeps i
 STAFF_SND = 'mods/darthnox/snd/m_staff.wav'    # homing staff cast
 RUN_SND = 'mods/darthnox/snd/mrun.wav'         # running stab, D>A stab, diving stab
 VAULT_SND = 'mods/darthnox/snd/mvault.wav'     # vault strikes
-TWIST_SND = 'mods/darthnox/snd/mtwist.wav'     # tornado
-CLONE_SND = 'mods/darthnox/snd/mclone.wav'     # clone
+# mtwist.wav / mclone.wav stay in snd/ unused: LF2's whirlwind and clone sounds replaced them.
 FIRE_SND = 'data\\070.wav'        # Firen's fire-trail sound (second vault)
 FIREN_FLAME, GROUND_FIRE = 211, 50  # Firen's flame object and its ground-fire action
 
@@ -66,6 +67,9 @@ TORNADO_TICKS = 32                # the tornado object lifts for ~1 s (Henry's f
 TORNADO_SPEED = 4                 # it drifts forward ~130 px while it lifts
 POLE_REACH = 170                  # D>A: the staff shoots out to 200 px (Wukong-style), m_pole.txt
 POLE_SPAWN = (40, -41)            # where it leaves her staff, rel. to her feet (measured: staff tip +44, -41)
+DIAG_SPAWN = (33, -18)            # the same tip on the DIVE pictures (rotated 35 deg about her waist)
+DIAG_JUMP = 15                    # DJA air extension: jump speed, ~80-100 px up before the staff shoots out
+DIAG_REACH = (70, 140, 200)       # its staff length per frame: the tip reaches the ground from up there
 COMBO_SCALE = 0.24                 # DvA after the vault: Louis EX's DvA hits at 40%, more of them
 VAULT_SPEED = 5                   # forward speed: lands ~140 px out, in front of a target the stab reached
 LAUNCH = 13                       # launcher strike: upward speed given to a grounded target
@@ -105,6 +109,21 @@ def pic(n, name, picture, hits=None):
 def staff(reach=54, **kw):        # staff hitbox in front of the chest
     kw.setdefault('effect', 0)
     return itr(CX + 2, CY - 56, reach, 26, **kw)
+
+
+def diag_staff(length):
+    """D>A's hit along the diagonal staff (35 deg down-forward from DIAG_SPAWN):
+    one box per 60 px stretch of it, padded 12 px around the line."""
+    ca, sa = math.cos(math.radians(35)), math.sin(math.radians(35))
+    boxes, start = '', 0
+    while start < length:
+        end = min(start + 60, length)
+        x0, x1 = DIAG_SPAWN[0] + ca * start, DIAG_SPAWN[0] + ca * end
+        y0, y1 = DIAG_SPAWN[1] + sa * start, DIAG_SPAWN[1] + sa * end
+        boxes += itr(CX + round(x0), CY + round(y0) - 12, round(x1 - x0), round(y1 - y0) + 24,
+                     dvx=6, fall=40, vrest=20, bdefend=30, injury=32)
+        start = end
+    return boxes
 
 
 PICK_UP = itr(CX - 19, CY - 22, 37, 24, vrest=1, kind=2)
@@ -247,11 +266,22 @@ FRAMES = [
         frame(base + 2, 'air_strike', SWING[2], 3, 3, base + 3, hits=follow),
         frame(base + 3, 'air_strike', SWING[2], 3, 3, 999, hits=follow))],
 
-    '# Diving stab: DJA during the D>A stab (a jump first, 315-316) or DvA during a\n'
-    '# vault. A short hang, then she drives the staff down-forward at 45 degrees and\n'
-    '# drops along it. Spikes an airborne target, knocks down a standing one.',
-    frame(315, 'dive_jump', JUMP[0], 3, 1, 316, dvx=3, dvy=ABSOLUTE - 14, body=False),
-    frame(316, 'dive_jump', JUMP[1], 3, 4, 310, dvx=3),
+    '# DJA during the D>A stab (or during vault 1): she jumps higher and, hanging at\n'
+    '# the top, shoots the staff out diagonally down-forward like the D>A extension\n'
+    '# (m_pole_d.txt, object 67, same sound). The hitboxes follow the staff down the\n'
+    '# 35-degree line as it grows (70, 140, 200 px), with D>A\'s hit.',
+    frame(315, 'air_ext_jump', JUMP[0], 3, 1, 316, dvx=3, dvy=ABSOLUTE - DIAG_JUMP, body=False),
+    frame(316, 'air_ext_jump', JUMP[1], 3, 4, 320, dvx=3),
+    frame(320, 'air_ext', DIVE[0], 3, 1, 321, dvx=ABSOLUTE, dvy=ABSOLUTE),
+    frame(321, 'air_ext', DIVE[1], 3, 2, 322, dvx=ABSOLUTE, dvy=ABSOLUTE, sound=RUN_SND,
+          extra=opoint(67, CX + DIAG_SPAWN[0], CY + DIAG_SPAWN[1]) + diag_staff(DIAG_REACH[0])),
+    frame(322, 'air_ext', DIVE[1], 3, 2, 323, dvx=ABSOLUTE, dvy=ABSOLUTE, extra=diag_staff(DIAG_REACH[1])),
+    frame(323, 'air_ext', DIVE[2], 3, 3, 324, dvx=ABSOLUTE, dvy=ABSOLUTE, extra=diag_staff(DIAG_REACH[2])),
+    frame(324, 'air_ext', DIVE[2], 3, 3, 999, dvx=ABSOLUTE, dvy=ABSOLUTE + 1),   # the pole retracts, then she drops
+
+    '# Diving stab: DvA during a vault. A short hang, then she drives the staff\n'
+    '# down-forward at 45 degrees and drops along it. Spikes an airborne target,\n'
+    '# knocks down a standing one.',
     frame(310, 'dive_stab', DIVE[0], 3, 1, 311, dvy=ABSOLUTE - 3),
     *[frame(311 + i, 'dive_stab', DIVE[1 + i], 3, 2 + i, 312 + i, dvx=DIVE_SPEED, dvy=ABSOLUTE + DIVE_SPEED,
             sound=RUN_SND if i == 0 else None,
@@ -269,17 +299,17 @@ FRAMES = [
     '# drifting forward; its whirlwind itrs (kind 10/11, like Freeze\'s whirlwind)\n'
     '# match the drawing and lift anyone it touches for ~1 s.',
     frame(250, 'tornado', TWIRL[0], 3, 1, 251, mp=200),
-    frame(251, 'tornado', TWIRL[1], 3, 1, 252, sound=TWIST_SND, extra=opoint(65, CX + 40, CY - 65)),
+    frame(251, 'tornado', TWIRL[1], 3, 1, 252, sound=WHIRL, extra=opoint(65, CX + 40, CY - 65)),
     *[frame(252 + i, 'tornado', TWIRL[i % 4], 3, 2, 253 + i if i < 5 else 258) for i in range(6)],
     frame(258, 'tornado', TWIRL[2], 3, 3, 999),
 
-    '# DvJ  Clone: a dance spin, then a copy of herself (object 63) appears behind\n'
+    '# DvJ  Clone: a dance spin in a ring of stars, then a copy of herself (object 63) appears behind\n'
     '# her, AI-controlled like Rudolf\'s clones; objects.lua gives it 15 HP (Rudolf\'s\n'
     '# have 10).',
-    frame(260, 'clone', DANCE[0], 3, 2, 261, mp=300),
-    *[frame(261 + i, 'clone', DANCE[(i + 1) % 4], 3, 2, 262 + i) for i in range(4)],
-    frame(265, 'clone', DANCE[1], 3, 1, 266, sound=CLONE_SND, extra=opoint(63, CX - 30, CY)),
-    frame(266, 'clone', DANCE[3], 3, 3, 999),
+    frame(260, 'clone', STARRY[0], 3, 2, 261, mp=300),
+    *[frame(261 + i, 'clone', STARRY[(i + 1) % 4], 3, 2, 262 + i) for i in range(4)],
+    frame(265, 'clone', STARRY[1], 3, 1, 266, sound=CLONE, extra=opoint(63, CX - 30, CY)),
+    frame(266, 'clone', STARRY[3], 3, 3, 999),
 ] + COMBO
 
 
@@ -344,6 +374,19 @@ def pole_ball():
                 'mods/darthnox/m_pole.bmp', (210, 16), c, frames)
 
 
+def diag_pole_ball():
+    # The D>A pole drawn 35 deg down-forward (make_mathilde_fx.py pole_d.bmp),
+    # centre at its upper end; same timeline as the straight one.
+    c = (4, 4)
+    timeline = [(0, 2), (1, 2), (2, 2), (3, 2), (4, 0), (5, 0), (6, 0), (7, 0)]
+    frames = []
+    for n, (picture, wait) in enumerate(timeline):
+        nxt = n + 1 if n < len(timeline) - 1 else 1000
+        frames.append(ball_frame(n, 'pole', picture, 3000, nxt, c).replace('wait: 1', f'wait: {wait}'))
+    return ball('Mathilde\'s DJA diagonal staff extension, visual only.',
+                'mods/darthnox/m_pole_d.bmp', (172, 124), c, frames)
+
+
 def main(assets):
     with open(os.path.join(assets, 'mathilde.txt'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(header() + '\n' + '\n'.join(FRAMES))
@@ -353,7 +396,9 @@ def main(assets):
         f.write(tornado_ball())
     with open(os.path.join(assets, 'm_pole.txt'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(pole_ball())
-    print('wrote mathilde.txt, m_staff.txt, m_tornado.txt, m_pole.txt')
+    with open(os.path.join(assets, 'm_pole_d.txt'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(diag_pole_ball())
+    print('wrote mathilde.txt, m_staff.txt, m_tornado.txt, m_pole.txt, m_pole_d.txt')
 
 
 if __name__ == '__main__':

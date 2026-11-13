@@ -2,8 +2,8 @@
 name: Mathilde
 head: mods/darthnox/mathilde_f.bmp
 small: mods/darthnox/mathilde_s.bmp
-file(0-103): mods/darthnox/mathilde.bmp
-w: 93  h: 93  row: 4  col: 26
+file(0-107): mods/darthnox/mathilde.bmp
+w: 93  h: 93  row: 4  col: 27
 walking_frame_rate 3
 walking_speed 7.000000
 walking_speedz 3.200000
@@ -903,20 +903,89 @@ rowing_distance 5.000000
    bdy_end:
 <frame_end>
 
-# Diving stab: DJA during the D>A stab (a jump first, 315-316) or DvA during a
-# vault. A short hang, then she drives the staff down-forward at 45 degrees and
-# drops along it. Spikes an airborne target, knocks down a standing one.
-<frame> 315 dive_jump
-   pic: 20  state: 3  wait: 1  next: 316  dvx: 3  dvy: 536  dvz: 0  centerx: 44  centery: 89
+# DJA during the D>A stab (or during vault 1): she jumps higher and, hanging at
+# the top, shoots the staff out diagonally down-forward like the D>A extension
+# (m_pole_d.txt, object 67, same sound). The hitboxes follow the staff down the
+# 35-degree line as it grows (70, 140, 200 px), with D>A's hit.
+<frame> 315 air_ext_jump
+   pic: 20  state: 3  wait: 1  next: 316  dvx: 3  dvy: 535  dvz: 0  centerx: 44  centery: 89
 <frame_end>
 
-<frame> 316 dive_jump
-   pic: 21  state: 3  wait: 4  next: 310  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89
+<frame> 316 air_ext_jump
+   pic: 21  state: 3  wait: 4  next: 320  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
+<frame> 320 air_ext
+   pic: 100  state: 3  wait: 1  next: 321  dvx: 550  dvy: 550  dvz: 0  centerx: 44  centery: 89
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 321 air_ext
+   pic: 101  state: 3  wait: 2  next: 322  dvx: 550  dvy: 550  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/mrun.wav
+   opoint:
+      kind: 1  x: 77  y: 71  action: 0  dvx: 0  dvy: 0  oid: 67  facing: 0
+   opoint_end:
+   itr:
+      kind: 0  x: 77  y: 59  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+   itr_end:
+   itr:
+      kind: 0  x: 126  y: 93  w: 8  h: 30  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 322 air_ext
+   pic: 101  state: 3  wait: 2  next: 323  dvx: 550  dvy: 550  dvz: 0  centerx: 44  centery: 89
+   itr:
+      kind: 0  x: 77  y: 59  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+   itr_end:
+   itr:
+      kind: 0  x: 126  y: 93  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+   itr_end:
+   itr:
+      kind: 0  x: 175  y: 128  w: 16  h: 35  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 323 air_ext
+   pic: 102  state: 3  wait: 3  next: 324  dvx: 550  dvy: 550  dvz: 0  centerx: 44  centery: 89
+   itr:
+      kind: 0  x: 77  y: 59  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+   itr_end:
+   itr:
+      kind: 0  x: 126  y: 93  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+   itr_end:
+   itr:
+      kind: 0  x: 175  y: 128  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+   itr_end:
+   itr:
+      kind: 0  x: 224  y: 162  w: 16  h: 35  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 324 air_ext
+   pic: 102  state: 3  wait: 3  next: 999  dvx: 550  dvy: 551  dvz: 0  centerx: 44  centery: 89
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+# Diving stab: DvA during a vault. A short hang, then she drives the staff
+# down-forward at 45 degrees and drops along it. Spikes an airborne target,
+# knocks down a standing one.
 <frame> 310 dive_stab
    pic: 100  state: 3  wait: 1  next: 311  dvx: 0  dvy: 547  dvz: 0  centerx: 44  centery: 89
    bdy:
@@ -995,7 +1064,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 251 tornado
-   pic: 53  state: 3  wait: 1  next: 252  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/mtwist.wav
+   pic: 53  state: 3  wait: 1  next: 252  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\073.wav
    opoint:
       kind: 1  x: 84  y: 24  action: 0  dvx: 0  dvy: 0  oid: 65  facing: 0
    opoint_end:
@@ -1053,46 +1122,46 @@ rowing_distance 5.000000
    bdy_end:
 <frame_end>
 
-# DvJ  Clone: a dance spin, then a copy of herself (object 63) appears behind
+# DvJ  Clone: a dance spin in a ring of stars, then a copy of herself (object 63) appears behind
 # her, AI-controlled like Rudolf's clones; objects.lua gives it 15 HP (Rudolf's
 # have 10).
 <frame> 260 clone
-   pic: 56  state: 3  wait: 2  next: 261  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  mp: 300
+   pic: 104  state: 3  wait: 2  next: 261  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  mp: 300
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 261 clone
-   pic: 57  state: 3  wait: 2  next: 262  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 105  state: 3  wait: 2  next: 262  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 262 clone
-   pic: 58  state: 3  wait: 2  next: 263  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 106  state: 3  wait: 2  next: 263  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 263 clone
-   pic: 59  state: 3  wait: 2  next: 264  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 107  state: 3  wait: 2  next: 264  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 264 clone
-   pic: 56  state: 3  wait: 2  next: 265  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 104  state: 3  wait: 2  next: 265  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 265 clone
-   pic: 57  state: 3  wait: 1  next: 266  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/mclone.wav
+   pic: 105  state: 3  wait: 1  next: 266  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\062.wav
    opoint:
       kind: 1  x: 14  y: 89  action: 0  dvx: 0  dvy: 0  oid: 63  facing: 0
    opoint_end:
@@ -1102,7 +1171,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 266 clone
-   pic: 59  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 107  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:

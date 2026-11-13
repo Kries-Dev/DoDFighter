@@ -5,6 +5,8 @@
 
 staff.bmp    4 x 2 cells of 64x64: pictures 0-3 a spinning bo staff (black,
              gold caps) with a magenta magic glow, 4-7 the same breaking up.
+pole.bmp     4 x 2 cells of 210x16: the D>A staff extension, out and back.
+pole_d.bmp   4 x 2 cells of 172x124: the same, 35 deg down-forward (DJA in the air).
 tornado.bmp  4 x 2 cells of 150x130: pictures 0-3 a swirling magic tornado
              (see-through dither so fighters inside stay visible), 4-7 fading.
 Palette and look match the fighters: bold dark outline, flat shading.
@@ -143,10 +145,39 @@ def pole_frame(length, extending):
     return px
 
 
+DIAG_W, DIAG_H, DIAG_ORIGIN, DIAG_ANGLE = 172, 124, (4, 4), math.radians(35)
+DIAG_LENGTHS = (70, 140, 200, 200, 150, 100, 60, 25)   # longer: it comes down from a jump
+
+
+def diag_pole_frame(length, extending):
+    """pole_frame drawn 35 deg down-forward from DIAG_ORIGIN (DJA from the air)."""
+    W, H = DIAG_W, DIAG_H
+    ca, sa = math.cos(DIAG_ANGLE), math.sin(DIAG_ANGLE)
+    px = [[0] * W for _ in range(H)]
+    for y in range(H):
+        for x in range(W):
+            dx, dy = x + .5 - DIAG_ORIGIN[0], y + .5 - DIAG_ORIGIN[1]
+            along, across = dx * ca + dy * sa, -dx * sa + dy * ca
+            if 0 <= along <= length + 1 and abs(across) <= 2.6:
+                if abs(across) > 1.6 or along > length:
+                    px[y][x] = OUTLINE
+                elif along >= length - 8:
+                    px[y][x] = GOLD_HI if across < -0.5 else GOLD
+                else:
+                    px[y][x] = SHINE if across < -0.5 else BLACK
+            elif extending and length - 50 <= along <= length - 12 and 4.5 <= abs(across) <= 7.5:
+                k = 0 if abs(across) < 6 else 1
+                if int(along + k) % 3:
+                    px[y][x] = GLOW3 if k == 0 else WHITE
+    return px
+
+
 def main(out_dir):
     os.makedirs(out_dir, exist_ok=True)
     poles = [pole_frame(n, i < 3) for i, n in enumerate(POLE_LENGTHS)]
     sheet(poles, POLE_W, POLE_H, os.path.join(out_dir, 'pole.bmp'))
+    sheet([diag_pole_frame(n, i < 3) for i, n in enumerate(DIAG_LENGTHS)], DIAG_W, DIAG_H,
+          os.path.join(out_dir, 'pole_d.bmp'))
     spins = [staff_frame(i * math.pi / 4, i) for i in range(4)]
     sheet(spins + [fade(staff_frame(i * math.pi / 4, i), k) for i, k in zip(range(4), (0.7, 0.45, 0.25, 0.1))],
           64, 64, os.path.join(out_dir, 'staff.bmp'))
