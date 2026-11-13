@@ -8,7 +8,7 @@
 -- where they are on landing (now on the ground) instead.
 
 local KEEP_ON_LANDING = {
-    [63] = {first = 270, last = 281},   -- Mathilde: the staff combo after the vault
+    [63] = {{270, 284}, {295, 297}},   -- Mathilde: staff combo, fire strike, ice strike + its J window
 }
 local CROUCH_ALTERNATE = 219
 
@@ -19,8 +19,10 @@ return function(base)
         local keep = KEEP_ON_LANDING[value.record.id]
         local before = value.frame
         local result = step(match, value)
-        if keep and before >= keep.first and before <= keep.last and value.frame == CROUCH_ALTERNATE then
-            value.frame = before
+        if keep and value.frame == CROUCH_ALTERNATE then
+            for _, range in ipairs(keep) do
+                if before >= range[1] and before <= range[2] then value.frame = before end
+            end
         end
         return result
     end

@@ -138,11 +138,26 @@ use 63 for Mathilde.
 
 ## Where it stands / next
 
-- **Last push:** `59fc7be`. Mathilde's latest changes: an aligned, slower
-  staff extension, vault 1 that freezes, J into a fire vault, DvA with its own
-  combo animation (also usable on its own), and fixed sound loudness. All
-  verified headless; **the user hasn't confirmed in game yet**. Ask how it
-  plays.
+- **Mathilde's current kit (verified headless):**
+  - D>A stab: 170 px reach, quicker retract.
+  - J during the stab: vault (~100 px forward, ~70 px high, no hit of its own).
+  - A during the vault: ice strike that freezes (295–297), followed by a long
+    J window: J gives the fire vault (290–294); A during that gives a fire
+    strike that burns and leaves ground fire (282–284).
+  - DvA combo: −20% damage, ~118.
+  The user hasn't confirmed any of this in game yet.
+- **Open issue, sounds:** the user hears only the homing-staff sound. Checked
+  so far:
+  - all five WAVs are sent by the engine at full volume;
+  - they load without decode errors in the real windowed game;
+  - they've been trimmed and normalised.
+
+  The remaining suspect is masking, since the clips are short (0.25–0.4 s) and
+  play alongside hit sounds. Next steps: ask which ones are missing, and try
+  making them longer or louder, or moving them onto the move's first frame.
+- **Known LF2 behaviour:** a fighter burnt by the fire strike can fly back into
+  Mathilde and burn her (~31). Possible fix: a larger dvx on the fire strike,
+  or Lua that skips damage from that burning victim to his attacker.
 - The user plans **3–4 fighters** to start; the next one is a new design from
   the user.
 - **Ideas offered but not done:**

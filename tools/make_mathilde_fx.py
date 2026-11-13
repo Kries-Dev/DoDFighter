@@ -113,7 +113,7 @@ def tornado_frame(phase, W=150, H=130):
     return px
 
 
-POLE_LENGTHS = (70, 140, 200, 200, 160, 110, 60, 30)   # D>A: shoots out, holds, retracts
+POLE_LENGTHS = (60, 120, 170, 170, 130, 90, 50, 20)   # D>A: shoots out, holds, retracts
 POLE_W, POLE_H = 210, 16
 
 
