@@ -773,15 +773,15 @@ rowing_distance 5.000000
 <frame_end>
 
 # Vault (J during the extension): plant, launch over the staff (invulnerable,
-# absolute dvy so hit lag can't stack it), an ICE strike on the way down
-# (effect 3 freezes, like Freeze's ice ball), then a plain fall. Icy aura on
-# the pictures. DvA during the vault starts the combo (270).
+# absolute dvy so hit lag can't stack it), a strike on the way down that only
+# staggers (fall 20, so the combo can follow), then a plain fall. Icy aura on
+# the pictures. DvA during the vault starts the combo (270), whose last hit freezes.
 <frame> 240 vault
-   pic: 80  state: 3  wait: 1  next: 241  dvx: 4  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
+   pic: 80  state: 3  wait: 1  next: 241  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
 <frame_end>
 
 <frame> 241 vault
-   pic: 81  state: 3  wait: 1  next: 242  dvx: 10  dvy: 535  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
+   pic: 81  state: 3  wait: 1  next: 242  dvx: 6  dvy: 535  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
 <frame_end>
 
 <frame> 242 vault
@@ -791,7 +791,7 @@ rowing_distance 5.000000
 <frame> 243 vault
    pic: 83  state: 3  wait: 3  next: 244  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_vault.wav  hit_Da: 270
    itr:
-      kind: 0  x: 24  y: 39  w: 72  h: 110  dvx: 6  dvy: 0  fall: 70  vrest: 15  arest: 0  bdefend: 30  injury: 25  effect: 3
+      kind: 0  x: 24  y: 39  w: 72  h: 110  dvx: 2  dvy: 0  fall: 20  vrest: 15  arest: 0  bdefend: 30  injury: 25  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1063,7 +1063,7 @@ rowing_distance 5.000000
 <frame> 280 staff_combo
    pic: 33  state: 3  wait: 2  next: 281  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
    itr:
-      kind: 0  x: 46  y: 33  w: 66  h: 26  dvx: 9  dvy: -12  fall: 70  vrest: 6  arest: 0  bdefend: 60  injury: 28  effect: 0
+      kind: 0  x: 46  y: 33  w: 66  h: 26  dvx: 9  dvy: -12  fall: 70  vrest: 6  arest: 0  bdefend: 60  injury: 28  effect: 3
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72

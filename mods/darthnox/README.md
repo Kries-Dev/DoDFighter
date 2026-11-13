@@ -160,8 +160,8 @@ items) come from **Davis** (`object_data.lua` → `FIGHTERS`).
 | Input | Move | Frames | MP | What it does |
 |---|---|---|---|---|
 | D>A | Staff extension | 235-238 | 50 | stabs while the staff shoots out Wukong-style to ~200 px (`m_pole.txt`, object 66, visual) and retracts; the hitbox grows with it, 29-32 |
-| …then J | Vault | 240-244 | — | plants the staff and vaults over it (invulnerable launch, ~90 px high, icy aura); the strike on the way down **freezes** (effect 3, 21) and plays her vault sound |
-| …then DvA | Staff combo | 270-281 | 40 | a Louis EX-style flurry: ten staff strikes at 40% of his DvA (16-28 each, ~148 total on a standing opponent, who flinches until the final launcher); after a freeze it shatters and juggles ~3 hits. `physics.lua` keeps it going through her landing |
+| …then J | Vault | 240-244 | — | plants the staff and vaults ~160 px (invulnerable launch, ~90 px high, icy aura), landing in front of whoever the stab reached; the strike on the way down staggers (21) and plays her vault sound |
+| …then DvA | Staff combo | 270-281 | 40 | a Louis EX-style flurry: ten staff strikes at 40% of his DvA (16-28 each, ~148 on a standing opponent, who flinches throughout); the **final hit launches and freezes** (effect 3). After the vault it lands 5-7 hits (~105-130). `physics.lua` keeps it going through her landing |
 | D^A | Homing staff | 245-248 | 75 | a conjure-and-fling cast that sends a spinning staff copy (`m_staff.txt`, object 64) after the nearest enemy like John's disc (`hit_Fa: 1`), 35 + knockdown |
 | D^J | Tornado | 250-258 | 200 | she twirls and sends a magic tornado (`m_tornado.txt`, object 65) drifting forward ~150 px; its whirlwind boxes match the drawing and lift whoever it touches once for ~1 s (`combat.lua`: no re-lifting, half landing damage), ~30-40 |
 | DvJ | Clone | 260-266 | 300 | dance spin, then an AI copy of her appears behind her; `objects.lua` gives it 15 HP (Rudolf's clones have 10) |

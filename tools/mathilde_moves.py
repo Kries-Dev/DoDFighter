@@ -58,6 +58,7 @@ TORNADO_TICKS = 32                # the tornado object lifts for ~1 s (Henry's f
 TORNADO_SPEED = 4                 # it drifts forward ~130 px while it lifts
 POLE_REACH = 200                  # D>A: the staff shoots out to 200 px (Wukong-style), m_pole.txt
 COMBO_SCALE = 0.4                 # DvA after the vault: Louis EX's DvA hits at 40%, more of them
+VAULT_SPEED = 6                   # forward speed: lands ~140 px out, in front of a target the stab reached
 VAULT_LAUNCH = 15                 # absolute launch speed: ~90 px, over a standing fighter
 
 
@@ -108,9 +109,11 @@ def louis(injury):                # Louis EX's DvA hit, scaled
 # (16-28 each). fall 1 keeps a standing victim flinching on every hit (the
 # engine steps its stun counter 20/40/60, so anything bigger floors them by the
 # 4th hit; 0 would count as 20), and vrest 6 (longer than a frame plus its 3-tick
-# hit lag) so each frame lands once, until the last strike launches them (fall 70); a victim the vault froze is
-# shattered into a fall by the first hit and juggled by the rest (dvy -10), like
-# Louis EX's. She steps forward 2 px a frame to stay on them.
+# hit lag) so each frame lands once, until the last strike launches them (fall
+# 70) and FREEZES them (effect 3). The freeze is on the finisher, not the vault:
+# hitting a frozen fighter shatters the ice into a knockdown, which would cut
+# the combo short. A victim already falling is juggled (dvy -10), like Louis
+# EX's. She steps forward 2 px a frame to stay on them.
 COMBO_HITS = [  # (picture, injury from Louis EX, reach, dvx, dvy)
     (SWING[1], 40, 58, 2, 0), (POKE[1], 40, 64, 2, 0), (SWING[2], 30, 58, 2, 0), (SMASH[1], 60, 60, 2, 0),
     (POKE[1], 40, 64, 2, 0), (SWING[1], 30, 58, 2, 0), (SMASH[2], 60, 60, 2, 0), (EXTEND[1], 70, 96, 3, 0),
@@ -123,7 +126,8 @@ for k, (picture, injury, reach, dvx, dvy) in enumerate(COMBO_HITS):
     COMBO.append(frame(271 + k, 'staff_combo', picture, 3, 1 if not last else 2, 272 + k, dvx=2,
                        sound=SWISH if k % 2 == 0 or last else None,
                        extra=staff(reach, dvx=dvx, dvy=dvy or -10, fall=70 if last else 1, vrest=6,
-                                   bdefend=60 if last else 16, injury=louis(injury))))
+                                   bdefend=60 if last else 16, injury=louis(injury),
+                                   effect=3 if last else 0)))
 COMBO.append(frame(271 + len(COMBO_HITS), 'staff_combo', SMASH[2], 3, 4, 999))
 
 FRAMES = [
@@ -210,15 +214,15 @@ FRAMES = [
     frame(238, 'staff_ext', EXTEND[3], 3, 3, 999, hits={'j': 240}),
 
     '# Vault (J during the extension): plant, launch over the staff (invulnerable,\n'
-    '# absolute dvy so hit lag can\'t stack it), an ICE strike on the way down\n'
-    '# (effect 3 freezes, like Freeze\'s ice ball), then a plain fall. Icy aura on\n'
-    '# the pictures. DvA during the vault starts the combo (270).',
-    frame(240, 'vault', VAULT_ICE[0], 3, 1, 241, dvx=4, body=False, hits=VAULT_COMBO),
-    frame(241, 'vault', VAULT_ICE[1], 3, 1, 242, dvx=10, dvy=ABSOLUTE - VAULT_LAUNCH, body=False, hits=VAULT_COMBO),
+    '# absolute dvy so hit lag can\'t stack it), a strike on the way down that only\n'
+    '# staggers (fall 20, so the combo can follow), then a plain fall. Icy aura on\n'
+    '# the pictures. DvA during the vault starts the combo (270), whose last hit freezes.',
+    frame(240, 'vault', VAULT_ICE[0], 3, 1, 241, dvx=3, body=False, hits=VAULT_COMBO),
+    frame(241, 'vault', VAULT_ICE[1], 3, 1, 242, dvx=VAULT_SPEED, dvy=ABSOLUTE - VAULT_LAUNCH, body=False, hits=VAULT_COMBO),
     frame(242, 'vault', VAULT_ICE[2], 3, 3, 243, body=False, hits=VAULT_COMBO),
     frame(243, 'vault', VAULT_ICE[3], 3, 3, 244, sound=VAULT_SND, hits=VAULT_COMBO,
           # the box reaches 60 px below her feet: it hits a standing fighter while she comes down
-          extra=itr(CX - 20, CY - 50, 72, 110, dvx=6, fall=70, vrest=15, bdefend=30, injury=25, effect=3)),
+          extra=itr(CX - 20, CY - 50, 72, 110, dvx=2, fall=20, vrest=15, bdefend=30, injury=25)),
     frame(244, 'vault', VAULT_ICE[3], 3, 4, 999, hits=VAULT_COMBO),
 
     '# D^A  Homing staff: a throwing motion that sends a spinning copy of the staff\n'
