@@ -138,24 +138,22 @@ use 63 for Mathilde.
 
 ## Where it stands / next
 
-- **Mathilde's current kit (latest; user-requested aerial chain):**
-  - The chain: DvA (~82, ten hits, launcher straight up; J only on the end
-    frame 281, a 13-tick window) → J vault 240–244 (no hit) → A staff slam
-    295–297 (20, pops the target up; J window) → J vault 2 (290–294, higher)
-    → A slam 282–284 (24, knockdown).
-  - No freeze or fire anywhere any more.
-  - Verified headless: DvA → J → A slam works. Slam → J → vault 2 → A has had
-    its window lengthened but is **not yet re-tested**.
-- **Open issue, sounds:** the user hears ONLY the homing projectile; that may
-  even be the stock ball hit sound (`data/020.wav`), not our `m_staff`.
-  Ruled out so far:
-  - the engine sends our sounds at full volume;
-  - they load without decode errors in the windowed game;
-  - they're converted to 22 kHz mono 16-bit.
-
-  Next idea: check `src/adapters/sdl/platform.cpp` `play()`/voice cache, and
-  test a stock wav copied into the mod under a mod path, to see whether any
-  mod-path sound ever plays.
+- **Mathilde's current kit (2026-11-13 redesign of the vault):**
+  - D>A stab → J vault (240-244, no hit). From the vault: **A = air carry**
+    (300-307: two rising strikes, the target is held in front of her by
+    `physics.lua` while she rises, then a slam), **DvA = diving stab**
+    (310-313, 45° down). The old slam / vault 2 / slam 2 chain (282-297) is gone.
+  - DvA ground combo (270-281) unchanged; J on its last frame still vaults.
+  - Verified headless vs Deep: stab → J → A lands 4 hits (~95) at every A
+    timing tried; stab → J → DvA lands (66). Starting the carry clears her hit
+    rest so the stab's 20-tick vrest can't void the first strike.
+- **Open issue, sounds:** the user hears ONLY the D^A staff cast (`m_staff.wav`).
+  Engine path is identical for all frame sounds (animation.lua → sounds.item →
+  SDL voice per file), so the suspects are the files: `m_vault/m_twist/m_clone`
+  were trimmed to 0.25-0.34 s by `prepare_sfx.py`, `m_run` peaks at only 44%.
+  **Test in place:** every move now plays `m_staff.wav`. If the user hears it on
+  all moves, re-prepare the other four from the original mp3s (longer, louder)
+  and restore their names in `mathilde_moves.py`. If not, the trigger is at fault.
 - The user plans **3–4 fighters** to start; the next one is a new design from
   the user.
 - **Ideas offered but not done:**

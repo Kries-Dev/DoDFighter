@@ -13,7 +13,7 @@ Edit the tables and re-run; the whole of mathilde.txt is generated.
 import os, sys
 
 CX, CY = 44, 89                   # sheet registration (autosprite_to_lf2.py output)
-CELL = (93, 93, 25)               # w, h, rows of mathilde.bmp
+CELL = (93, 93, 26)               # w, h, rows of mathilde.bmp
 BODY = (CX - 15, CY - 72, 30, 72)
 ABSOLUTE = 550                    # dvy above 500 sets the speed: dvy - 550 (see darthnox_moves.py)
 
@@ -27,6 +27,7 @@ ICE, BURN = (72, 73), (76, 77, 78)
 VAULT_ICE, CAST = (80, 81, 82, 83), (84, 85, 86)   # vault with a frost aura; conjure-and-fling
 COMBO_PICS = (88, 89, 90, 91, 92, 93, 94, 95)     # the staff-combo clip: eight strikes with motion arcs
 VAULT_FIRE = (96, 97, 98, 99)                     # second vault, fire aura
+DIVE = (100, 101, 102, 103)                       # EXTEND tilted 35 deg down (tools/make_mathilde_dive.py)
 
 SWISH = 'data\\008.wav'           # weapon swing
 WHOOSH = 'data\\045.wav'          # big swish (extension stab)
@@ -34,11 +35,15 @@ FLUTE = 'data\\056.wav'           # Henry's flute start (tornado)
 CLONE = 'data\\062.wav'           # Rudolf's clone (unused now: she has her own)
 PUNCH = 'data\\007.wav'           # LF2's punch impact (her grab-and-hit keeps it)
 # Her own sounds (supplied as mp3, converted with tools/to_wav.ps1)
-RUN_SND = 'mods/darthnox/snd/m_run.wav'        # running stab
-STAFF_SND = 'mods/darthnox/snd/m_staff.wav'    # homing staff cast
-VAULT_SND = 'mods/darthnox/snd/m_vault.wav'    # vault's aerial strike
-TWIST_SND = 'mods/darthnox/snd/m_twist.wav'    # tornado
-CLONE_SND = 'mods/darthnox/snd/m_clone.wav'    # clone
+# SOUND TEST (2026-11-13): only D^A's m_staff.wav is heard in game, so every
+# slot plays that file for now. If they all play, the other files are the
+# problem (too short / quiet after prepare_sfx.py), not the engine; then put
+# the real names back: m_run, m_vault, m_twist, m_clone.
+STAFF_SND = 'mods/darthnox/snd/m_staff.wav'    # homing staff cast (the one that works)
+RUN_SND = STAFF_SND                            # running stab        (m_run.wav)
+VAULT_SND = STAFF_SND                          # vault strikes       (m_vault.wav)
+TWIST_SND = STAFF_SND                          # tornado             (m_twist.wav)
+CLONE_SND = STAFF_SND                          # clone               (m_clone.wav)
 FIRE_SND = 'data\\070.wav'        # Firen's fire-trail sound (second vault)
 FIREN_FLAME, GROUND_FIRE = 211, 50  # Firen's flame object and its ground-fire action
 
@@ -64,7 +69,10 @@ POLE_REACH = 170                  # D>A: the staff shoots out to 200 px (Wukong-
 POLE_SPAWN = (40, -41)            # where it leaves her staff, rel. to her feet (measured: staff tip +44, -41)
 COMBO_SCALE = 0.24                 # DvA after the vault: Louis EX's DvA hits at 40%, more of them
 VAULT_SPEED = 5                   # forward speed: lands ~140 px out, in front of a target the stab reached
-VAULT2_LAUNCH = 15                 # second vault starts mid-air: a smaller, mostly vertical hop onto the target
+CARRY_RISE = 10                   # air carry: the speed she and the target rise at together
+CARRY_DVX = 4                     # ... and drift forward at
+CARRY_DROP = 12                   # the slam's dive speed
+DIVE_SPEED = 9                    # diving stab: 9 forward, 9 down = 45 degrees
 VAULT_LAUNCH = 13                 # absolute launch speed: ~90 px, over a standing fighter
 
 
@@ -103,7 +111,7 @@ def staff(reach=54, **kw):        # staff hitbox in front of the chest
 
 
 PICK_UP = itr(CX - 19, CY - 22, 37, 24, vrest=1, kind=2)
-VAULT1 = {'a': 295}                   # during the vault: A = staff slam
+VAULT_FOLLOW = {'a': 300, 'Da': 310}   # during the vault: A = air carry combo, DvA = diving stab
 
 
 def louis(injury):                # Louis EX's DvA hit, scaled
@@ -222,30 +230,39 @@ FRAMES = [
     frame(239, 'staff_ext', EXTEND[2], 3, 4, 999, hits={'j': 240}),   # same staff line as 236-238 while the pole retracts
 
     '# Vault (J after the stab, or at the end of the DvA launcher): a flip, no hit of\n'
-    '# its own. A during it = staff slam (295). The slam pops the target up (dvy -8)\n'
-    '# and J after it = the second vault (290), whose A = a second slam (282).',
-    frame(240, 'vault', VAULT[0], 3, 1, 241, dvx=3, body=False, hits=VAULT1),
-    frame(241, 'vault', VAULT[1], 3, 1, 242, dvx=VAULT_SPEED, dvy=ABSOLUTE - VAULT_LAUNCH, body=False, hits=VAULT1),
-    frame(242, 'vault', VAULT[2], 3, 3, 243, body=False, hits=VAULT1),
-    frame(243, 'vault', VAULT[3], 3, 3, 244, hits=VAULT1),
-    frame(244, 'vault', VAULT[3], 3, 4, 999, hits=VAULT1),
+    '# its own. Two follow-ups while in the air:\n'
+    '#   A   = air carry combo (300-307): two rising strikes that lift the target with\n'
+    '#         her, then a slam that spikes them into the floor\n'
+    '#   DvA = diving stab (310-313): a second stab, aimed diagonally down',
+    *[frame(240 + i, 'vault', VAULT[min(i, 3)], 3, w, nxt, dvx=dvx, dvy=dvy, body=i >= 3, hits=VAULT_FOLLOW)
+      for i, (w, nxt, dvx, dvy) in enumerate([(1, 241, 3, 0), (1, 242, VAULT_SPEED, ABSOLUTE - VAULT_LAUNCH),
+                                               (3, 243, 0, 0), (3, 244, 0, 0), (4, 999, 0, 0)])],
 
-    '# Staff slam 1 (A during the vault): overhead slam in the air; J after it = vault 2',
-    frame(295, 'slam', SMASH[0], 3, 1, 296, body=False, hits={'j': 290}),
-    frame(296, 'slam', SMASH[1], 3, 2, 297, sound=VAULT_SND, hits={'j': 290},
-          extra=itr(CX - 15, CY - 80, 85, 120, dvx=3, dvy=-8, fall=40, vrest=12, bdefend=30, injury=20)),
-    frame(297, 'slam', SMASH[2], 3, 10, 999, hits={'j': 290}),
+    '# Air carry (A during the vault). The dvy of a hit SETS the vertical speed of a\n'
+    '# falling victim (combat.lua plain_hit); she holds hers with absolute dvy, so each\n'
+    '# strike gives the target the speed she is rising at: they go up together. Tall\n'
+    '# boxes (from above her head to well below her feet) catch a target still on\n'
+    '# the ground under her. Then she hangs above them and slams down.',
+    frame(300, 'air_carry', SWING[0], 3, 1, 301, dvx=CARRY_DVX, dvy=ABSOLUTE - 4),
+    frame(301, 'air_carry', SWING[1], 3, 2, 302, dvx=CARRY_DVX, dvy=ABSOLUTE - CARRY_RISE, sound=SWISH,
+          extra=itr(CX - 30, CY - 90, 115, 180, dvx=CARRY_DVX, dvy=-CARRY_RISE, fall=70, vrest=8, bdefend=60, injury=18)),
+    frame(302, 'air_carry', SWING[2], 3, 1, 303, dvx=CARRY_DVX, dvy=ABSOLUTE - CARRY_RISE),
+    frame(303, 'air_carry', POKE[1], 3, 2, 304, dvx=CARRY_DVX, dvy=ABSOLUTE - 7, sound=SWISH,
+          extra=itr(CX - 30, CY - 100, 115, 190, dvx=CARRY_DVX, dvy=-9, fall=70, vrest=8, bdefend=60, injury=18)),
+    frame(304, 'air_carry', POKE[2], 3, 2, 305, dvx=CARRY_DVX, dvy=ABSOLUTE - 6),
+    frame(305, 'air_carry', SMASH[0], 3, 1, 306, dvy=ABSOLUTE),                      # hang above them
+    frame(306, 'air_carry', SMASH[1], 3, 2, 307, dvx=3, dvy=ABSOLUTE + CARRY_DROP, sound=VAULT_SND,
+          extra=itr(CX - 25, CY - 70, 110, 170, dvx=5, dvy=18, fall=70, vrest=15, bdefend=60, injury=30)),
+    frame(307, 'air_carry', SMASH[2], 3, 3, 999, dvy=ABSOLUTE + CARRY_DROP),
 
-    '# Vault 2: higher flip, no hit of its own; A during it = staff slam 2 (knockdown)',
-    frame(290, 'vault2', VAULT[0], 3, 1, 291, dvx=3, body=False, hits={'a': 282}),
-    frame(291, 'vault2', VAULT[1], 3, 1, 292, dvx=4, dvy=ABSOLUTE - VAULT2_LAUNCH, body=False, hits={'a': 282}),
-    frame(292, 'vault2', VAULT[2], 3, 3, 293, body=False, hits={'a': 282}),
-    frame(293, 'vault2', VAULT[3], 3, 3, 294, hits={'a': 282}),
-    frame(294, 'vault2', VAULT[3], 3, 4, 999, hits={'a': 282}),
-    frame(282, 'slam2', SMASH[0], 3, 1, 283, body=False),
-    frame(283, 'slam2', SMASH[1], 3, 2, 284, sound=VAULT_SND,
-          extra=itr(CX - 15, CY - 80, 85, 120, dvx=8, dvy=6, fall=70, vrest=12, bdefend=60, injury=24)),
-    frame(284, 'slam2', SMASH[2], 3, 4, 999),
+    '# Diving stab (DvA during the vault): a short hang, then she drives the staff\n'
+    '# down-forward at 45 degrees and drops along it. Spikes an airborne target, knocks\n'
+    '# down a standing one. Landing ends it (crouch).',
+    frame(310, 'dive_stab', DIVE[0], 3, 1, 311, dvy=ABSOLUTE - 3),
+    *[frame(311 + i, 'dive_stab', DIVE[1 + i], 3, 2 + i, 312 + i, dvx=DIVE_SPEED, dvy=ABSOLUTE + DIVE_SPEED,
+            sound=RUN_SND if i == 0 else None,
+            extra=itr(CX, CY - 45, 85, 100, dvx=8, dvy=8, fall=70, vrest=15, bdefend=60, injury=34)) for i in range(2)],
+    frame(313, 'dive_stab', DIVE[3], 3, 4, 999, dvx=4, dvy=ABSOLUTE + DIVE_SPEED),
 
     '# D^A  Homing staff: a throwing motion that sends a spinning copy of the staff\n'
     '# (m_staff.txt, object 64) after the nearest enemy, like John\'s disc.',

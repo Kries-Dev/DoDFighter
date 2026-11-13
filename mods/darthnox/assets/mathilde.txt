@@ -2,8 +2,8 @@
 name: Mathilde
 head: mods/darthnox/mathilde_f.bmp
 small: mods/darthnox/mathilde_s.bmp
-file(0-99): mods/darthnox/mathilde.bmp
-w: 93  h: 93  row: 4  col: 25
+file(0-103): mods/darthnox/mathilde.bmp
+w: 93  h: 93  row: 4  col: 26
 walking_frame_rate 3
 walking_speed 7.000000
 walking_speedz 3.200000
@@ -334,7 +334,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 86 run_attack
-   pic: 41  state: 3  wait: 2  next: 87  dvx: 4  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_run.wav
+   pic: 41  state: 3  wait: 2  next: 87  dvx: 4  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_staff.wav
    itr:
       kind: 0  x: 46  y: 33  w: 96  h: 26  dvx: 8  dvy: -3  fall: 70  vrest: 15  arest: 0  bdefend: 60  injury: 38  effect: 0
    itr_end:
@@ -743,7 +743,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 236 staff_ext
-   pic: 41  state: 3  wait: 2  next: 237  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_run.wav  hit_j: 240
+   pic: 41  state: 3  wait: 2  next: 237  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_staff.wav  hit_j: 240
    opoint:
       kind: 1  x: 84  y: 48  action: 0  dvx: 0  dvy: 0  oid: 66  facing: 0
    opoint_end:
@@ -783,99 +783,138 @@ rowing_distance 5.000000
 <frame_end>
 
 # Vault (J after the stab, or at the end of the DvA launcher): a flip, no hit of
-# its own. A during it = staff slam (295). The slam pops the target up (dvy -8)
-# and J after it = the second vault (290), whose A = a second slam (282).
+# its own. Two follow-ups while in the air:
+#   A   = air carry combo (300-307): two rising strikes that lift the target with
+#         her, then a slam that spikes them into the floor
+#   DvA = diving stab (310-313): a second stab, aimed diagonally down
 <frame> 240 vault
-   pic: 44  state: 3  wait: 1  next: 241  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 295
+   pic: 44  state: 3  wait: 1  next: 241  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 300  hit_Da: 310
 <frame_end>
 
 <frame> 241 vault
-   pic: 45  state: 3  wait: 1  next: 242  dvx: 5  dvy: 537  dvz: 0  centerx: 44  centery: 89  hit_a: 295
+   pic: 45  state: 3  wait: 1  next: 242  dvx: 5  dvy: 537  dvz: 0  centerx: 44  centery: 89  hit_a: 300  hit_Da: 310
 <frame_end>
 
 <frame> 242 vault
-   pic: 46  state: 3  wait: 3  next: 243  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 295
+   pic: 46  state: 3  wait: 3  next: 243  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 300  hit_Da: 310
 <frame_end>
 
 <frame> 243 vault
-   pic: 47  state: 3  wait: 3  next: 244  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 295
+   pic: 47  state: 3  wait: 3  next: 244  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 300  hit_Da: 310
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 244 vault
-   pic: 47  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 295
+   pic: 47  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 300  hit_Da: 310
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
-# Staff slam 1 (A during the vault): overhead slam in the air; J after it = vault 2
-<frame> 295 slam
-   pic: 32  state: 3  wait: 1  next: 296  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 290
+# Air carry (A during the vault). The dvy of a hit SETS the vertical speed of a
+# falling victim (combat.lua plain_hit); she holds hers with absolute dvy, so each
+# strike gives the target the speed she is rising at: they go up together. Tall
+# boxes (from above her head to well below her feet) catch a target still on
+# the ground under her. Then she hangs above them and slams down.
+<frame> 300 air_carry
+   pic: 12  state: 3  wait: 1  next: 301  dvx: 4  dvy: 546  dvz: 0  centerx: 44  centery: 89
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
 <frame_end>
 
-<frame> 296 slam
-   pic: 33  state: 3  wait: 2  next: 297  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_vault.wav  hit_j: 290
+<frame> 301 air_carry
+   pic: 13  state: 3  wait: 2  next: 302  dvx: 4  dvy: 540  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
    itr:
-      kind: 0  x: 29  y: 9  w: 85  h: 120  dvx: 3  dvy: -8  fall: 40  vrest: 12  arest: 0  bdefend: 30  injury: 20  effect: 0
+      kind: 0  x: 14  y: -1  w: 115  h: 180  dvx: 4  dvy: -10  fall: 70  vrest: 8  arest: 0  bdefend: 60  injury: 18  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
-<frame> 297 slam
-   pic: 34  state: 3  wait: 10  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 290
+<frame> 302 air_carry
+   pic: 14  state: 3  wait: 1  next: 303  dvx: 4  dvy: 540  dvz: 0  centerx: 44  centery: 89
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
-# Vault 2: higher flip, no hit of its own; A during it = staff slam 2 (knockdown)
-<frame> 290 vault2
-   pic: 44  state: 3  wait: 1  next: 291  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 282
-<frame_end>
-
-<frame> 291 vault2
-   pic: 45  state: 3  wait: 1  next: 292  dvx: 4  dvy: 535  dvz: 0  centerx: 44  centery: 89  hit_a: 282
-<frame_end>
-
-<frame> 292 vault2
-   pic: 46  state: 3  wait: 3  next: 293  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 282
-<frame_end>
-
-<frame> 293 vault2
-   pic: 47  state: 3  wait: 3  next: 294  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 282
-   bdy:
-      kind: 0  x: 29  y: 17  w: 30  h: 72
-   bdy_end:
-<frame_end>
-
-<frame> 294 vault2
-   pic: 47  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_a: 282
-   bdy:
-      kind: 0  x: 29  y: 17  w: 30  h: 72
-   bdy_end:
-<frame_end>
-
-<frame> 282 slam2
-   pic: 32  state: 3  wait: 1  next: 283  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
-<frame_end>
-
-<frame> 283 slam2
-   pic: 33  state: 3  wait: 2  next: 284  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_vault.wav
+<frame> 303 air_carry
+   pic: 17  state: 3  wait: 2  next: 304  dvx: 4  dvy: 543  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
    itr:
-      kind: 0  x: 29  y: 9  w: 85  h: 120  dvx: 8  dvy: 6  fall: 70  vrest: 12  arest: 0  bdefend: 60  injury: 24  effect: 0
+      kind: 0  x: 14  y: -11  w: 115  h: 190  dvx: 4  dvy: -9  fall: 70  vrest: 8  arest: 0  bdefend: 60  injury: 18  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
-<frame> 284 slam2
-   pic: 34  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+<frame> 304 air_carry
+   pic: 18  state: 3  wait: 2  next: 305  dvx: 4  dvy: 544  dvz: 0  centerx: 44  centery: 89
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 305 air_carry
+   pic: 32  state: 3  wait: 1  next: 306  dvx: 0  dvy: 550  dvz: 0  centerx: 44  centery: 89
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 306 air_carry
+   pic: 33  state: 3  wait: 2  next: 307  dvx: 3  dvy: 562  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_staff.wav
+   itr:
+      kind: 0  x: 19  y: 19  w: 110  h: 170  dvx: 5  dvy: 18  fall: 70  vrest: 15  arest: 0  bdefend: 60  injury: 30  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 307 air_carry
+   pic: 34  state: 3  wait: 3  next: 999  dvx: 0  dvy: 562  dvz: 0  centerx: 44  centery: 89
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+# Diving stab (DvA during the vault): a short hang, then she drives the staff
+# down-forward at 45 degrees and drops along it. Spikes an airborne target, knocks
+# down a standing one. Landing ends it (crouch).
+<frame> 310 dive_stab
+   pic: 100  state: 3  wait: 1  next: 311  dvx: 0  dvy: 547  dvz: 0  centerx: 44  centery: 89
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 311 dive_stab
+   pic: 101  state: 3  wait: 2  next: 312  dvx: 9  dvy: 559  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_staff.wav
+   itr:
+      kind: 0  x: 44  y: 44  w: 85  h: 100  dvx: 8  dvy: 8  fall: 70  vrest: 15  arest: 0  bdefend: 60  injury: 34  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 312 dive_stab
+   pic: 102  state: 3  wait: 3  next: 313  dvx: 9  dvy: 559  dvz: 0  centerx: 44  centery: 89
+   itr:
+      kind: 0  x: 44  y: 44  w: 85  h: 100  dvx: 8  dvy: 8  fall: 70  vrest: 15  arest: 0  bdefend: 60  injury: 34  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 313 dive_stab
+   pic: 103  state: 3  wait: 4  next: 999  dvx: 4  dvy: 559  dvz: 0  centerx: 44  centery: 89
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
@@ -925,7 +964,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 251 tornado
-   pic: 53  state: 3  wait: 1  next: 252  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_twist.wav
+   pic: 53  state: 3  wait: 1  next: 252  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_staff.wav
    opoint:
       kind: 1  x: 84  y: 24  action: 0  dvx: 0  dvy: 0  oid: 65  facing: 0
    opoint_end:
@@ -1022,7 +1061,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 265 clone
-   pic: 57  state: 3  wait: 1  next: 266  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_clone.wav
+   pic: 57  state: 3  wait: 1  next: 266  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_staff.wav
    opoint:
       kind: 1  x: 14  y: 89  action: 0  dvx: 0  dvy: 0  oid: 63  facing: 0
    opoint_end:

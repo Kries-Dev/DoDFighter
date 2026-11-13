@@ -6,10 +6,16 @@
 --
 -- Also Mathilde's tornado (object 65): it lifts each fighter once (for its ~1 s
 -- life) and its landing damage is halved.
+--
+-- Also Mathilde's air carry (A during her vault, mathilde.txt 300-307): a fighter
+-- her rising strikes (301, 303) knock down is marked as carried; physics.lua
+-- then holds them in front of her until the slam.
 
 return function(base)
     local fighter_id = 61
     local TORNADO = 65   -- Mathilde's D^J tornado object
+    local MATHILDE, CARRY_HITS = 63, {[301] = true, [303] = true}
+    local character = require("base/game/constants").record_kinds.character
     local parry_first, parry_last, counter_frame = 241, 243, 245
     local objects = require("base/game/objects")
     local kinds = require("base/game/constants").attack_kinds
@@ -48,6 +54,14 @@ return function(base)
             end
         end
         local result = apply(state, p)
+        if attacker and attacker.record.id == MATHILDE and CARRY_HITS[attacker.frame_at_pass] then
+            for position = 1, attacker.hit_list_count do
+                local victim = objects.lookup(state, attacker.hit_list[position])
+                if victim and victim.record.kind == character and victim.frame >= 180 and victim.frame <= 191 then
+                    attacker.dod_carry = victim
+                end
+            end
+        end
         if tornado then
             -- Half the whirlwind's usual landing damage (20 -> 10).
             for position = 1, attacker.hit_list_count do
