@@ -1,5 +1,6 @@
 -- SPDX-License-Identifier: MIT
--- DarthNox — our sprites and authored frames over a base fighter's mechanics.
+-- DoD Fighter — our fighters' sprites and authored frames over a stock fighter's
+-- mechanics (DarthNox over Deep, Mathilde over Davis; see FIGHTERS below).
 --
 -- The art set is incomplete (8 cells: idle + walk). Rather than block on
 -- drawing ~200 more frames, this inherits a base fighter's full frame table —
@@ -27,25 +28,29 @@ local IDLE_PICTURE = 0
 -- swish instead.
 local SOUND_SWAP = {["data\\007.wav"] = "data\\008.wav", ["data\\014.wav"] = "data\\008.wav"}
 
+-- Our fighters and the stock fighter each one inherits its mechanics from.
+local FIGHTERS = {
+    ["mods/darthnox/darthnox.txt"] = {base = 1},    -- DarthNox over Deep
+    ["mods/darthnox/mathilde.txt"] = {base = 11},   -- Mathilde over Davis
+}
+
 return function(base)
     local load = base.load
-    local fighter_path = "mods/darthnox/darthnox.txt"
-    local copy
+    local cache = {}
 
     function base.load(path)
-        if path ~= fighter_path then return load(path) end
-        if copy then return copy end
+        local fighter = FIGHTERS[path]
+        if not fighter then return load(path) end
+        if cache[path] then return cache[path] end
 
-        local source
-        for _, fighter in ipairs(require("base/game/catalog").load()) do
-            if fighter.id >= 1 and fighter.id < 30 then source = fighter; break end
-        end
-        assert(source, "darthnox needs a base fighter for its mechanics")
+        local source = require("base/game/catalog").objects().by_id[fighter.base]
+        assert(source, path .. " needs base fighter " .. fighter.base .. " for its mechanics")
 
         local original = load(source.path)
         local authored = load(path)
 
-        copy = {}
+        local copy = {}
+        cache[path] = copy
         for key, value in pairs(original) do copy[key] = value end
         copy.name = authored.name:gsub("_", " ")
         copy.head, copy.small = authored.head, authored.small

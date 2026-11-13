@@ -30,6 +30,13 @@ boots. <OUTFIT: hair, face, clothing, colours>. <WEAPON: short, thick, bright,
 clearly visible>. Bold outlines, flat cel shading.
 ```
 
+Mathilde's (second fighter), which shows how much fits in 600 characters:
+
+> Jester dancer girl: burgundy jester hood with two curled red-white striped
+> horns with gold bells, long black hair, burgundy corset dress, short white
+> ruffled skirt, one black and one red-white striped stocking, curled jester
+> boots. Long thick black bo staff with gold caps in both hands, clearly visible.
+
 DarthNox's outfit sentence, for reference:
 
 > Musketeer: navy hat with red-and-white plume, spiky black hair, clean-shaven
@@ -56,6 +63,12 @@ Proportions drift when AutoSprite re-imagines the character for each clip
 5. A clip anchored on the pose starts and ends on the standing pose, so skip
    those frames when converting (`walk.png,walk.json,4,1,14`) and, for a clip
    that repeats, take exactly one cycle (`run.png,run.json,4,1,4`).
+
+Generate a whole fighter's clips in one batch, then identify them on a contact
+sheet: AutoSprite doesn't return clip names, and it sometimes ignores a prompt
+(Mathilde's first "hurt" came out as a neutral staff move; the retry asked for
+"eyes squeezed shut, mouth open in a grimace"). Skip frames where it painted
+props that aren't the character (a giant fist, a bomb, a red streak).
 
 Never enable `withSound` without asking — it costs extra.
 

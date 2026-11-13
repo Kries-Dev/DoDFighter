@@ -144,6 +144,44 @@ new art.
 select and options screens) off: menus are silent, match and stage music play
 as normal. Set `MENU_MUSIC = true` in that file to bring it back.
 
+## Mathilde (record ID 63)
+
+A **jester dancer with a bo staff: the fastest in the cast, fragile, built for
+combos.** Her data is `assets/mathilde.txt`, generated whole by
+`tools/mathilde_moves.py`; her generic mechanics (getting hit, falls, grabs,
+items) come from **Davis** (`object_data.lua` → `FIGHTERS`).
+
+| | |
+|---|---|
+| Speed | walk 7.0 / run 13.5 / dash 21 (fastest in the main cast) |
+| Defence | takes 25% more damage (`armor` 80, `match.lua`) |
+| Attack | A, A, A chains swing → poke → overhead smash (22, 22, 40 + knockdown); short frames |
+
+| Input | Move | Frames | MP | What it does |
+|---|---|---|---|---|
+| D>A | Staff extension | 235-238 | 50 | slides to the end of the staff and stabs at full length (~110 px reach), 32 |
+| …then J | Vault | 240-244 | — | plants the staff and vaults over it (invulnerable launch, ~90 px high), landing kick 25 |
+| D^A | Homing staff | 245-248 | 75 | throws a spinning staff copy (`m_staff.txt`, object 64) that chases the nearest enemy like John's disc (`hit_Fa: 1`), 35 + knockdown |
+| D^J | Tornado | 250-258 | 200 | twirls inside a magic tornado (`m_tornado.txt`, object 65, visual) while Henry's flute whirlwind itrs (kind 10/11) lift everyone around her for ~1 s |
+| DvJ | Clone | 260-266 | 300 | dance spin, then an AI copy of her appears behind her; `objects.lua` gives it 15 HP (Rudolf's clones have 10) |
+
+Sheet `mathilde.bmp`: 360×1800, 80 cells of 89×89 (`row: 4  col: 20`), centre 44,85.
+Rows: idle, walk, run, swing, poke, jump, hurt, knockdown, overhead smash, block,
+extension, vault, throwing motion, twirl, dance spin, roll, grab, throw, frozen,
+burning. Effects (`m_staff.bmp`, `m_tornado.bmp`) are drawn by
+`tools/make_mathilde_fx.py`. Portraits `mathilde_f.bmp` / `mathilde_s.bmp`.
+
+Verified headless vs Deep: combo chain into the smash, extension 28, vault 89 px,
+homing staff curving onto a target 400 px away and off her line, tornado lifting
+Deep 130 px for ~1 s, clone with 15 HP, Deep's punch doing 40 to her.
+
+## More than one fighter
+
+Every fighter lives in this one mod. Adding one means: an entry in `catalog.lua`
+(`fighters_added`, plus any objects its moves spawn), its stock base in
+`object_data.lua` (`FIGHTERS`), its defence in `match.lua` (`DEFENCE`), and its
+assets in `package.manifest`. Keep each asset path ≤ 29 characters.
+
 ## Urban Bridge stage
 
 The mod also adds **Urban Bridge** to the Versus background list (after

@@ -1,12 +1,19 @@
 -- SPDX-License-Identifier: MIT
--- DarthNox — adds the fighter (record ID 61), his crescent projectile (62) and the
--- Urban Bridge stage without editing base scripts.
+-- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63), the objects their
+-- moves spawn (62, 64, 65) and the Urban Bridge stage without editing base scripts.
 
 return function(base)
-    local fighter_id = 61
-    local fighter_path = "mods/darthnox/darthnox.txt"
-    -- Objects his frames spawn (opoint oid:), type 3 = attack/ball.
-    local spawned = {{id = 62, kind = 3, path = "mods/darthnox/crescent.txt"}}
+    -- Our fighters (object type 0) and the objects their frames spawn (opoint
+    -- oid:, type 3 = attack/ball). IDs must not clash with the stock catalog.
+    local fighters_added = {
+        {id = 61, path = "mods/darthnox/darthnox.txt"},
+        {id = 63, path = "mods/darthnox/mathilde.txt"},
+    }
+    local spawned = {
+        {id = 62, kind = 3, path = "mods/darthnox/crescent.txt"},   -- DarthNox's crescent
+        {id = 64, kind = 3, path = "mods/darthnox/m_staff.txt"},    -- Mathilde's homing staff
+        {id = 65, kind = 3, path = "mods/darthnox/m_tornado.txt"},  -- Mathilde's tornado (visual)
+    }
     local stage_path = "mods/darthnox/bg/bridge.txt"
     local load, objects, backgrounds = base.load, base.objects, base.backgrounds
     local added_fighter, added_object, added_stage = false, false, false
@@ -14,21 +21,20 @@ return function(base)
     function base.load()
         local fighters = load()
         if not added_fighter then
-            assert(added_object or not objects().by_id[fighter_id],
-                "darthnox ID is already in use")
-            local header = assert(engine.read_resource(fighter_path):match("<bmp_begin>(.-)<bmp_end>"))
-            local name = assert(header:match("name:%s*(%S+)")):gsub("_", " ")
-            local portrait = assert(header:match("head:%s*(%S+)"))
-            -- record = the fighter's 0-based position in the object list
-            local record
-            for index, entry in ipairs(base.objects().list) do
-                if entry.id == fighter_id then record = index - 1; break end
+            local list = base.objects().list
+            for _, fighter in ipairs(fighters_added) do
+                local header = assert(engine.read_resource(fighter.path):match("<bmp_begin>(.-)<bmp_end>"))
+                local name = assert(header:match("name:%s*(%S+)")):gsub("_", " ")
+                local portrait = assert(header:match("head:%s*(%S+)"))
+                -- record = the fighter's 0-based position in the object list
+                local record
+                for index, entry in ipairs(list) do
+                    if entry.id == fighter.id then record = index - 1; break end
+                end
+                assert(record, fighter.path .. " is missing from the object list")
+                fighters[#fighters + 1] = {id = fighter.id, record = record, name = name,
+                    portrait = portrait, path = fighter.path, hidden = false}
             end
-            assert(record, "darthnox is missing from the object list")
-            fighters[#fighters + 1] = {id = fighter_id,
-                record = record,
-                name = name, portrait = portrait,
-                path = fighter_path, hidden = false}
             added_fighter = true
         end
         return fighters
@@ -37,14 +43,13 @@ return function(base)
     function base.objects()
         local catalog = objects()
         if not added_object then
-            assert(not catalog.by_id[fighter_id], "darthnox ID is already in use")
-            local entry = {id = fighter_id, kind = 0, path = fighter_path}
-            catalog.list[#catalog.list + 1] = entry
-            catalog.by_id[fighter_id] = entry
-            for _, object in ipairs(spawned) do
-                assert(not catalog.by_id[object.id], "darthnox object ID " .. object.id .. " is already in use")
-                catalog.list[#catalog.list + 1] = object
-                catalog.by_id[object.id] = object
+            for _, group in ipairs({fighters_added, spawned}) do
+                for _, object in ipairs(group) do
+                    assert(not catalog.by_id[object.id], "mod object ID " .. object.id .. " is already in use")
+                    local entry = {id = object.id, kind = object.kind or 0, path = object.path}
+                    catalog.list[#catalog.list + 1] = entry
+                    catalog.by_id[object.id] = entry
+                end
             end
             added_object = true
         end

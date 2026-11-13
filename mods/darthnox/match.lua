@@ -1,9 +1,12 @@
 -- SPDX-License-Identifier: MIT
--- DarthNox — low defence: he takes 10% more damage (armor 91; the
+-- DoD Fighter — low defence: DarthNox takes 10% more damage, Mathilde 25% (the
 -- engine divides every hit by armor/100, and battle mode's defence setting
 -- is scaled the same way). Also: Urban Bridge plays its own track ("Gravity Stars") instead of the
 -- Versus music pick. Music set to OFF stays off, and the title-screen demo keeps
 -- its own music.
+
+-- armor multipliers: damage taken is x 100/armor, so 0.91 = +10%, 0.80 = +25%
+local DEFENCE = {[61] = 0.91, [63] = 0.80}   -- DarthNox, Mathilde
 
 return function(base)
     local stage_path = "mods/darthnox/bg/bridge.txt"
@@ -17,8 +20,9 @@ return function(base)
         if state and state.items then
             for index = 0, 19 do
                 local value = state.items[index]
-                if value and value.record.id == 61 then
-                    value.armor = math.floor((value.armor > 0 and value.armor or 100) * 0.91)
+                local defence = value and DEFENCE[value.record.id]
+                if defence then
+                    value.armor = math.floor((value.armor > 0 and value.armor or 100) * defence)
                 end
             end
         end

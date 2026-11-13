@@ -17,6 +17,7 @@ Read from the game data by a headless probe (OpenLF2 + the DarthNox mod,
 
 | Fighter | Walk | Run | Jump (speed → ≈px) | Dash | Punch dmg | Armor | Invulnerable moves |
 |---|---|---|---|---|---|---|---|
+| **Mathilde** (63) | **7.0** | **13.5** | 16.3 → 86 | 21 | 22 (staff), chains into a 40 smash | none; **takes +25% damage** | vault launch; roll |
 | **DarthNox** (61) | **6.0** | 10.5 | 16.3 → 86 | 19 | 30 (sword) | none; **takes +10% damage** | D^A launch (4 ticks); parry counter stab (whole stab); roll |
 | Davis (11) | 5.0 | 10.0 | 16.3 → 86 | 18 | 20 | — | D^A (4 of 21 ticks); roll |
 | Deep (1) | 5.0 | 8.5 | 16.3 → 86 | 16 | 35 | — | roll |
@@ -53,6 +54,7 @@ direct hit here.
 
 | Fighter | Moves |
 |---|---|
+| **Mathilde** | D>A staff extension 50 MP, 32 (J: vault over the staff, 25) · D^A homing staff 75 MP, 35 · D^J tornado 200 MP, lifts everyone around for ~1 s · DvJ clone 300 MP, AI copy with 15 HP |
 | **DarthNox** | D>A crescent 60 MP, proj 21 · D>J lunge 75 MP, 11 × ~4 hits · D^A rising slash 100 MP, 45 (+20), i-frames on launch · DvA flurry 50 MP, 3 × 14 + 22 finisher (+20 MP per extra round) · DJA parry 200 MP, counter 70 + dizzy, counter is invulnerable · D>J can cancel into D^A |
 | Davis | D>A ball 40 · D^A dragon punch 225 MP, 85 · DvA many punch 75 MP, 45 · D^J jump hit 25 MP |
 | Deep | D>A blast 75 MP, proj · DvA jump sword 75 MP, 54 · D>J dash sword 150 MP, 54 · D^J jump sword |
