@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: MIT
--- DarthNox — very low defence: he takes a third more damage (armor 75; the
+-- DarthNox — low defence: he takes 10% more damage (armor 91; the
 -- engine divides every hit by armor/100, and battle mode's defence setting
 -- is scaled the same way). Also: Urban Bridge plays its own track ("Gravity Stars") instead of the
 -- Versus music pick. Music set to OFF stays off, and the title-screen demo keeps
@@ -18,7 +18,7 @@ return function(base)
             for index = 0, 19 do
                 local value = state.items[index]
                 if value and value.record.id == 61 then
-                    value.armor = math.floor((value.armor > 0 and value.armor or 100) * 0.75)
+                    value.armor = math.floor((value.armor > 0 and value.armor or 100) * 0.91)
                 end
             end
         end

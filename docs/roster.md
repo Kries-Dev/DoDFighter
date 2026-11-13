@@ -7,8 +7,8 @@ Read from the game data by a headless probe (OpenLF2 + the DarthNox mod,
 
 - **HP 500, MP 500** for every fighter in Versus (`points.full`); LF2 has no
   per-character health. MP regenerates on its own (faster at low HP).
-- **Defence** is the same for everyone except DarthNox (takes a third more
-  damage, `armor` 75) and the three armored characters below.
+- **Defence** is the same for everyone except DarthNox (takes 10% more
+  damage, `armor` 91) and the three armored characters below.
 - **Rolling** (run + D) is invulnerable for everyone except Julian and Knight.
 - Jump height is the launch speed; peak height in pixels is about
   86 × (speed / 16.3)² (Davis: 16.3 → 86 px, measured).
@@ -17,7 +17,7 @@ Read from the game data by a headless probe (OpenLF2 + the DarthNox mod,
 
 | Fighter | Walk | Run | Jump (speed → ≈px) | Dash | Punch dmg | Armor | Invulnerable moves |
 |---|---|---|---|---|---|---|---|
-| **DarthNox** (61) | **6.0** | 10.5 | 16.3 → 86 | 19 | 30 (sword) | none; **takes +33% damage** | D^A launch (4 ticks); parry counter stab (whole stab); roll |
+| **DarthNox** (61) | **6.0** | 10.5 | 16.3 → 86 | 19 | 30 (sword) | none; **takes +10% damage** | D^A launch (4 ticks); parry counter stab (whole stab); roll |
 | Davis (11) | 5.0 | 10.0 | 16.3 → 86 | 18 | 20 | — | D^A (4 of 21 ticks); roll |
 | Deep (1) | 5.0 | 8.5 | 16.3 → 86 | 16 | 35 | — | roll |
 | Dennis (9) | 5.0 | 10.5 | 16.3 → 86 | 18 | 30 | — | roll |

@@ -7,12 +7,12 @@ A musketeer with idle, walk, run, two sword attacks, a jump, hurt and knockdown,
 
 ## Fighter profile
 
-A **fast fencer with very low defence and medium attack.**
+A **fast fencer with low defence and medium attack.**
 
 | | |
 |---|---|
 | Speed | walk 6.0 / run 10.5 / dash 19 (Deep: 5 / 8.5 / 17) |
-| Defence | takes a third more damage (`armor` 75, set in `match.lua`) |
+| Defence | takes 10% more damage (`armor` 91, set in `match.lua`) |
 | Attack | sword slashes, 30 per hit (Deep's punches are 35), with sword reach and a weapon swish; specials below |
 
 | Input | Move | Frames | MP | What it does |
