@@ -22,6 +22,9 @@
 --   * it has any hit_*:  -> its hit_* fields replace Deep's (his own inputs)
 
 local IDLE_PICTURE = 0
+-- He fights with a sword: frames kept from Deep that play LF2's punch sound
+-- (dash attack, grab throws ...) play the weapon swish instead.
+local SOUND_SWAP = {["data\\007.wav"] = "data\\008.wav"}
 
 return function(base)
     local load = base.load
@@ -104,6 +107,7 @@ return function(base)
             else
                 for key, value in pairs(frame) do own[key] = value end
                 rebase(own, frame)
+                if own.sound and SOUND_SWAP[own.sound:lower()] then own.sound = SOUND_SWAP[own.sound:lower()] end
                 own.picture = (mine and mine.picture) or IDLE_PICTURE
                 if mine and has_hits(mine) then own.hits = mine.hits end
             end

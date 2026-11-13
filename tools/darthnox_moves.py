@@ -132,6 +132,58 @@ MOVES = [
     frame(287, 'flurry', 52, 3, 1, 282, mp=FLURRY_EXTRA_MP, extra=blade(50, dvx=1, fall=8, vrest=3, bdefend=8, injury=7)),
 ]
 
+SLASH = 'data\\008.wav'           # LF2's weapon-swing swish (object_data.lua also swaps Deep's punch sound for it)
+# A punch-frame itr that picks up an item when attacking over it (Deep's 60/65), at our feet.
+PICK_UP = itr(CX - 19, CY - 22, 37, 24, vrest=1, kind=2, effect=0)
+
+# Normal attacks: sword slashes with sword reach instead of Deep's punches.
+# "Medium attack": 30 per hit (Deep's punches are 35). vrest 10 on the swing and
+# follow-through frames so one press hits once.
+BASICS = [
+    '# A, A: slash then thrust (the punch combo); the third hit (super) is a power thrust',
+    frame(60, 'punch', 12, 3, 2, 61, extra=PICK_UP),
+    frame(61, 'punch', 13, 3, 1, 62, sound=SLASH, extra=blade(52, dvx=2, fall=25, vrest=10, bdefend=30, injury=30)),
+    frame(62, 'punch', 14, 3, 2, 999, extra=blade(48, dvx=2, fall=25, vrest=10, bdefend=30, injury=30)),
+    frame(65, 'punch', 16, 3, 2, 66, extra=PICK_UP),
+    frame(66, 'punch', 17, 3, 1, 67, sound=SLASH, extra=blade(60, dvx=2, fall=25, vrest=10, bdefend=30, injury=30)),
+    frame(67, 'punch', 18, 3, 2, 999, extra=blade(52, dvx=2, fall=25, vrest=10, bdefend=30, injury=30)),
+    frame(70, 'super_punch', 16, 3, 3, 71),
+    frame(71, 'super_punch', 17, 3, 1, 72, dvx=6, sound=SLASH, extra=blade(62, dvx=9, fall=70, vrest=15, bdefend=60, injury=50)),
+    frame(72, 'super_punch', 17, 3, 3, 73),
+    frame(73, 'super_punch', 18, 3, 3, 999),
+    '# Jump attack: an overhead slash through the air',
+    frame(80, 'jump_attack', 12, 3, 1, 81, sound=SLASH),
+    frame(81, 'jump_attack', 13, 3, 1, 82, extra=itr(CX - 8, CY - 76, 72, 74, dvx=7, dvy=7, fall=70, arest=15, bdefend=60, injury=45)),
+    frame(82, 'jump_attack', 14, 3, 11, 999),
+    '# Run attack: a running thrust',
+    frame(85, 'run_attack', 16, 3, 4, 86, dvx=6),
+    frame(86, 'run_attack', 17, 3, 2, 87, dvx=4, sound=SLASH, extra=blade(64, dvx=8, dvy=-4, fall=70, vrest=15, bdefend=60, injury=45)),
+    frame(87, 'run_attack', 17, 3, 3, 88),
+    frame(88, 'run_attack', 18, 3, 3, 999),
+
+    '# Roll (run + D): the rolling frames, invulnerable like Deep\'s (no bdy); D>J from a roll is the lunge.\n'
+    '# 100-101 and 108-109 are the air flips after being knocked up (picture only).',
+    frame(100, 'rowing', 57, 6, 2, 101, body=False),
+    frame(101, 'rowing', 58, 6, 6, 0, body=False),
+] + [frame(n, 'rowing', pic, 6, 2, nxt, dvx=9, body=False, hits=hits,
+           extra=itr(CX - 3, CY - 25, 13, 25, vrest=1, kind=7, effect=0))
+     for n, pic, nxt, hits in ((102, 56, 103, {'Fj': 260, 'Uj': 0}), (103, 57, 104, {'Fj': 260, 'Uj': 0}),
+                               (104, 58, 105, {'Fj': 260, 'Uj': 0}), (105, 59, 219, {'Fj': 260, 'Uj': 0}),
+                               (106, 57, 219, None), (107, 59, 219, None))] + [
+    frame(108, 'rowing', 57, 6, 3, 109, body=False),
+    frame(109, 'rowing', 59, 6, 6, 0, body=False),
+
+    '# Frozen (ice: 200-202) and burning (fire: 203-206) keep Deep\'s mechanics; pictures only',
+    frame(200, 'ice', 60, 15, 2, 201, body=False),
+    frame(201, 'ice', 61, 13, 90, 202, body=False),
+    frame(202, 'ice', 60, 15, 1, 182, body=False),
+    frame(203, 'fire', 64, 18, 1, 204, body=False),
+    frame(204, 'fire', 65, 18, 1, 203, body=False),
+    frame(205, 'fire', 66, 18, 1, 206, body=False),
+    frame(206, 'fire', 65, 18, 1, 205, body=False),
+    frame(207, 'tired', 26, 15, 2, 0, body=False),
+]
+
 BALL_CX, BALL_CY = 17, 32
 BALL_BOX = (3, 4, 28, 56)
 
@@ -176,7 +228,13 @@ def main(assets):
     text = re.sub(r'<frame> (\d+) (.*?<frame_end>)', add_hits, text, flags=re.S)
     gen = [MARK, '# Defend: the parry pose; specials start from here (hit_* as on standing)',
            frame(110, 'defend', 37, 7, 12, 999, body=False, hits=HITS),
-           frame(111, 'defend', 37, 7, 0, 110, body=False)] + MOVES
+           frame(111, 'defend', 37, 7, 0, 110, body=False)] + BASICS + MOVES
+    # The LF2 parser keeps the FIRST definition of a frame, so drop any hand-written
+    # copy of a frame this script writes.
+    generated = {int(n) for block in gen for n in re.findall(r'^<frame> (\d+) ', block, flags=re.M)}
+    text = re.sub(r'(?:#[^\n]*\n)*<frame> (\d+) .*?<frame_end>\n?',
+                  lambda m: '' if int(m.group(1)) in generated else m.group(0), text, flags=re.S)
+    text = re.sub(r'\n{3,}', '\n\n', text)
     open(path, 'w', encoding='utf-8', newline='\n').write(text + '\n' + '\n'.join(gen))
     open(os.path.join(assets, 'crescent.txt'), 'w', encoding='utf-8', newline='\n').write(ball())
     print('wrote', path, 'and crescent.txt')

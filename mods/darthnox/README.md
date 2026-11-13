@@ -13,7 +13,7 @@ A **fast fencer with very low defence and medium attack.**
 |---|---|
 | Speed | walk 6.0 / run 10.5 / dash 19 (Deep: 5 / 8.5 / 17) |
 | Defence | takes a third more damage (`armor` 75, set in `match.lua`) |
-| Attack | normal hits as Deep (35); specials below |
+| Attack | sword slashes, 30 per hit (Deep's punches are 35), with sword reach and a weapon swish; specials below |
 
 | Input | Move | Frames | MP | What it does |
 |---|---|---|---|---|
@@ -33,15 +33,16 @@ starts, hits, and knocks down / launches / stuns as listed.
 
 | | |
 |---|---|
-| Own frames (mechanics too) | the special moves 235–286 |
+| Own frames (mechanics too) | normal attacks as sword slashes (60–62, 65–67, 70–73, jump attack 80–82, run attack 85–88), the roll (102–107), the special moves 235–287 |
 | Own inputs | standing, walking and defend (110) carry his `hit_*` fields |
-| Own pictures | standing (0–3), walking (5–8), running (9–11), attacks (60–62, 65–67), super attack (70–73), jump attack (80–82), run attack (85–88), jump (210–212, 215, 219), defend (110–111), hurt (220–229), falling (180–191), lying (230–231) |
+| Own pictures | standing (0–3), walking (5–8), running (9–11), attacks (60–62, 65–67), super attack (70–73), jump attack (80–82), run attack (85–88), jump (210–212, 215, 219), defend (110–111), hurt (220–229), falling (180–191), lying (230–231), air flips (100–101, 108–109), frozen (200–202), burning (203–207) |
 | Inherited from Deep | every other frame's mechanics — states, `itr`/`bdy` boxes, next-wiring, catches, falls |
 
 `object_data.lua` decides per frame: a frame in `darthnox.txt` with a `bdy:` or
 `itr:`, or whose name differs from Deep's frame at that number, replaces Deep's
 frame whole; a frame with `hit_*` fields swaps Deep's inputs; anything else
-only swaps the picture.
+only swaps the picture. Frames kept from Deep that play LF2's punch sound
+(`data\007.wav`: dash attack, grab throw) play the weapon swish (`008`) instead.
 
 Every frame kept from Deep has its hitboxes, spawn, weapon and catch points
 moved by the difference between Deep's centre and ours (`rebase` in
@@ -70,12 +71,13 @@ original game may use `.dat`.
 
 ## Sprite sheet
 
-- `darthnox.bmp` — 468×1218, 56 cells of 116×86, 4 across × 14 down (`row: 4  col: 14`).
+- `darthnox.bmp` — 468×1479, 68 cells of 116×86, 4 across × 17 down (`row: 4  col: 17`).
   Pictures 0–3 idle, 4–7 walk, 8–11 run, 12–14 slash, 16–18 thrust,
   20–22 jump (crouch, rise, air), 24–26 hurt (recoil, smaller recoil, recovering),
   28–31 knockdown (tipping, airborne, flat, lying), 32–34 crescent swing,
   36–38 parry guard, 40–42 power stab (counter), 44–46 lunge with afterimages,
-  48–50 rising slash, 52–54 stab flurry (high, low, middle) with ghost blades. Forward falls reuse
+  48–50 rising slash, 52–54 stab flurry (high, low, middle) with ghost blades, 56–59 roll, 60–61 frozen,
+  64–66 burning. Forward falls reuse
   the knockdown pictures until there is face-down art.
 - `crescent.bmp` — the sword wave, 4×2 cells of 34×64 (flying, breaking up), drawn
   by `tools/make_crescent.py`. Stock fighters use
@@ -173,7 +175,8 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,w
     slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground \
     hurt.png,hurt.json,@7/8/11 fall.png,fall.json,@7/9/11/14,ground \
     swing.png,swing.json,@3/4/12 parry.png,parry.json,@3/5/9 stab.png,stab.json,@2/4/13 \
-    stab.png,stab.json,@3/4/8,trail rise.png,rise.json,@6/10/12,ground flurry2.png,flurry2.json,@7/5/10,blades
+    stab.png,stab.json,@3/4/8,trail rise.png,rise.json,@6/10/12,ground flurry2.png,flurry2.json,@7/5/10,blades \
+    roll.png,roll.json,@4/6/9/11,ground hurt.png,hurt.json,@7/8,ice fall.png,fall.json,@7/9/11,ground,burn
 python tools/make_crescent.py out/crescent.bmp
 python tools/darthnox_moves.py mods/darthnox/assets
 python tools/autosprite_portrait.py base.png out 130,60,730,660 230,170,610,598

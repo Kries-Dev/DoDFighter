@@ -2,8 +2,8 @@
 name: DarthNox
 head: mods/darthnox/portrait_f.bmp
 small: mods/darthnox/portrait_s.bmp
-file(0-55): mods/darthnox/darthnox.bmp
-w: 116  h: 86  row: 4  col: 14
+file(0-67): mods/darthnox/darthnox.bmp
+w: 116  h: 86  row: 4  col: 17
 walking_frame_rate 3
 walking_speed 6.000000
 walking_speedz 2.800000
@@ -73,67 +73,6 @@ rowing_distance 4.000000
    pic: 10  state: 2  wait: 3  next: 9  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
 <frame_end>
 
-# Attack A: slash (wind-up, swing, follow-through)
-<frame> 60 punch
-   pic: 12  state: 3  wait: 3  next: 61  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 61 punch
-   pic: 13  state: 3  wait: 1  next: 62  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 62 punch
-   pic: 14  state: 3  wait: 1  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-
-# Attack B: thrust (wind-up, lunge, recover)
-<frame> 65 punch
-   pic: 16  state: 3  wait: 3  next: 66  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 66 punch
-   pic: 17  state: 3  wait: 1  next: 67  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 67 punch
-   pic: 18  state: 3  wait: 1  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-
-# Super attack: thrust held longer
-<frame> 70 super_punch
-   pic: 16  state: 3  wait: 4  next: 71  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 71 super_punch
-   pic: 17  state: 3  wait: 1  next: 72  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 72 super_punch
-   pic: 17  state: 3  wait: 2  next: 73  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 73 super_punch
-   pic: 18  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-
-# Jump attack: the slash, in the air
-<frame> 80 jump_attack
-   pic: 12  state: 3  wait: 1  next: 81  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 81 jump_attack
-   pic: 13  state: 3  wait: 1  next: 82  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 82 jump_attack
-   pic: 14  state: 3  wait: 11  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-
-# Run attack: the slash
-<frame> 85 run_attack
-   pic: 12  state: 3  wait: 4  next: 86  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 86 run_attack
-   pic: 13  state: 3  wait: 2  next: 87  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 87 run_attack
-   pic: 14  state: 3  wait: 3  next: 88  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-<frame> 88 run_attack
-   pic: 14  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
-<frame_end>
-
 # Jump: crouch, rise, airborne; landing crouch reuses the crouch
 <frame> 210 jump
    pic: 20  state: 4  wait: 1  next: 211  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
@@ -147,7 +86,6 @@ rowing_distance 4.000000
 <frame> 215 crouch
    pic: 20  state: 15  wait: 2  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
 <frame_end>
-
 
 # Crouch after landing from a fall or a jump
 <frame> 219 crouch2
@@ -238,6 +176,248 @@ rowing_distance 4.000000
 
 <frame> 111 defend
    pic: 37  state: 7  wait: 0  next: 110  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+# A, A: slash then thrust (the punch combo); the third hit (super) is a power thrust
+<frame> 60 punch
+   pic: 12  state: 3  wait: 2  next: 61  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   itr:
+      kind: 2  x: 52  y: 63  w: 37  h: 24  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 61 punch
+   pic: 13  state: 3  wait: 1  next: 62  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85  sound: data\008.wav
+   itr:
+      kind: 0  x: 75  y: 27  w: 52  h: 28  dvx: 2  dvy: 0  fall: 25  vrest: 10  arest: 0  bdefend: 30  injury: 30  effect: 1
+   itr_end:
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 62 punch
+   pic: 14  state: 3  wait: 2  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   itr:
+      kind: 0  x: 75  y: 27  w: 48  h: 28  dvx: 2  dvy: 0  fall: 25  vrest: 10  arest: 0  bdefend: 30  injury: 30  effect: 1
+   itr_end:
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 65 punch
+   pic: 16  state: 3  wait: 2  next: 66  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   itr:
+      kind: 2  x: 52  y: 63  w: 37  h: 24  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 66 punch
+   pic: 17  state: 3  wait: 1  next: 67  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85  sound: data\008.wav
+   itr:
+      kind: 0  x: 75  y: 27  w: 60  h: 28  dvx: 2  dvy: 0  fall: 25  vrest: 10  arest: 0  bdefend: 30  injury: 30  effect: 1
+   itr_end:
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 67 punch
+   pic: 18  state: 3  wait: 2  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   itr:
+      kind: 0  x: 75  y: 27  w: 52  h: 28  dvx: 2  dvy: 0  fall: 25  vrest: 10  arest: 0  bdefend: 30  injury: 30  effect: 1
+   itr_end:
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 70 super_punch
+   pic: 16  state: 3  wait: 3  next: 71  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 71 super_punch
+   pic: 17  state: 3  wait: 1  next: 72  dvx: 6  dvy: 0  dvz: 0  centerx: 71  centery: 85  sound: data\008.wav
+   itr:
+      kind: 0  x: 75  y: 27  w: 62  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 15  arest: 0  bdefend: 60  injury: 50  effect: 1
+   itr_end:
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 72 super_punch
+   pic: 17  state: 3  wait: 3  next: 73  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 73 super_punch
+   pic: 18  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+# Jump attack: an overhead slash through the air
+<frame> 80 jump_attack
+   pic: 12  state: 3  wait: 1  next: 81  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85  sound: data\008.wav
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 81 jump_attack
+   pic: 13  state: 3  wait: 1  next: 82  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   itr:
+      kind: 0  x: 63  y: 9  w: 72  h: 74  dvx: 7  dvy: 7  fall: 70  vrest: 0  arest: 15  bdefend: 60  injury: 45  effect: 1
+   itr_end:
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 82 jump_attack
+   pic: 14  state: 3  wait: 11  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+# Run attack: a running thrust
+<frame> 85 run_attack
+   pic: 16  state: 3  wait: 4  next: 86  dvx: 6  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 86 run_attack
+   pic: 17  state: 3  wait: 2  next: 87  dvx: 4  dvy: 0  dvz: 0  centerx: 71  centery: 85  sound: data\008.wav
+   itr:
+      kind: 0  x: 75  y: 27  w: 64  h: 28  dvx: 8  dvy: -4  fall: 70  vrest: 15  arest: 0  bdefend: 60  injury: 45  effect: 1
+   itr_end:
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 87 run_attack
+   pic: 17  state: 3  wait: 3  next: 88  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 88 run_attack
+   pic: 18  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   bdy:
+      kind: 0  x: 54  y: 13  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+# Roll (run + D): the rolling frames, invulnerable like Deep's (no bdy); D>J from a roll is the lunge.
+# 100-101 and 108-109 are the air flips after being knocked up (picture only).
+<frame> 100 rowing
+   pic: 57  state: 6  wait: 2  next: 101  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 101 rowing
+   pic: 58  state: 6  wait: 6  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 102 rowing
+   pic: 56  state: 6  wait: 2  next: 103  dvx: 9  dvy: 0  dvz: 0  centerx: 71  centery: 85  hit_Fj: 260  hit_Uj: 0
+   itr:
+      kind: 7  x: 68  y: 60  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
+   itr_end:
+<frame_end>
+
+<frame> 103 rowing
+   pic: 57  state: 6  wait: 2  next: 104  dvx: 9  dvy: 0  dvz: 0  centerx: 71  centery: 85  hit_Fj: 260  hit_Uj: 0
+   itr:
+      kind: 7  x: 68  y: 60  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
+   itr_end:
+<frame_end>
+
+<frame> 104 rowing
+   pic: 58  state: 6  wait: 2  next: 105  dvx: 9  dvy: 0  dvz: 0  centerx: 71  centery: 85  hit_Fj: 260  hit_Uj: 0
+   itr:
+      kind: 7  x: 68  y: 60  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
+   itr_end:
+<frame_end>
+
+<frame> 105 rowing
+   pic: 59  state: 6  wait: 2  next: 219  dvx: 9  dvy: 0  dvz: 0  centerx: 71  centery: 85  hit_Fj: 260  hit_Uj: 0
+   itr:
+      kind: 7  x: 68  y: 60  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
+   itr_end:
+<frame_end>
+
+<frame> 106 rowing
+   pic: 57  state: 6  wait: 2  next: 219  dvx: 9  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   itr:
+      kind: 7  x: 68  y: 60  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
+   itr_end:
+<frame_end>
+
+<frame> 107 rowing
+   pic: 59  state: 6  wait: 2  next: 219  dvx: 9  dvy: 0  dvz: 0  centerx: 71  centery: 85
+   itr:
+      kind: 7  x: 68  y: 60  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
+   itr_end:
+<frame_end>
+
+<frame> 108 rowing
+   pic: 57  state: 6  wait: 3  next: 109  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 109 rowing
+   pic: 59  state: 6  wait: 6  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+# Frozen (ice: 200-202) and burning (fire: 203-206) keep Deep's mechanics; pictures only
+<frame> 200 ice
+   pic: 60  state: 15  wait: 2  next: 201  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 201 ice
+   pic: 61  state: 13  wait: 90  next: 202  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 202 ice
+   pic: 60  state: 15  wait: 1  next: 182  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 203 fire
+   pic: 64  state: 18  wait: 1  next: 204  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 204 fire
+   pic: 65  state: 18  wait: 1  next: 203  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 205 fire
+   pic: 66  state: 18  wait: 1  next: 206  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 206 fire
+   pic: 65  state: 18  wait: 1  next: 205  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
+<frame_end>
+
+<frame> 207 tired
+   pic: 26  state: 15  wait: 2  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 85
 <frame_end>
 
 # D>A  Crescent: a horizontal swing that launches a fast, light sword wave (crescent.txt)

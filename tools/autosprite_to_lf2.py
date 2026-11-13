@@ -17,6 +17,9 @@ A trailing ,ground on a ROW_SPEC stands every frame of that row on its own
 lowest pixel instead of the clip's foot pivot -- for jumps, where the clip lifts
 the character but the engine already does that.
 
+,ice recolours the row as frozen solid and ,burn as charred and on fire (for
+the engine's ice and fire frames).
+
 A trailing ,trail draws two dithered afterimages of the whole body behind the
 character (for dashes and lunges); ,blades draws ghost copies of the sword arm
 above and below it (for rapid stabs, like Davis's many-punch). LF2 sprites have
@@ -190,6 +193,65 @@ def ghost(cell, offsets, front_of=None, band=None, cover=None):
                 cell[y][x] = (r * .4 + GHOST_TINT[0] * .6, g * .4 + GHOST_TINT[1] * .6, b * .4 + GHOST_TINT[2] * .6, 1.0)
 
 
+# ------------------------------------------------------- frozen / burning ---
+def _edge(cell, x, y):
+    # transparent pixel touching an opaque one
+    h, w = len(cell), len(cell[0])
+    return cell[y][x][3] < 0.5 and any(0 <= x + dx < w and 0 <= y + dy < h and cell[y + dy][x + dx][3] >= 0.5
+                                       for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+
+
+def frost(cell):
+    """Frozen solid (LF2's ice pictures): every pixel recoloured into icy blues by
+    its brightness, a pale frost outline, and a glint on the light side."""
+    h, w = len(cell), len(cell[0])
+    rim = [(x, y) for y in range(h) for x in range(w) if _edge(cell, x, y)]
+    for y in range(h):
+        for x in range(w):
+            r, g, b, a = cell[y][x]
+            if a >= 0.5:
+                lum = 0.3 * r + 0.59 * g + 0.11 * b
+                cell[y][x] = (40 + lum * 0.55, 95 + lum * 0.55, 170 + lum * 0.33, 1.0)
+    for x, y in rim:
+        cell[y][x] = (205, 240, 255, 1.0)
+    for y in range(h):          # glint: brighten the right-facing edge pixels
+        for x in range(w - 1):
+            if cell[y][x][3] >= 0.5 and cell[y][x + 1][3] < 0.5 and (x + y) % 3 == 0:
+                cell[y][x] = (245, 252, 255, 1.0)
+
+
+FLAME = [(255, 244, 150), (255, 190, 60), (240, 110, 30), (190, 50, 20)]   # hot core -> outer
+
+
+def burn(cell, phase):
+    """On fire (LF2's burning pictures): the body charred dark with an ember
+    glow, and dithered flame tongues rising off its upper edges; `phase` moves
+    the flames between frames so they flicker."""
+    h, w = len(cell), len(cell[0])
+    src = [row[:] for row in cell]
+    for y in range(h):
+        for x in range(w):
+            r, g, b, a = src[y][x]
+            if a >= 0.5:
+                lum = 0.3 * r + 0.59 * g + 0.11 * b
+                ember = 1 if (x * 7 + y * 13 + phase * 5) % 41 == 0 else 0      # a few sparse embers
+                cell[y][x] = (min(255, 30 + lum * 0.5 + ember * 150), min(255, 20 + lum * 0.3 + ember * 80), 16 + lum * 0.18, 1.0)
+    # flames: from every opaque pixel that has open air above it, a tongue rises
+    tops = [(x, y) for x in range(w) for y in range(1, h) if src[y][x][3] >= 0.5 and src[y - 1][x][3] < 0.5]
+    for x, y in tops:
+        height = 5 + int(9 * (0.5 + 0.5 * math.sin(x * 0.45 + phase * 1.9)) * (0.6 + 0.4 * math.sin(x * 0.13 + phase)))
+        for k in range(height):
+            yy = y - 1 - k
+            if yy < 0 or cell[yy][x][3] >= 0.5:
+                continue
+            if k > 2 and BAYER[yy % 4][(x + phase) % 4] >= 16 * (1 - k / height) * 1.3:
+                continue
+            cell[yy][x] = FLAME[min(3, int(4 * k / height))] + (1.0,)
+        for k in range(3):          # the burning surface itself glows
+            if y + k < h and src[y + k][x][3] >= 0.5 and (x + k + phase) % 2 == 0:
+                cell[y + k][x] = FLAME[1 + k % 2] + (1.0,)
+
+
 # ------------------------------------------------------------------- main ----
 def main(out_dir, height, specs):
     import os
@@ -201,7 +263,7 @@ def main(out_dir, height, specs):
     for spec in specs:
         parts = spec.split(',')
         flags = set()
-        while parts[-1] in ('ground', 'trail', 'blades'):
+        while parts[-1] in ('ground', 'trail', 'blades', 'ice', 'burn'):
             flags.add(parts.pop())
         ground = 'ground' in flags
         png, atlas, n = parts[0], parts[1], parts[2]
@@ -260,6 +322,9 @@ def main(out_dir, height, specs):
             if 'trail' in flags: ghost(cell, [(-9, 0), (-18, 0), (-TRAIL_REACH, 0)])
             if 'blades' in flags: ghost(cell, [(-3, -11), (-5, 10), (-2, -20), (-6, 18)], front_of=centerx + 6,
                                         band=(centery - 56, centery - 14), cover=[0.75, 0.75, 0.5, 0.5])
+        for i, cell in enumerate(cells[ri]):
+            if 'ice' in flags: frost(cell)
+            if 'burn' in flags: burn(cell, i)
 
     opaque = [(int(c[0]), int(c[1]), int(c[2])) for row in cells for cell in row for line in cell for c in line if c[3] >= 0.5]
     pal = median_cut(opaque, 255)

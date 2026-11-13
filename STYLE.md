@@ -72,7 +72,8 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,w
     slash.png,slash.json,@5/6/7 thrust.png,thrust.json,@3/5/12 jump.png,jump.json,@12/9/6,ground \
     hurt.png,hurt.json,@7/8/11 fall.png,fall.json,@7/9/11/14,ground \
     swing.png,swing.json,@3/4/12 parry.png,parry.json,@3/5/9 stab.png,stab.json,@2/4/13 \
-    stab.png,stab.json,@3/4/8,trail rise.png,rise.json,@6/10/12,ground flurry2.png,flurry2.json,@7/5/10,blades
+    stab.png,stab.json,@3/4/8,trail rise.png,rise.json,@6/10/12,ground flurry2.png,flurry2.json,@7/5/10,blades \
+    roll.png,roll.json,@4/6/9/11,ground hurt.png,hurt.json,@7/8,ice fall.png,fall.json,@7/9/11,ground,burn
 ```
 
 - DarthNox's approved size is **scale s0.345992** (his idle at 82px tall). Pass
@@ -109,6 +110,12 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,w
   ticks, so never put dvy on a frame with an itr; use an absolute dvy (value > 500
   sets the speed to dvy - 550) on a launch frame without a hitbox. End airborne
   moves with next: 999 (a plain fall); next: 212 re-runs the jump launch.
+- Frozen and burning pictures are recoloured, not generated: `,ice` (icy blues,
+  frost rim) on a hurt pose, `,burn` (charred, flames rising off the top edges)
+  on knockdown poses. Free, and they match the character exactly.
+- Weapon fighters: write the normal attacks as weapon swings (own frames, weapon
+  reach, `data\008.wav`), never Deep's punches, and swap any remaining punch
+  sound in `object_data.lua`.
 - Write the frame data with a generator script (`tools/darthnox_moves.py` is the
   template): one table of moves, one place for hitboxes, re-runnable.
 - Every fighter gets a profile (speed / defence / attack) before any moves are
