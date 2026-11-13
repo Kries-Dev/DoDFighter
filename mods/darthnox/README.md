@@ -166,7 +166,7 @@ items) come from **Davis** (`object_data.lua` → `FIGHTERS`).
 | D^J | Tornado | 250-258 | 200 | she twirls and sends a magic tornado (`m_tornado.txt`, object 65) drifting forward ~150 px; its whirlwind boxes match the drawing and lift whoever it touches once for ~1 s (`combat.lua`: no re-lifting, half landing damage), ~30-40 |
 | DvJ | Clone | 260-266 | 300 | dance spin, then an AI copy of her appears behind her; `objects.lua` gives it 15 HP (Rudolf's clones have 10) |
 
-Sheet `mathilde.bmp`: 376×2046, 88 cells of 93×93 (`row: 4  col: 22`), centre 44,89.
+Sheet `mathilde.bmp`: 376×2068, 88 cells of 93×93 (`row: 4  col: 22`), centre 44,89.
 Rows: idle, walk, run, swing, poke, jump, hurt, knockdown, overhead smash, block,
 extension, vault, throwing motion, twirl, dance spin, roll, grab, throw, frozen,
 burning, vault with a frost aura, conjure-and-fling cast. Effects (`m_staff.bmp`, `m_tornado.bmp`, `m_pole.bmp`) are drawn by
