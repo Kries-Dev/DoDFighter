@@ -8,37 +8,33 @@ weapon_broken_sound: data\020.wav
 # Mathilde's D>A staff extension (Wukong-style), visual only.
 
 <frame> 0 pole
-   pic: 0  state: 3000  wait: 0  next: 1  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
+   pic: 0  state: 3000  wait: 2  next: 1  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
 <frame_end>
 
 <frame> 1 pole
-   pic: 1  state: 3000  wait: 0  next: 2  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
+   pic: 1  state: 3000  wait: 2  next: 2  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
 <frame_end>
 
 <frame> 2 pole
-   pic: 2  state: 3000  wait: 0  next: 30  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
-<frame_end>
-
-<frame> 30 pole_hold
-   pic: 3  state: 3000  wait: 1  next: 4  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
+   pic: 2  state: 3000  wait: 2  next: 3  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
 <frame_end>
 
 <frame> 3 pole
-   pic: 3  state: 3000  wait: 0  next: 4  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
+   pic: 3  state: 3000  wait: 5  next: 4  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
 <frame_end>
 
 <frame> 4 pole
-   pic: 4  state: 3000  wait: 0  next: 5  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
+   pic: 4  state: 3000  wait: 1  next: 5  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
 <frame_end>
 
 <frame> 5 pole
-   pic: 5  state: 3000  wait: 0  next: 6  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
+   pic: 5  state: 3000  wait: 1  next: 6  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
 <frame_end>
 
 <frame> 6 pole
-   pic: 6  state: 3000  wait: 0  next: 7  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
+   pic: 6  state: 3000  wait: 1  next: 7  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
 <frame_end>
 
 <frame> 7 pole
-   pic: 7  state: 3000  wait: 0  next: 1000  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
+   pic: 7  state: 3000  wait: 1  next: 1000  dvx: 0  dvy: 0  centerx: 2  centery: 8  hit_a: 0  hit_d: 0  hit_j: 0
 <frame_end>

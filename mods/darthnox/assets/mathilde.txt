@@ -2,8 +2,8 @@
 name: Mathilde
 head: mods/darthnox/mathilde_f.bmp
 small: mods/darthnox/mathilde_s.bmp
-file(0-87): mods/darthnox/mathilde.bmp
-w: 93  h: 93  row: 4  col: 22
+file(0-99): mods/darthnox/mathilde.bmp
+w: 93  h: 93  row: 4  col: 25
 walking_frame_rate 3
 walking_speed 7.000000
 walking_speedz 3.200000
@@ -30,35 +30,35 @@ rowing_distance 5.000000
 
 # Standing, walking, running (inputs live on standing, walking and defend)
 <frame> 0 standing
-   pic: 0  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 0  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
+   pic: 0  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
 <frame_end>
 
 <frame> 1 standing
-   pic: 1  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 0  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
+   pic: 1  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
 <frame_end>
 
 <frame> 2 standing
-   pic: 2  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 0  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
+   pic: 2  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
 <frame_end>
 
 <frame> 3 standing
-   pic: 3  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 0  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
+   pic: 3  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
 <frame_end>
 
 <frame> 5 walking
-   pic: 4  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 0  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
+   pic: 4  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
 <frame_end>
 
 <frame> 6 walking
-   pic: 5  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 0  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
+   pic: 5  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
 <frame_end>
 
 <frame> 7 walking
-   pic: 6  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 0  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
+   pic: 6  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
 <frame_end>
 
 <frame> 8 walking
-   pic: 7  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 0  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
+   pic: 7  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
 <frame_end>
 
 <frame> 9 running
@@ -438,7 +438,7 @@ rowing_distance 5.000000
 
 # Block, broken block, picking up
 <frame> 110 defend
-   pic: 37  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 0  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
+   pic: 37  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Fa: 235  hit_Ua: 245  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 0
 <frame_end>
 
 <frame> 111 defend
@@ -733,22 +733,22 @@ rowing_distance 5.000000
 <frame_end>
 
 # D>A  Staff extension: she stabs and the staff shoots out Wukong-style to
-# ~200 px (m_pole.txt, object 66, drawn from her hands) and retracts; the
-# hitbox grows with it. Press J during it to vault over the staff (240).
+# ~200 px (m_pole.txt, object 66, drawn from her staff tip) over ~9 ticks,
+# holds, and retracts; the hitbox grows with it (90, 150, 200 px). J during it vaults.
 <frame> 235 staff_ext
-   pic: 40  state: 3  wait: 1  next: 236  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  mp: 50
+   pic: 40  state: 3  wait: 2  next: 236  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  mp: 50
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 236 staff_ext
-   pic: 41  state: 3  wait: 1  next: 237  dvx: 8  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\045.wav  hit_j: 240
+   pic: 41  state: 3  wait: 2  next: 237  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\045.wav  hit_j: 240
    opoint:
-      kind: 1  x: 64  y: 39  action: 0  dvx: 0  dvy: 0  oid: 66  facing: 0
+      kind: 1  x: 84  y: 48  action: 0  dvx: 0  dvy: 0  oid: 66  facing: 0
    opoint_end:
    itr:
-      kind: 0  x: 46  y: 33  w: 140  h: 26  dvx: 6  dvy: 0  fall: 40  vrest: 15  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 46  y: 33  w: 90  h: 26  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -756,9 +756,9 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 237 staff_ext
-   pic: 42  state: 3  wait: 3  next: 238  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 240
+   pic: 41  state: 3  wait: 2  next: 238  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 240
    itr:
-      kind: 0  x: 46  y: 33  w: 200  h: 26  dvx: 6  dvy: 0  fall: 40  vrest: 15  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 46  y: 33  w: 150  h: 26  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -766,32 +766,42 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 238 staff_ext
-   pic: 43  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 240
+   pic: 42  state: 3  wait: 5  next: 239  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 240
+   itr:
+      kind: 0  x: 46  y: 33  w: 200  h: 26  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 239 staff_ext
+   pic: 43  state: 3  wait: 6  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 240
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
 # Vault (J during the extension): plant, launch over the staff (invulnerable,
-# absolute dvy so hit lag can't stack it), a strike on the way down that only
-# staggers (fall 20, so the combo can follow), then a plain fall. Icy aura on
-# the pictures. DvA during the vault starts the combo (270), whose last hit freezes.
+# absolute dvy so hit lag can't stack it), an ICE strike on the way down that
+# FREEZES (effect 3), then a plain fall. Icy aura on the pictures.
+# J during it: the second vault (290). DvA during it: the staff combo (270).
 <frame> 240 vault
-   pic: 80  state: 3  wait: 1  next: 241  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
+   pic: 80  state: 3  wait: 1  next: 241  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270  hit_j: 290
 <frame_end>
 
 <frame> 241 vault
-   pic: 81  state: 3  wait: 1  next: 242  dvx: 6  dvy: 535  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
+   pic: 81  state: 3  wait: 1  next: 242  dvx: 6  dvy: 535  dvz: 0  centerx: 44  centery: 89  hit_Da: 270  hit_j: 290
 <frame_end>
 
 <frame> 242 vault
-   pic: 82  state: 3  wait: 3  next: 243  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
+   pic: 82  state: 3  wait: 3  next: 243  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270  hit_j: 290
 <frame_end>
 
 <frame> 243 vault
-   pic: 83  state: 3  wait: 3  next: 244  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_vault.wav  hit_Da: 270
+   pic: 83  state: 3  wait: 3  next: 244  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_vault.wav  hit_Da: 270  hit_j: 290
    itr:
-      kind: 0  x: 24  y: 39  w: 72  h: 110  dvx: 2  dvy: 0  fall: 20  vrest: 15  arest: 0  bdefend: 30  injury: 25  effect: 0
+      kind: 0  x: 24  y: 39  w: 72  h: 110  dvx: 2  dvy: 0  fall: 20  vrest: 15  arest: 0  bdefend: 30  injury: 25  effect: 3
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -799,7 +809,42 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 244 vault
-   pic: 83  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
+   pic: 83  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270  hit_j: 290
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+# Second vault (J during the first): another flip from wherever she is, with a
+# fire aura; the strike on the way down BURNS (effect 2) and leaves a patch of
+# fire on the ground (Firen's flame, ground-fire action), with Firen's trail sound.
+<frame> 290 vault2
+   pic: 96  state: 3  wait: 1  next: 291  dvx: 3  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
+<frame_end>
+
+<frame> 291 vault2
+   pic: 97  state: 3  wait: 1  next: 292  dvx: 3  dvy: 541  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
+<frame_end>
+
+<frame> 292 vault2
+   pic: 98  state: 3  wait: 3  next: 293  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
+<frame_end>
+
+<frame> 293 vault2
+   pic: 99  state: 3  wait: 3  next: 294  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\070.wav  hit_Da: 270
+   itr:
+      kind: 0  x: 24  y: 39  w: 72  h: 110  dvx: 6  dvy: 0  fall: 70  vrest: 15  arest: 0  bdefend: 30  injury: 30  effect: 2
+   itr_end:
+   opoint:
+      kind: 1  x: 64  y: 91  action: 50  dvx: 0  dvy: 0  oid: 211  facing: 0
+   opoint_end:
+   bdy:
+      kind: 0  x: 29  y: 17  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 294 vault2
+   pic: 99  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_Da: 270
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
@@ -962,18 +1007,19 @@ rowing_distance 5.000000
    bdy_end:
 <frame_end>
 
-# DvA after the vault: ten staff strikes at 40% of Louis EX's DvA, then a launcher
+# DvA (on its own, or out of either vault): ten staff strikes at 40% of Louis
+# EX's DvA, the last one launching and freezing
 <frame> 270 staff_combo
-   pic: 12  state: 3  wait: 1  next: 271  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  mp: 40
+   pic: 91  state: 3  wait: 1  next: 271  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  mp: 40
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 271 staff_combo
-   pic: 13  state: 3  wait: 1  next: 272  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
+   pic: 88  state: 3  wait: 1  next: 272  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
    itr:
-      kind: 0  x: 46  y: 33  w: 58  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 16  effect: 0
+      kind: 0  x: 46  y: 33  w: 62  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 16  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -981,9 +1027,9 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 272 staff_combo
-   pic: 17  state: 3  wait: 1  next: 273  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 89  state: 3  wait: 1  next: 273  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89
    itr:
-      kind: 0  x: 46  y: 33  w: 64  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 16  effect: 0
+      kind: 0  x: 46  y: 33  w: 62  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 16  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -991,9 +1037,9 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 273 staff_combo
-   pic: 14  state: 3  wait: 1  next: 274  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
+   pic: 90  state: 3  wait: 1  next: 274  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
    itr:
-      kind: 0  x: 46  y: 33  w: 58  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 12  effect: 0
+      kind: 0  x: 46  y: 33  w: 62  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 12  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1001,9 +1047,9 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 274 staff_combo
-   pic: 33  state: 3  wait: 1  next: 275  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 91  state: 3  wait: 1  next: 275  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89
    itr:
-      kind: 0  x: 46  y: 33  w: 60  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 24  effect: 0
+      kind: 0  x: 46  y: 33  w: 62  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 24  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1011,9 +1057,9 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 275 staff_combo
-   pic: 17  state: 3  wait: 1  next: 276  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
+   pic: 92  state: 3  wait: 1  next: 276  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
    itr:
-      kind: 0  x: 46  y: 33  w: 64  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 16  effect: 0
+      kind: 0  x: 46  y: 33  w: 62  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 16  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1021,9 +1067,9 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 276 staff_combo
-   pic: 13  state: 3  wait: 1  next: 277  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 93  state: 3  wait: 1  next: 277  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89
    itr:
-      kind: 0  x: 46  y: 33  w: 58  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 12  effect: 0
+      kind: 0  x: 46  y: 33  w: 62  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 12  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1031,9 +1077,9 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 277 staff_combo
-   pic: 34  state: 3  wait: 1  next: 278  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
+   pic: 88  state: 3  wait: 1  next: 278  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
    itr:
-      kind: 0  x: 46  y: 33  w: 60  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 24  effect: 0
+      kind: 0  x: 46  y: 33  w: 62  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 24  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1041,9 +1087,9 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 278 staff_combo
-   pic: 41  state: 3  wait: 1  next: 279  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 90  state: 3  wait: 1  next: 279  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89
    itr:
-      kind: 0  x: 46  y: 33  w: 96  h: 26  dvx: 3  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 28  effect: 0
+      kind: 0  x: 46  y: 33  w: 66  h: 26  dvx: 3  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 28  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1051,9 +1097,9 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 279 staff_combo
-   pic: 14  state: 3  wait: 1  next: 280  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
+   pic: 94  state: 3  wait: 1  next: 280  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
    itr:
-      kind: 0  x: 46  y: 33  w: 58  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 22  effect: 0
+      kind: 0  x: 46  y: 33  w: 64  h: 26  dvx: 2  dvy: -10  fall: 1  vrest: 6  arest: 0  bdefend: 16  injury: 22  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1061,9 +1107,9 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 280 staff_combo
-   pic: 33  state: 3  wait: 2  next: 281  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
+   pic: 95  state: 3  wait: 2  next: 281  dvx: 2  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\008.wav
    itr:
-      kind: 0  x: 46  y: 33  w: 66  h: 26  dvx: 9  dvy: -12  fall: 70  vrest: 6  arest: 0  bdefend: 60  injury: 28  effect: 3
+      kind: 0  x: 46  y: 33  w: 68  h: 26  dvx: 9  dvy: -12  fall: 70  vrest: 6  arest: 0  bdefend: 60  injury: 28  effect: 3
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1071,7 +1117,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 281 staff_combo
-   pic: 34  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 95  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
    bdy_end:

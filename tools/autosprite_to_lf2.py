@@ -18,7 +18,7 @@ lowest pixel instead of the clip's foot pivot -- for jumps, where the clip lifts
 the character but the engine already does that.
 
 ,aura draws a shimmering blue glow around the silhouette (the parry stance);
-,bladeglow the same glow around the weapon's blade only; ,frostaura an icy one;
+,bladeglow the same glow around the weapon's blade only; ,frostaura an icy one; ,fireaura a fiery one;
 ,ice recolours the row as frozen solid and ,burn as charred and on fire (for
 the engine's ice and fire frames).
 
@@ -199,6 +199,7 @@ def ghost(cell, offsets, front_of=None, band=None, cover=None):
 AURA_REACH = 4
 AURA = [((185, 240, 255), 1.0), ((110, 195, 255), 0.75), ((60, 140, 245), 0.5), ((40, 100, 220), 0.25)]  # by distance
 FROST = [((245, 252, 255), 1.0), ((200, 240, 255), 0.75), ((150, 225, 250), 0.5), ((110, 200, 240), 0.25)]  # icy
+FIRE = [((255, 240, 150), 1.0), ((255, 190, 60), 0.75), ((240, 110, 30), 0.5), ((190, 50, 20), 0.25)]  # flames
 
 
 def blade_pixels(cell, centerx):
@@ -311,7 +312,7 @@ def main(out_dir, height, specs):
     for spec in specs:
         parts = spec.split(',')
         flags = set()
-        while parts[-1] in ('ground', 'trail', 'blades', 'ice', 'burn', 'aura', 'bladeglow', 'frostaura'):
+        while parts[-1] in ('ground', 'trail', 'blades', 'ice', 'burn', 'aura', 'bladeglow', 'frostaura', 'fireaura'):
             flags.add(parts.pop())
         ground = 'ground' in flags
         png, atlas, n = parts[0], parts[1], parts[2]
@@ -356,7 +357,7 @@ def main(out_dir, height, specs):
     scale = fixed_scale or height / tallest
     if any('trail' in f for f in row_flags):
         L -= TRAIL_REACH / scale       # room for the afterimages behind the body
-    if any(f & {'aura', 'bladeglow', 'frostaura'} for f in row_flags):
+    if any(f & {'aura', 'bladeglow', 'frostaura', 'fireaura'} for f in row_flags):
         T -= AURA_REACH / scale        # room for the glow above the hat
         R += AURA_REACH / scale
     cw, ch = math.ceil((R - L) * scale), math.ceil((B - T) * scale)
@@ -378,6 +379,7 @@ def main(out_dir, height, specs):
             if 'burn' in flags: burn(cell, i)
             if 'aura' in flags: aura(cell, i)
             if 'frostaura' in flags: aura(cell, i, colours=FROST)
+            if 'fireaura' in flags: aura(cell, i, colours=FIRE)
             if 'bladeglow' in flags: aura(cell, i, seeds=blade_pixels(cell, centerx))
 
     opaque = [(int(c[0]), int(c[1]), int(c[2])) for row in cells for cell in row for line in cell for c in line if c[3] >= 0.5]

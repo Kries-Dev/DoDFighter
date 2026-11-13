@@ -137,7 +137,9 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,w
 - An air move that should keep going on landing (an aerial combo) needs a
   `physics.lua` entry: landing otherwise forces the crouch (219).
 - Sounds: frame `sound:` takes any PCM WAV (SDL converts rate/channels); convert
-  with `tools/to_wav.ps1`. Music must be WMA 8 (`tools/to_wma.ps1`).
+  with `tools/to_wav.ps1`, then `tools/prepare_sfx.py` (a sound plays when its
+  frame starts, so trim lead-in silence; normalise, or the game's near
+  full-scale effects drown it). Music must be WMA 8 (`tools/to_wma.ps1`).
 - Frozen and burning pictures are recoloured, not generated: `,ice` (icy blues,
   frost rim) on a hurt pose, `,burn` (charred, flames rising off the top edges)
   on knockdown poses. Free, and they match the character exactly.

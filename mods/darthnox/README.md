@@ -159,20 +159,23 @@ items) come from **Davis** (`object_data.lua` → `FIGHTERS`).
 
 | Input | Move | Frames | MP | What it does |
 |---|---|---|---|---|
-| D>A | Staff extension | 235-238 | 50 | stabs while the staff shoots out Wukong-style to ~200 px (`m_pole.txt`, object 66, visual) and retracts; the hitbox grows with it, 29-32 |
-| …then J | Vault | 240-244 | — | plants the staff and vaults ~160 px (invulnerable launch, ~90 px high, icy aura), landing in front of whoever the stab reached; the strike on the way down staggers (21) and plays her vault sound |
-| …then DvA | Staff combo | 270-281 | 40 | a Louis EX-style flurry: ten staff strikes at 40% of his DvA (16-28 each, ~148 on a standing opponent, who flinches throughout); the **final hit launches and freezes** (effect 3). After the vault it lands 5-7 hits (~105-130). `physics.lua` keeps it going through her landing |
+| D>A | Staff extension | 235-239 | 50 | stabs while the staff shoots out Wukong-style from her staff tip to ~200 px over ~9 ticks, holds and retracts (`m_pole.txt`, object 66, visual); the hitbox grows with it (90/150/200 px), 29-32 |
+| …then J | Vault | 240-244 | — | plants the staff and vaults ~100-135 px (invulnerable launch, ~90 px high, icy aura); the strike on the way down **freezes** (22) and plays her vault sound |
+| …then J again | Fire vault | 290-294 | — | a second, smaller flip from mid-air (fire aura); the strike on the way down **burns** (30, knockdown) and leaves a patch of Firen's ground fire, with Firen's fire-trail sound. Vault → fire vault on one target: ~50 damage, frozen then burnt |
+| DvA | Staff combo | 270-281 | 40 | on its own or out of either vault: ten staff strikes from its own animation (motion arcs), 40% of Louis EX's DvA (16-28 each, ~148), the opponent flinching throughout; the final hit launches and **freezes**. `physics.lua` keeps it going through a landing |
 | D^A | Homing staff | 245-248 | 75 | a conjure-and-fling cast that sends a spinning staff copy (`m_staff.txt`, object 64) after the nearest enemy like John's disc (`hit_Fa: 1`), 35 + knockdown |
 | D^J | Tornado | 250-258 | 200 | she twirls and sends a magic tornado (`m_tornado.txt`, object 65) drifting forward ~150 px; its whirlwind boxes match the drawing and lift whoever it touches once for ~1 s (`combat.lua`: no re-lifting, half landing damage), ~30-40 |
 | DvJ | Clone | 260-266 | 300 | dance spin, then an AI copy of her appears behind her; `objects.lua` gives it 15 HP (Rudolf's clones have 10) |
 
-Sheet `mathilde.bmp`: 376×2068, 88 cells of 93×93 (`row: 4  col: 22`), centre 44,89.
+Sheet `mathilde.bmp`: 376×2350, 100 cells of 93×93 (`row: 4  col: 25`), centre 44,89.
 Rows: idle, walk, run, swing, poke, jump, hurt, knockdown, overhead smash, block,
 extension, vault, throwing motion, twirl, dance spin, roll, grab, throw, frozen,
-burning, vault with a frost aura, conjure-and-fling cast. Effects (`m_staff.bmp`, `m_tornado.bmp`, `m_pole.bmp`) are drawn by
+burning, vault with a frost aura, conjure-and-fling cast, staff combo (2 rows),
+vault with a fire aura. Effects (`m_staff.bmp`, `m_tornado.bmp`, `m_pole.bmp`) are drawn by
 `tools/make_mathilde_fx.py`. Her sounds (`assets/snd/`: running stab, staff cast,
-vault strike, tornado, clone) were supplied as mp3 and converted with
-`tools/to_wav.ps1`; her grab-and-hit keeps LF2's punch sound. Portraits `mathilde_f.bmp` / `mathilde_s.bmp`.
+vault strike, tornado, clone) were supplied as mp3, converted with
+`tools/to_wav.ps1` and made game-ready (lead-in silence trimmed, loudness
+normalised, ~1.2 s max) with `tools/prepare_sfx.py`; her grab-and-hit keeps LF2's punch sound. Portraits `mathilde_f.bmp` / `mathilde_s.bmp`.
 
 Verified headless vs Deep: combo chain into the smash, extension 28, vault 89 px,
 homing staff curving onto a target 400 px away and off her line, tornado lifting
