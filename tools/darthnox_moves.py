@@ -27,8 +27,9 @@ MOVEMENT = {
     'jump_distance': 10.0, 'dash_distance': 19.0,
 }
 
-LUNGE_SPEED = 10                  # D>J travels ~100 px
+LUNGE_SPEED = 12                  # D>J travels ~125 px
 CRESCENT_SPEED = 11               # crescent dvx (half of the first version's 22)
+CRESCENT_DAMAGE = 25               # crescent hit: 21 HP on a normal-defence fighter (was 12 HP, +75%)
 CRESCENT_DRAIN = 16               # crescent hp lost per frame; half the speed needs half the drain for ~420 px
 RISING_LAUNCH = 16                # D^A launch speed (absolute): peak ~98 px, 10% over Davis's D^A
 
@@ -230,7 +231,7 @@ def ball():
     for n in range(4):
         out.append(f'<frame> {n} flying\n   pic: {n}  state: 3000  wait: 1  next: {n + 1 if n < 3 else 999}  dvx: {CRESCENT_SPEED}  dvy: 0'
                    f'  centerx: {BALL_CX}  centery: {BALL_CY}  hit_a: {CRESCENT_DRAIN}  hit_d: 40  hit_j: 0\n'
-                   + itr(x, y, w, h, dvx=8, fall=70, vrest=10, bdefend=16, injury=16)
+                   + itr(x, y, w, h, dvx=8, fall=70, vrest=10, bdefend=16, injury=CRESCENT_DAMAGE)
                    + bdy(x, y, w, h) + '<frame_end>\n')
     for base, name, st in ((10, 'hiting', 3001), (20, 'hit', 3002), (30, 'rebounding', 3003), (40, 'disappearing', 3004)):
         for i in range(4 if base < 40 else 3):

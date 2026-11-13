@@ -648,7 +648,7 @@ rowing_distance 4.000000
 <frame_end>
 
 <frame> 261 lunge
-   pic: 45  state: 3  wait: 4  next: 262  dvx: 10  dvy: 0  dvz: 0  centerx: 71  centery: 89  sound: data\054.wav  hit_Ua: 270
+   pic: 45  state: 3  wait: 4  next: 262  dvx: 12  dvy: 0  dvz: 0  centerx: 71  centery: 89  sound: data\054.wav  hit_Ua: 270
    itr:
       kind: 0  x: 65  y: 23  w: 78  h: 46  dvx: 2  dvy: 0  fall: 14  vrest: 4  arest: 0  bdefend: 12  injury: 11  effect: 1
    itr_end:

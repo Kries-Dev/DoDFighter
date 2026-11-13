@@ -11,7 +11,7 @@ weapon_broken_sound: data\020.wav
 <frame> 0 flying
    pic: 0  state: 3000  wait: 1  next: 1  dvx: 11  dvy: 0  centerx: 17  centery: 32  hit_a: 16  hit_d: 40  hit_j: 0
    itr:
-      kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 16  effect: 1
+      kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 25  effect: 1
    itr_end:
    bdy:
       kind: 0  x: 3  y: 4  w: 28  h: 56
@@ -21,7 +21,7 @@ weapon_broken_sound: data\020.wav
 <frame> 1 flying
    pic: 1  state: 3000  wait: 1  next: 2  dvx: 11  dvy: 0  centerx: 17  centery: 32  hit_a: 16  hit_d: 40  hit_j: 0
    itr:
-      kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 16  effect: 1
+      kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 25  effect: 1
    itr_end:
    bdy:
       kind: 0  x: 3  y: 4  w: 28  h: 56
@@ -31,7 +31,7 @@ weapon_broken_sound: data\020.wav
 <frame> 2 flying
    pic: 2  state: 3000  wait: 1  next: 3  dvx: 11  dvy: 0  centerx: 17  centery: 32  hit_a: 16  hit_d: 40  hit_j: 0
    itr:
-      kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 16  effect: 1
+      kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 25  effect: 1
    itr_end:
    bdy:
       kind: 0  x: 3  y: 4  w: 28  h: 56
@@ -41,7 +41,7 @@ weapon_broken_sound: data\020.wav
 <frame> 3 flying
    pic: 3  state: 3000  wait: 1  next: 999  dvx: 11  dvy: 0  centerx: 17  centery: 32  hit_a: 16  hit_d: 40  hit_j: 0
    itr:
-      kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 16  effect: 1
+      kind: 0  x: 3  y: 4  w: 28  h: 56  dvx: 8  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 25  effect: 1
    itr_end:
    bdy:
       kind: 0  x: 3  y: 4  w: 28  h: 56

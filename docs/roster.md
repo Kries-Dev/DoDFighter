@@ -53,7 +53,7 @@ direct hit here.
 
 | Fighter | Moves |
 |---|---|
-| **DarthNox** | D>A crescent 60 MP, proj 16 · D>J lunge 75 MP, 11 × ~4 hits · D^A rising slash 100 MP, 45 (+20), i-frames on launch · DvA flurry 50 MP, 3 × 14 + 22 finisher (+20 MP per extra round) · DJA parry 200 MP, counter 70 + dizzy, counter is invulnerable · D>J can cancel into D^A |
+| **DarthNox** | D>A crescent 60 MP, proj 21 · D>J lunge 75 MP, 11 × ~4 hits · D^A rising slash 100 MP, 45 (+20), i-frames on launch · DvA flurry 50 MP, 3 × 14 + 22 finisher (+20 MP per extra round) · DJA parry 200 MP, counter 70 + dizzy, counter is invulnerable · D>J can cancel into D^A |
 | Davis | D>A ball 40 · D^A dragon punch 225 MP, 85 · DvA many punch 75 MP, 45 · D^J jump hit 25 MP |
 | Deep | D>A blast 75 MP, proj · DvA jump sword 75 MP, 54 · D>J dash sword 150 MP, 54 · D^J jump sword |
 | Dennis | D>A ball 40 · D^A chase ball 100 · DvA many foot 75 MP, 45 · D>J whirlwind kick 75 MP, 45 |

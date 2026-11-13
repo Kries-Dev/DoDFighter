@@ -17,9 +17,9 @@ A **fast fencer with low defence and medium attack.**
 
 | Input | Move | Frames | MP | What it does |
 |---|---|---|---|---|
-| D>A | Crescent | 235-238 | 60 | horizontal swing (sword swish) that launches a sword wave (`crescent.txt`, object 62) at ~11 px/tick: ~390 px, about half a screen; light damage (16), knocks down |
+| D>A | Crescent | 235-238 | 60 | horizontal swing (sword swish) that launches a sword wave (`crescent.txt`, object 62) at ~11 px/tick: ~390 px, about half a screen; 21 damage, knocks down |
 | DJA | Parry | 240-244 | 200 | ~1 s guard (241-243) with a blue aura. A hit landing in it is cancelled and he counters (245-248): an unblockable stab, 70 damage, leaves the victim dizzy. The counter has no hurtbox. |
-| D>J | Lunge (D^A cancels it into the rising slash) | 260-263 | 75 | travelling stab (~95 px) with a sword sound and three fading afterimages; wide, tall blade box that hits every 5 ticks (11 each, ~4 hits), last ones knock down |
+| D>J | Lunge (D^A cancels it into the rising slash) | 260-263 | 75 | travelling stab (~125 px) with a sword sound and three fading afterimages; wide, tall blade box that hits every 5 ticks (11 each, ~4 hits), last ones knock down |
 | D^A | Rising slash | 270-273 | 100 | invincible launch, then an upward sweep that launches (45 + 20); peaks at ~100 px whether it hits or not, then a plain fall (no hop) |
 | DvA | Flurry | 280-288 | 50 | three heavier stabs (high, low, middle, 14 each, with a swish) that keep the opponent flinching on his feet, then a finisher that knocks down (22). Press A during the third stab for another round of three (20 MP); it ends when MP runs out |
 
