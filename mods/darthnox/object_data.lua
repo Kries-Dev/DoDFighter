@@ -23,14 +23,14 @@
 --   * it has any hit_*:  -> its hit_* fields replace Deep's (his own inputs)
 
 local IDLE_PICTURE = 0
--- He fights with a sword: frames kept from Deep that play LF2's punch sounds
--- (007: dash attack, grab throw; 014: hitting a held opponent) play the weapon
--- swish instead.
-local SOUND_SWAP = {["data\\007.wav"] = "data\\008.wav", ["data\\014.wav"] = "data\\008.wav"}
+-- DarthNox fights with a sword: frames he keeps from Deep that play LF2's punch
+-- sounds (007: dash attack, grab throw; 014: hitting a held opponent) play the
+-- weapon swish instead. Mathilde keeps the punch sounds.
+local SWORD_SOUNDS = {["data\\007.wav"] = "data\\008.wav", ["data\\014.wav"] = "data\\008.wav"}
 
 -- Our fighters and the stock fighter each one inherits its mechanics from.
 local FIGHTERS = {
-    ["mods/darthnox/darthnox.txt"] = {base = 1},    -- DarthNox over Deep
+    ["mods/darthnox/darthnox.txt"] = {base = 1, sounds = SWORD_SOUNDS},   -- DarthNox over Deep
     ["mods/darthnox/mathilde.txt"] = {base = 11},   -- Mathilde over Davis
 }
 
@@ -113,7 +113,8 @@ return function(base)
             else
                 for key, value in pairs(frame) do own[key] = value end
                 rebase(own, frame)
-                if own.sound and SOUND_SWAP[own.sound:lower()] then own.sound = SOUND_SWAP[own.sound:lower()] end
+                local swap = fighter.sounds
+                if swap and own.sound and swap[own.sound:lower()] then own.sound = swap[own.sound:lower()] end
                 own.picture = (mine and mine.picture) or IDLE_PICTURE
                 if mine and has_hits(mine) then own.hits = mine.hits end
             end

@@ -159,17 +159,20 @@ items) come from **Davis** (`object_data.lua` → `FIGHTERS`).
 
 | Input | Move | Frames | MP | What it does |
 |---|---|---|---|---|
-| D>A | Staff extension | 235-238 | 50 | slides to the end of the staff and stabs at full length (~110 px reach), 32 |
-| …then J | Vault | 240-244 | — | plants the staff and vaults over it (invulnerable launch, ~90 px high), landing kick 25 |
-| D^A | Homing staff | 245-248 | 75 | throws a spinning staff copy (`m_staff.txt`, object 64) that chases the nearest enemy like John's disc (`hit_Fa: 1`), 35 + knockdown |
-| D^J | Tornado | 250-258 | 200 | twirls inside a magic tornado (`m_tornado.txt`, object 65, visual) while Henry's flute whirlwind itrs (kind 10/11) lift everyone around her for ~1 s |
+| D>A | Staff extension | 235-238 | 50 | stabs while the staff shoots out Wukong-style to ~200 px (`m_pole.txt`, object 66, visual) and retracts; the hitbox grows with it, 29-32 |
+| …then J | Vault | 240-244 | — | plants the staff and vaults over it (invulnerable launch, ~90 px high, icy aura); the strike on the way down **freezes** (effect 3, 21) and plays her vault sound |
+| …then DvA | Staff combo | 270-281 | 40 | a Louis EX-style flurry: ten staff strikes at 40% of his DvA (16-28 each, ~148 total on a standing opponent, who flinches until the final launcher); after a freeze it shatters and juggles ~3 hits. `physics.lua` keeps it going through her landing |
+| D^A | Homing staff | 245-248 | 75 | a conjure-and-fling cast that sends a spinning staff copy (`m_staff.txt`, object 64) after the nearest enemy like John's disc (`hit_Fa: 1`), 35 + knockdown |
+| D^J | Tornado | 250-258 | 200 | she twirls and sends a magic tornado (`m_tornado.txt`, object 65) drifting forward ~150 px; its whirlwind boxes match the drawing and lift whoever it touches once for ~1 s (`combat.lua`: no re-lifting, half landing damage), ~30-40 |
 | DvJ | Clone | 260-266 | 300 | dance spin, then an AI copy of her appears behind her; `objects.lua` gives it 15 HP (Rudolf's clones have 10) |
 
-Sheet `mathilde.bmp`: 360×1800, 80 cells of 89×89 (`row: 4  col: 20`), centre 44,85.
+Sheet `mathilde.bmp`: 376×2046, 88 cells of 93×93 (`row: 4  col: 22`), centre 44,89.
 Rows: idle, walk, run, swing, poke, jump, hurt, knockdown, overhead smash, block,
 extension, vault, throwing motion, twirl, dance spin, roll, grab, throw, frozen,
-burning. Effects (`m_staff.bmp`, `m_tornado.bmp`) are drawn by
-`tools/make_mathilde_fx.py`. Portraits `mathilde_f.bmp` / `mathilde_s.bmp`.
+burning, vault with a frost aura, conjure-and-fling cast. Effects (`m_staff.bmp`, `m_tornado.bmp`, `m_pole.bmp`) are drawn by
+`tools/make_mathilde_fx.py`. Her sounds (`assets/snd/`: running stab, staff cast,
+vault strike, tornado, clone) were supplied as mp3 and converted with
+`tools/to_wav.ps1`; her grab-and-hit keeps LF2's punch sound. Portraits `mathilde_f.bmp` / `mathilde_s.bmp`.
 
 Verified headless vs Deep: combo chain into the smash, extension 28, vault 89 px,
 homing staff curving onto a target 400 px away and off her line, tornado lifting

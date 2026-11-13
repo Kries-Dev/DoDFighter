@@ -12,7 +12,8 @@ return function(base)
     local spawned = {
         {id = 62, kind = 3, path = "mods/darthnox/crescent.txt"},   -- DarthNox's crescent
         {id = 64, kind = 3, path = "mods/darthnox/m_staff.txt"},    -- Mathilde's homing staff
-        {id = 65, kind = 3, path = "mods/darthnox/m_tornado.txt"},  -- Mathilde's tornado (visual)
+        {id = 65, kind = 3, path = "mods/darthnox/m_tornado.txt"},  -- Mathilde's tornado
+        {id = 66, kind = 3, path = "mods/darthnox/m_pole.txt"},     -- Mathilde's extending staff (visual)
     }
     local stage_path = "mods/darthnox/bg/bridge.txt"
     local load, objects, backgrounds = base.load, base.objects, base.backgrounds

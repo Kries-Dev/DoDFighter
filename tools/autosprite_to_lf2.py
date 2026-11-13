@@ -18,7 +18,7 @@ lowest pixel instead of the clip's foot pivot -- for jumps, where the clip lifts
 the character but the engine already does that.
 
 ,aura draws a shimmering blue glow around the silhouette (the parry stance);
-,bladeglow the same glow around the weapon's blade only;
+,bladeglow the same glow around the weapon's blade only; ,frostaura an icy one;
 ,ice recolours the row as frozen solid and ,burn as charred and on fire (for
 the engine's ice and fire frames).
 
@@ -198,6 +198,7 @@ def ghost(cell, offsets, front_of=None, band=None, cover=None):
 # -------------------------------------------------------------------- aura ---
 AURA_REACH = 4
 AURA = [((185, 240, 255), 1.0), ((110, 195, 255), 0.75), ((60, 140, 245), 0.5), ((40, 100, 220), 0.25)]  # by distance
+FROST = [((245, 252, 255), 1.0), ((200, 240, 255), 0.75), ((150, 225, 250), 0.5), ((110, 200, 240), 0.25)]  # icy
 
 
 def blade_pixels(cell, centerx):
@@ -213,7 +214,7 @@ def blade_pixels(cell, centerx):
     return found
 
 
-def aura(cell, phase, seeds=None):
+def aura(cell, phase, seeds=None, colours=None):
     """A soft blue glow around the silhouette (the parry stance): rings 1-4 px out,
     bright at the edge and dithered away outwards; `phase` shifts the dither so
     the glow shimmers between frames. seeds: glow only around these pixels (the
@@ -235,7 +236,7 @@ def aura(cell, phase, seeds=None):
         for x in range(w):
             d = dist[y][x]
             if 1 <= d <= AURA_REACH:
-                colour, cover = AURA[d - 1]
+                colour, cover = (colours or AURA)[d - 1]
                 if BAYER[(y + phase) % 4][(x + phase) % 4] < cover * 16:
                     cell[y][x] = colour + (1.0,)
 
@@ -310,7 +311,7 @@ def main(out_dir, height, specs):
     for spec in specs:
         parts = spec.split(',')
         flags = set()
-        while parts[-1] in ('ground', 'trail', 'blades', 'ice', 'burn', 'aura', 'bladeglow'):
+        while parts[-1] in ('ground', 'trail', 'blades', 'ice', 'burn', 'aura', 'bladeglow', 'frostaura'):
             flags.add(parts.pop())
         ground = 'ground' in flags
         png, atlas, n = parts[0], parts[1], parts[2]
@@ -355,7 +356,7 @@ def main(out_dir, height, specs):
     scale = fixed_scale or height / tallest
     if any('trail' in f for f in row_flags):
         L -= TRAIL_REACH / scale       # room for the afterimages behind the body
-    if any('aura' in f or 'bladeglow' in f for f in row_flags):
+    if any(f & {'aura', 'bladeglow', 'frostaura'} for f in row_flags):
         T -= AURA_REACH / scale        # room for the glow above the hat
         R += AURA_REACH / scale
     cw, ch = math.ceil((R - L) * scale), math.ceil((B - T) * scale)
@@ -376,6 +377,7 @@ def main(out_dir, height, specs):
             if 'ice' in flags: frost(cell)
             if 'burn' in flags: burn(cell, i)
             if 'aura' in flags: aura(cell, i)
+            if 'frostaura' in flags: aura(cell, i, colours=FROST)
             if 'bladeglow' in flags: aura(cell, i, seeds=blade_pixels(cell, centerx))
 
     opaque = [(int(c[0]), int(c[1]), int(c[2])) for row in cells for cell in row for line in cell for c in line if c[3] >= 0.5]

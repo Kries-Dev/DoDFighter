@@ -130,9 +130,14 @@ python tools/autosprite_to_lf2.py out s0.345992 idle.png,idle.json,4 walk2.png,w
   parries with the aura copy 77). `,bladeglow` puts the same glow on the weapon's
   blade only (DarthNox's run attack).
 - Balance new fighters against `docs/roster.md` (stats of the whole cast).
-- Rapid multi-hits: keep each hit's `fall` small (~5) and space the hits ~8 ticks
-  apart, or the engine's stun counter (stepped 20/40/60, draining 1 per tick)
-  floors the victim after 3-4 hits. Let a finisher do the knockdown.
+- Rapid multi-hits: the engine's stun counter steps 20/40/60 and drains 1 per
+  tick, but not during the 3-tick hit lag. Keep `fall` at 1 (0 counts as 20) and
+  `vrest` above frame length + 3, so each frame lands once and the counter drains
+  between hits; then a finisher does the knockdown. Otherwise the 4th hit floors them.
+- An air move that should keep going on landing (an aerial combo) needs a
+  `physics.lua` entry: landing otherwise forces the crouch (219).
+- Sounds: frame `sound:` takes any PCM WAV (SDL converts rate/channels); convert
+  with `tools/to_wav.ps1`. Music must be WMA 8 (`tools/to_wma.ps1`).
 - Frozen and burning pictures are recoloured, not generated: `,ice` (icy blues,
   frost rim) on a hurt pose, `,burn` (charred, flames rising off the top edges)
   on knockdown poses. Free, and they match the character exactly.

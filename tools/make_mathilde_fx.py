@@ -113,8 +113,40 @@ def tornado_frame(phase, W=150, H=130):
     return px
 
 
+POLE_LENGTHS = (70, 140, 200, 200, 160, 110, 60, 30)   # D>A: shoots out, holds, retracts
+POLE_W, POLE_H = 210, 16
+
+
+def pole_frame(length, extending):
+    """The staff extended Wukong-style from her hands (x=0) to `length` px, black
+    with a gold tip; speed streaks along it while it is shooting out."""
+    W, H, cy = POLE_W, POLE_H, POLE_H // 2
+    px = [[0] * W for _ in range(H)]
+    for x in range(min(length, W)):
+        for y in range(cy - 2, cy + 3):
+            tip = x >= length - 8
+            if y in (cy - 2, cy + 2):
+                px[y][x] = OUTLINE
+            elif tip:
+                px[y][x] = GOLD_HI if y == cy - 1 else GOLD
+            else:
+                px[y][x] = SHINE if y == cy - 1 else BLACK
+    if length > 0:
+        for y in range(cy - 2, cy + 3):
+            if length < W:
+                px[y][min(length, W - 1)] = OUTLINE
+    if extending:
+        for k, y in enumerate((cy - 5, cy + 5, cy - 7, cy + 7)):
+            for x in range(max(0, length - 50 + k * 8), max(0, length - 12 - k * 6)):
+                if 0 <= y < H and (x + k) % 3:
+                    px[y][x] = GLOW3 if k < 2 else WHITE
+    return px
+
+
 def main(out_dir):
     os.makedirs(out_dir, exist_ok=True)
+    poles = [pole_frame(n, i < 3) for i, n in enumerate(POLE_LENGTHS)]
+    sheet(poles, POLE_W, POLE_H, os.path.join(out_dir, 'pole.bmp'))
     spins = [staff_frame(i * math.pi / 4, i) for i in range(4)]
     sheet(spins + [fade(staff_frame(i * math.pi / 4, i), k) for i, k in zip(range(4), (0.7, 0.45, 0.25, 0.1))],
           64, 64, os.path.join(out_dir, 'staff.bmp'))

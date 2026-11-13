@@ -12,8 +12,8 @@ Edit the tables and re-run; the whole of mathilde.txt is generated.
 """
 import os, sys
 
-CX, CY = 44, 85                   # sheet registration (autosprite_to_lf2.py output)
-CELL = (89, 89, 20)               # w, h, rows of mathilde.bmp
+CX, CY = 44, 89                   # sheet registration (autosprite_to_lf2.py output)
+CELL = (93, 93, 22)               # w, h, rows of mathilde.bmp
 BODY = (CX - 15, CY - 72, 30, 72)
 ABSOLUTE = 550                    # dvy above 500 sets the speed: dvy - 550 (see darthnox_moves.py)
 
@@ -24,11 +24,19 @@ HURT, FALL, SMASH, BLOCK = (24, 25, 26), (28, 29, 30, 31), (32, 33, 34), (36, 37
 EXTEND, VAULT, THROWING = (40, 41, 42, 43), (44, 45, 46, 47), (48, 49, 50)
 TWIRL, DANCE, ROLL, GRAB, THROW = (52, 53, 54, 55), (56, 57, 58, 59), (60, 61, 62, 63), (64, 65, 66, 67), (68, 69, 70)
 ICE, BURN = (72, 73), (76, 77, 78)
+VAULT_ICE, CAST = (80, 81, 82, 83), (84, 85, 86)   # vault with a frost aura; conjure-and-fling
 
 SWISH = 'data\\008.wav'           # weapon swing
 WHOOSH = 'data\\045.wav'          # big swish (extension stab)
 FLUTE = 'data\\056.wav'           # Henry's flute start (tornado)
-CLONE = 'data\\062.wav'           # Rudolf's clone
+CLONE = 'data\\062.wav'           # Rudolf's clone (unused now: she has her own)
+PUNCH = 'data\\007.wav'           # LF2's punch impact (her grab-and-hit keeps it)
+# Her own sounds (supplied as mp3, converted with tools/to_wav.ps1)
+RUN_SND = 'mods/darthnox/snd/m_run.wav'        # running stab
+STAFF_SND = 'mods/darthnox/snd/m_staff.wav'    # homing staff cast
+VAULT_SND = 'mods/darthnox/snd/m_vault.wav'    # vault's aerial strike
+TWIST_SND = 'mods/darthnox/snd/m_twist.wav'    # tornado
+CLONE_SND = 'mods/darthnox/snd/m_clone.wav'    # clone
 
 MOVEMENT = [                      # very fast: walk/run above everyone in the main cast
     ('walking_frame_rate', 3), ('walking_speed', 7.0), ('walking_speedz', 3.2),
@@ -46,7 +54,10 @@ HITS = dict(Fa=235, Ua=245, Da=0, Fj=0, Uj=250, Dj=260, ja=0)
 
 STAFF_DAMAGE = 35                 # homing staff copy (John's disc does 55)
 STAFF_DRAIN = 6                   # its hp lost per frame: ~2.5 s of chasing
-TORNADO_TICKS = 30                # ~1 s of lift (Henry's flute holds ~3 s)
+TORNADO_TICKS = 32                # the tornado object lifts for ~1 s (Henry's flute holds ~3 s)
+TORNADO_SPEED = 4                 # it drifts forward ~130 px while it lifts
+POLE_REACH = 200                  # D>A: the staff shoots out to 200 px (Wukong-style), m_pole.txt
+COMBO_SCALE = 0.4                 # DvA after the vault: Louis EX's DvA hits at 40%, more of them
 VAULT_LAUNCH = 15                 # absolute launch speed: ~90 px, over a standing fighter
 
 
@@ -85,6 +96,35 @@ def staff(reach=54, **kw):        # staff hitbox in front of the chest
 
 
 PICK_UP = itr(CX - 19, CY - 22, 37, 24, vrest=1, kind=2)
+VAULT_COMBO = {'Da': 270}
+
+
+def louis(injury):                # Louis EX's DvA hit, scaled
+    return max(1, round(injury * COMBO_SCALE))
+
+
+# DvA during the vault: a Louis EX-style flurry of staff strikes. Louis EX's DvA
+# lands 40, 40, 30, 60, 70, 70, 55; this one lands ten hits at 40% of those
+# (16-28 each). fall 1 keeps a standing victim flinching on every hit (the
+# engine steps its stun counter 20/40/60, so anything bigger floors them by the
+# 4th hit; 0 would count as 20), and vrest 6 (longer than a frame plus its 3-tick
+# hit lag) so each frame lands once, until the last strike launches them (fall 70); a victim the vault froze is
+# shattered into a fall by the first hit and juggled by the rest (dvy -10), like
+# Louis EX's. She steps forward 2 px a frame to stay on them.
+COMBO_HITS = [  # (picture, injury from Louis EX, reach, dvx, dvy)
+    (SWING[1], 40, 58, 2, 0), (POKE[1], 40, 64, 2, 0), (SWING[2], 30, 58, 2, 0), (SMASH[1], 60, 60, 2, 0),
+    (POKE[1], 40, 64, 2, 0), (SWING[1], 30, 58, 2, 0), (SMASH[2], 60, 60, 2, 0), (EXTEND[1], 70, 96, 3, 0),
+    (SWING[2], 55, 58, 2, 0), (SMASH[1], 70, 66, 9, -12),
+]
+COMBO = ['# DvA after the vault: ten staff strikes at 40% of Louis EX\'s DvA, then a launcher',
+         frame(270, 'staff_combo', SWING[0], 3, 1, 271, mp=40)]
+for k, (picture, injury, reach, dvx, dvy) in enumerate(COMBO_HITS):
+    last = k == len(COMBO_HITS) - 1
+    COMBO.append(frame(271 + k, 'staff_combo', picture, 3, 1 if not last else 2, 272 + k, dvx=2,
+                       sound=SWISH if k % 2 == 0 or last else None,
+                       extra=staff(reach, dvx=dvx, dvy=dvy or -10, fall=70 if last else 1, vrest=6,
+                                   bdefend=60 if last else 16, injury=louis(injury))))
+COMBO.append(frame(271 + len(COMBO_HITS), 'staff_combo', SMASH[2], 3, 4, 999))
 
 FRAMES = [
     '# Standing, walking, running (inputs live on standing, walking and defend)',
@@ -123,7 +163,7 @@ FRAMES = [
     frame(81, 'jump_attack', SMASH[1], 3, 1, 82, extra=itr(CX - 8, CY - 80, 74, 80, dvx=7, dvy=7, fall=70, arest=15, bdefend=60, injury=40)),
     frame(82, 'jump_attack', SMASH[2], 3, 9, 999),
     frame(85, 'run_attack', EXTEND[0], 3, 3, 86, dvx=6),
-    frame(86, 'run_attack', EXTEND[1], 3, 2, 87, dvx=4, sound=WHOOSH, extra=staff(96, dvx=8, dvy=-3, fall=70, vrest=15, bdefend=60, injury=38)),
+    frame(86, 'run_attack', EXTEND[1], 3, 2, 87, dvx=4, sound=RUN_SND, extra=staff(96, dvx=8, dvy=-3, fall=70, vrest=15, bdefend=60, injury=38)),
     frame(87, 'run_attack', EXTEND[2], 3, 3, 88),
     frame(88, 'run_attack', EXTEND[3], 3, 3, 999),
     *[pic(n, 'dash_attack', p) for n, p in zip((90, 91, 92, 93, 94), SMASH + (34, 34))],
@@ -143,7 +183,7 @@ FRAMES = [
     pic(115, 'picking_light', JUMP[0]), pic(116, 'picking_heavy', JUMP[0]), pic(117, 'picking_heavy', JUMP[0]),
 
     '# Grab and staff jab (A while holding), throws, being held',
-    *[pic(120 + i, 'catching', GRAB[i]) for i in range(4)],
+    *[pic(120 + i, 'catching', GRAB[i]) for i in range(4)],   # Davis's punch-impact sounds stay (object_data.lua swaps only for DarthNox)
     *[pic(232 + i, 'throw_lying_man', THROW[i]) for i in range(3)],
     *[pic(n, 'picked_caught', p) for n, p in zip(range(130, 145), HURT + (28, 29, 30, 30, 31, 29, 28, 29, 30, 30, 31, 29))],
 
@@ -160,39 +200,40 @@ FRAMES = [
     pic(213, 'dash', JUMP[1]), pic(214, 'dash', JUMP[1]), pic(216, 'dash', JUMP[1]), pic(217, 'dash', JUMP[1]),
     pic(215, 'crouch', JUMP[0]), pic(218, 'stop_running', JUMP[0]), pic(219, 'crouch2', JUMP[0]),
 
-    '# D>A  Staff extension: she slides to the end of the staff and stabs at full\n'
-    '# length (~110 px reach). Press J during it to vault over the staff (240).',
+    '# D>A  Staff extension: she stabs and the staff shoots out Wukong-style to\n'
+    '# ~200 px (m_pole.txt, object 66, drawn from her hands) and retracts; the\n'
+    '# hitbox grows with it. Press J during it to vault over the staff (240).',
     frame(235, 'staff_ext', EXTEND[0], 3, 1, 236, mp=50),
     frame(236, 'staff_ext', EXTEND[1], 3, 1, 237, dvx=8, sound=WHOOSH, hits={'j': 240},
-          extra=staff(110, dvx=6, fall=40, vrest=15, bdefend=30, injury=32)),
-    frame(237, 'staff_ext', EXTEND[2], 3, 3, 238, hits={'j': 240}, extra=staff(110, dvx=6, fall=40, vrest=15, bdefend=30, injury=32)),
+          extra=opoint(66, CX + 20, CY - 50) + staff(140, dvx=6, fall=40, vrest=15, bdefend=30, injury=32)),
+    frame(237, 'staff_ext', EXTEND[2], 3, 3, 238, hits={'j': 240}, extra=staff(POLE_REACH, dvx=6, fall=40, vrest=15, bdefend=30, injury=32)),
     frame(238, 'staff_ext', EXTEND[3], 3, 3, 999, hits={'j': 240}),
 
     '# Vault (J during the extension): plant, launch over the staff (invulnerable,\n'
-    '# absolute dvy so hit lag can\'t stack it), a landing kick, then a plain fall.',
-    frame(240, 'vault', VAULT[0], 3, 1, 241, dvx=4, body=False),
-    frame(241, 'vault', VAULT[1], 3, 1, 242, dvx=10, dvy=ABSOLUTE - VAULT_LAUNCH, body=False),
-    frame(242, 'vault', VAULT[2], 3, 3, 243, body=False),
-    frame(243, 'vault', VAULT[3], 3, 3, 244, extra=itr(CX - 10, CY - 62, 62, 62, dvx=6, fall=70, vrest=15, bdefend=30, injury=25)),
-    frame(244, 'vault', VAULT[3], 3, 4, 999),
+    '# absolute dvy so hit lag can\'t stack it), an ICE strike on the way down\n'
+    '# (effect 3 freezes, like Freeze\'s ice ball), then a plain fall. Icy aura on\n'
+    '# the pictures. DvA during the vault starts the combo (270).',
+    frame(240, 'vault', VAULT_ICE[0], 3, 1, 241, dvx=4, body=False, hits=VAULT_COMBO),
+    frame(241, 'vault', VAULT_ICE[1], 3, 1, 242, dvx=10, dvy=ABSOLUTE - VAULT_LAUNCH, body=False, hits=VAULT_COMBO),
+    frame(242, 'vault', VAULT_ICE[2], 3, 3, 243, body=False, hits=VAULT_COMBO),
+    frame(243, 'vault', VAULT_ICE[3], 3, 3, 244, sound=VAULT_SND, hits=VAULT_COMBO,
+          # the box reaches 60 px below her feet: it hits a standing fighter while she comes down
+          extra=itr(CX - 20, CY - 50, 72, 110, dvx=6, fall=70, vrest=15, bdefend=30, injury=25, effect=3)),
+    frame(244, 'vault', VAULT_ICE[3], 3, 4, 999, hits=VAULT_COMBO),
 
     '# D^A  Homing staff: a throwing motion that sends a spinning copy of the staff\n'
     '# (m_staff.txt, object 64) after the nearest enemy, like John\'s disc.',
-    frame(245, 'staff_throw', THROWING[0], 3, 2, 246, mp=75),
-    frame(246, 'staff_throw', THROWING[1], 3, 1, 247, sound=SWISH, extra=opoint(64, CX + 28, CY - 48)),
-    frame(247, 'staff_throw', THROWING[2], 3, 4, 248),
-    frame(248, 'staff_throw', THROWING[2], 3, 1, 999),
+    frame(245, 'staff_throw', CAST[0], 3, 2, 246, mp=75),
+    frame(246, 'staff_throw', CAST[1], 3, 2, 247),
+    frame(247, 'staff_throw', CAST[2], 3, 1, 248, sound=STAFF_SND, extra=opoint(64, CX + 28, CY - 48)),
+    frame(248, 'staff_throw', CAST[2], 3, 5, 999),
 
-    f'# D^J  Tornado: she twirls inside a magic tornado (m_tornado.txt, object 65, a\n'
-    f'# visual) while whirlwind itrs (kind 10/11, Henry\'s flute) lift and hold anyone\n'
-    f'# around her for ~{TORNADO_TICKS} ticks (1 s); then they drop.',
+    '# D^J  Tornado: she twirls and sends a magic tornado (m_tornado.txt, object 65)\n'
+    '# drifting forward; its whirlwind itrs (kind 10/11, like Freeze\'s whirlwind)\n'
+    '# match the drawing and lift anyone it touches for ~1 s.',
     frame(250, 'tornado', TWIRL[0], 3, 1, 251, mp=200),
-    frame(251, 'tornado', TWIRL[1], 3, 1, 252, sound=FLUTE, extra=opoint(65, CX, CY - 65)),
-] + [frame(252 + i, 'tornado', TWIRL[i % 4], 3, TORNADO_TICKS // 6 - 1, 253 + i if i < 5 else 258,
-           extra=itr(CX - 75, CY - 150, 150, 220, vrest=1, injury=1, kind=10)
-           + itr(CX - 130, CY - 140, 260, 210, vrest=1, injury=1, kind=10)
-           + itr(CX - 165, CY - 120, 330, 190, vrest=1, injury=1, kind=11))
-     for i in range(6)] + [
+    frame(251, 'tornado', TWIRL[1], 3, 1, 252, sound=TWIST_SND, extra=opoint(65, CX + 40, CY - 65)),
+    *[frame(252 + i, 'tornado', TWIRL[i % 4], 3, 2, 253 + i if i < 5 else 258) for i in range(6)],
     frame(258, 'tornado', TWIRL[2], 3, 3, 999),
 
     '# DvJ  Clone: a dance spin, then a copy of herself (object 63) appears behind\n'
@@ -200,9 +241,9 @@ FRAMES = [
     '# have 10).',
     frame(260, 'clone', DANCE[0], 3, 2, 261, mp=300),
     *[frame(261 + i, 'clone', DANCE[(i + 1) % 4], 3, 2, 262 + i) for i in range(4)],
-    frame(265, 'clone', DANCE[1], 3, 1, 266, sound=CLONE, extra=opoint(63, CX - 30, CY)),
+    frame(265, 'clone', DANCE[1], 3, 1, 266, sound=CLONE_SND, extra=opoint(63, CX - 30, CY)),
     frame(266, 'clone', DANCE[3], 3, 3, 999),
-]
+] + COMBO
 
 
 def header():
@@ -242,11 +283,27 @@ def staff_ball():
 
 
 def tornado_ball():
+    # 16 frames x 2 ticks = 32 ticks of lift while drifting forward, then fade.
+    # The boxes cover the drawn funnel: kind 10 lifts, kind 11 keeps the lifted up.
     c = (75, 65)
-    spin = [ball_frame(n, 'tornado', n % 4, 3000, n + 1, c) for n in range(16)]
-    fade = [ball_frame(16 + i, 'tornado_fade', 4 + i, 3000, 17 + i if i < 3 else 1000, c) for i in range(4)]
-    return ball('The tornado around Mathilde\'s D^J: visual only (the lift is on her frames).',
+    lift = itr(25, 0, 100, 130, vrest=1, injury=1, kind=10) + itr(5, 0, 140, 130, vrest=1, injury=1, kind=11)
+    spin = [ball_frame(n, 'tornado', n % 4, 3000, n + 1, c, dvx=TORNADO_SPEED, extra=lift) for n in range(16)]
+    fade = [ball_frame(16 + i, 'tornado_fade', 4 + i, 3000, 17 + i if i < 3 else 1000, c, dvx=TORNADO_SPEED) for i in range(4)]
+    return ball('Mathilde\'s D^J tornado: drifts forward and lifts what it touches for ~1 s.',
                 'mods/darthnox/m_tornado.bmp', (150, 130), c, spin + fade)
+
+
+def pole_ball():
+    # The extended staff, drawn from her hands (centre at its left end). Visual only:
+    # the hitbox is on her frames 236-237 and grows with it. 1 tick per frame.
+    c = (2, 8)
+    lengths = 8
+    frames = [ball_frame(n, 'pole', n, 3000, n + 1 if n < lengths - 1 else 1000, c).replace('wait: 1', 'wait: 0')
+              for n in range(lengths)]
+    frames.insert(3, ball_frame(30, 'pole_hold', 3, 3000, 4, c))   # hold at full length (2 ticks)
+    frames[2] = frames[2].replace('next: 3', 'next: 30')
+    return ball('Mathilde\'s D>A staff extension (Wukong-style), visual only.',
+                'mods/darthnox/m_pole.bmp', (210, 16), c, frames)
 
 
 def main(assets):
@@ -256,7 +313,9 @@ def main(assets):
         f.write(staff_ball())
     with open(os.path.join(assets, 'm_tornado.txt'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(tornado_ball())
-    print('wrote mathilde.txt, m_staff.txt, m_tornado.txt')
+    with open(os.path.join(assets, 'm_pole.txt'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(pole_ball())
+    print('wrote mathilde.txt, m_staff.txt, m_tornado.txt, m_pole.txt')
 
 
 if __name__ == '__main__':
