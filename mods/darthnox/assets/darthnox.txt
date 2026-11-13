@@ -2,8 +2,8 @@
 name: DarthNox
 head: mods/darthnox/portrait_f.bmp
 small: mods/darthnox/portrait_s.bmp
-file(0-79): mods/darthnox/darthnox.bmp
-w: 120  h: 90  row: 4  col: 20
+file(0-83): mods/darthnox/darthnox.bmp
+w: 120  h: 90  row: 4  col: 21
 walking_frame_rate 3
 walking_speed 6.000000
 walking_speedz 2.800000
@@ -295,16 +295,16 @@ rowing_distance 4.000000
    bdy_end:
 <frame_end>
 
-# Run attack: a running thrust
+# Run attack: a running thrust; its pictures (80-82) have a blue glow on the blade
 <frame> 85 run_attack
-   pic: 16  state: 3  wait: 4  next: 86  dvx: 6  dvy: 0  dvz: 0  centerx: 71  centery: 89
+   pic: 80  state: 3  wait: 4  next: 86  dvx: 6  dvy: 0  dvz: 0  centerx: 71  centery: 89
    bdy:
       kind: 0  x: 54  y: 17  w: 34  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 86 run_attack
-   pic: 17  state: 3  wait: 2  next: 87  dvx: 4  dvy: 0  dvz: 0  centerx: 71  centery: 89  sound: data\008.wav
+   pic: 81  state: 3  wait: 2  next: 87  dvx: 4  dvy: 0  dvz: 0  centerx: 71  centery: 89  sound: data\008.wav
    itr:
       kind: 0  x: 75  y: 31  w: 64  h: 28  dvx: 8  dvy: -4  fall: 70  vrest: 15  arest: 0  bdefend: 60  injury: 45  effect: 1
    itr_end:
@@ -314,14 +314,14 @@ rowing_distance 4.000000
 <frame_end>
 
 <frame> 87 run_attack
-   pic: 17  state: 3  wait: 3  next: 88  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+   pic: 81  state: 3  wait: 3  next: 88  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
    bdy:
       kind: 0  x: 54  y: 17  w: 34  h: 72
    bdy_end:
 <frame_end>
 
 <frame> 88 run_attack
-   pic: 18  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+   pic: 82  state: 3  wait: 3  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
    bdy:
       kind: 0  x: 54  y: 17  w: 34  h: 72
    bdy_end:
@@ -648,7 +648,7 @@ rowing_distance 4.000000
 <frame_end>
 
 <frame> 261 lunge
-   pic: 45  state: 3  wait: 4  next: 262  dvx: 10  dvy: 0  dvz: 0  centerx: 71  centery: 89  sound: data\054.wav
+   pic: 45  state: 3  wait: 4  next: 262  dvx: 10  dvy: 0  dvz: 0  centerx: 71  centery: 89  sound: data\054.wav  hit_Ua: 270
    itr:
       kind: 0  x: 65  y: 23  w: 78  h: 46  dvx: 2  dvy: 0  fall: 14  vrest: 4  arest: 0  bdefend: 12  injury: 11  effect: 1
    itr_end:
@@ -658,7 +658,7 @@ rowing_distance 4.000000
 <frame_end>
 
 <frame> 262 lunge
-   pic: 46  state: 3  wait: 6  next: 263  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+   pic: 46  state: 3  wait: 6  next: 263  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89  hit_Ua: 270
    itr:
       kind: 0  x: 65  y: 23  w: 78  h: 46  dvx: 2  dvy: 0  fall: 14  vrest: 4  arest: 0  bdefend: 12  injury: 11  effect: 1
    itr_end:
@@ -668,7 +668,7 @@ rowing_distance 4.000000
 <frame_end>
 
 <frame> 263 lunge
-   pic: 42  state: 3  wait: 5  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+   pic: 42  state: 3  wait: 5  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89  hit_Ua: 270
    bdy:
       kind: 0  x: 54  y: 17  w: 34  h: 72
    bdy_end:

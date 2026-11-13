@@ -18,6 +18,7 @@ lowest pixel instead of the clip's foot pivot -- for jumps, where the clip lifts
 the character but the engine already does that.
 
 ,aura draws a shimmering blue glow around the silhouette (the parry stance);
+,bladeglow the same glow around the weapon's blade only;
 ,ice recolours the row as frozen solid and ,burn as charred and on fire (for
 the engine's ice and fire frames).
 
@@ -199,14 +200,28 @@ AURA_REACH = 4
 AURA = [((185, 240, 255), 1.0), ((110, 195, 255), 0.75), ((60, 140, 245), 0.5), ((40, 100, 220), 0.25)]  # by distance
 
 
-def aura(cell, phase):
+def blade_pixels(cell, centerx):
+    """The steel of the weapon: bright, neutral-to-cool grey pixels in front of the
+    body (his cream sleeves are warmer, so they don't count)."""
+    h, w = len(cell), len(cell[0])
+    found = []
+    for y in range(h):
+        for x in range(centerx + 8, w):
+            r, g, b, a = cell[y][x]
+            if a >= 0.5 and min(r, g, b) >= 135 and max(r, g, b) - min(r, g, b) <= 50 and b >= r - 6:
+                found.append((x, y))
+    return found
+
+
+def aura(cell, phase, seeds=None):
     """A soft blue glow around the silhouette (the parry stance): rings 1-4 px out,
     bright at the edge and dithered away outwards; `phase` shifts the dither so
-    the glow shimmers between frames."""
+    the glow shimmers between frames. seeds: glow only around these pixels (the
+    blade, for ,bladeglow) instead of the whole body."""
     h, w = len(cell), len(cell[0])
     solid = [[cell[y][x][3] >= 0.5 for x in range(w)] for y in range(h)]
     dist = [[0 if solid[y][x] else 99 for x in range(w)] for y in range(h)]
-    frontier = [(x, y) for y in range(h) for x in range(w) if solid[y][x]]
+    frontier = seeds if seeds is not None else [(x, y) for y in range(h) for x in range(w) if solid[y][x]]
     for d in range(1, AURA_REACH + 1):
         nxt = []
         for x, y in frontier:
@@ -295,7 +310,7 @@ def main(out_dir, height, specs):
     for spec in specs:
         parts = spec.split(',')
         flags = set()
-        while parts[-1] in ('ground', 'trail', 'blades', 'ice', 'burn', 'aura'):
+        while parts[-1] in ('ground', 'trail', 'blades', 'ice', 'burn', 'aura', 'bladeglow'):
             flags.add(parts.pop())
         ground = 'ground' in flags
         png, atlas, n = parts[0], parts[1], parts[2]
@@ -340,7 +355,7 @@ def main(out_dir, height, specs):
     scale = fixed_scale or height / tallest
     if any('trail' in f for f in row_flags):
         L -= TRAIL_REACH / scale       # room for the afterimages behind the body
-    if any('aura' in f for f in row_flags):
+    if any('aura' in f or 'bladeglow' in f for f in row_flags):
         T -= AURA_REACH / scale        # room for the glow above the hat
         R += AURA_REACH / scale
     cw, ch = math.ceil((R - L) * scale), math.ceil((B - T) * scale)
@@ -361,6 +376,7 @@ def main(out_dir, height, specs):
             if 'ice' in flags: frost(cell)
             if 'burn' in flags: burn(cell, i)
             if 'aura' in flags: aura(cell, i)
+            if 'bladeglow' in flags: aura(cell, i, seeds=blade_pixels(cell, centerx))
 
     opaque = [(int(c[0]), int(c[1]), int(c[2])) for row in cells for cell in row for line in cell for c in line if c[3] >= 0.5]
     pal = median_cut(opaque, 255)

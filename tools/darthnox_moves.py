@@ -74,6 +74,7 @@ def blade(reach=48, **kw):
     return itr(CX + 4, CY - 58, reach, 28, **kw)
 
 
+LUNGE_CANCEL = {'Ua': 270}        # D^A during the lunge cancels it into the rising slash (pays its MP)
 FLURRY_EXTRA_MP = 20              # each extra flurry round (press A during it)
 
 
@@ -112,9 +113,9 @@ MOVES = [
     '# D>J  Lunge: a travelling stab that hits several times (re-hits every 5 ticks for\n'
     '# 11 damage) with a wide, tall blade box, held long enough to see the afterimages',
     frame(260, 'lunge', 44, 3, 2, 261, mp=75),
-    frame(261, 'lunge', 45, 3, 4, 262, dvx=LUNGE_SPEED, sound=SWORD, extra=lunge_blade()),
-    frame(262, 'lunge', 46, 3, 6, 263, extra=lunge_blade()),
-    frame(263, 'lunge', 42, 3, 5, 999),
+    frame(261, 'lunge', 45, 3, 4, 262, dvx=LUNGE_SPEED, sound=SWORD, hits=LUNGE_CANCEL, extra=lunge_blade()),
+    frame(262, 'lunge', 46, 3, 6, 263, hits=LUNGE_CANCEL, extra=lunge_blade()),
+    frame(263, 'lunge', 42, 3, 5, 999, hits=LUNGE_CANCEL),
 
     '# D^A  Rising slash: crouch, launch (no hitbox, invincible, absolute dvy so hit lag\n'
     '# can\'t stack it), two hits, then a plain fall via next: 999.',
@@ -163,11 +164,11 @@ BASICS = [
     frame(80, 'jump_attack', 12, 3, 1, 81, sound=SLASH),
     frame(81, 'jump_attack', 13, 3, 1, 82, extra=itr(CX - 8, CY - 76, 72, 74, dvx=7, dvy=7, fall=70, arest=15, bdefend=60, injury=45)),
     frame(82, 'jump_attack', 14, 3, 11, 999),
-    '# Run attack: a running thrust',
-    frame(85, 'run_attack', 16, 3, 4, 86, dvx=6),
-    frame(86, 'run_attack', 17, 3, 2, 87, dvx=4, sound=SLASH, extra=blade(64, dvx=8, dvy=-4, fall=70, vrest=15, bdefend=60, injury=45)),
-    frame(87, 'run_attack', 17, 3, 3, 88),
-    frame(88, 'run_attack', 18, 3, 3, 999),
+    '# Run attack: a running thrust; its pictures (80-82) have a blue glow on the blade',
+    frame(85, 'run_attack', 80, 3, 4, 86, dvx=6),
+    frame(86, 'run_attack', 81, 3, 2, 87, dvx=4, sound=SLASH, extra=blade(64, dvx=8, dvy=-4, fall=70, vrest=15, bdefend=60, injury=45)),
+    frame(87, 'run_attack', 81, 3, 3, 88),
+    frame(88, 'run_attack', 82, 3, 3, 999),
 
     '# Roll (run + D): the rolling frames, invulnerable like Deep\'s (no bdy); D>J from a roll is the lunge.\n'
     '# 100-101 and 108-109 are the air flips after being knocked up (picture only).',
