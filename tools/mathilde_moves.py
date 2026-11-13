@@ -62,9 +62,9 @@ TORNADO_TICKS = 32                # the tornado object lifts for ~1 s (Henry's f
 TORNADO_SPEED = 4                 # it drifts forward ~130 px while it lifts
 POLE_REACH = 170                  # D>A: the staff shoots out to 200 px (Wukong-style), m_pole.txt
 POLE_SPAWN = (40, -41)            # where it leaves her staff, rel. to her feet (measured: staff tip +44, -41)
-COMBO_SCALE = 0.32                 # DvA after the vault: Louis EX's DvA hits at 40%, more of them
+COMBO_SCALE = 0.24                 # DvA after the vault: Louis EX's DvA hits at 40%, more of them
 VAULT_SPEED = 5                   # forward speed: lands ~140 px out, in front of a target the stab reached
-VAULT2_LAUNCH = 9                 # second vault starts mid-air: a smaller, mostly vertical hop onto the target
+VAULT2_LAUNCH = 15                 # second vault starts mid-air: a smaller, mostly vertical hop onto the target
 VAULT_LAUNCH = 13                 # absolute launch speed: ~90 px, over a standing fighter
 
 
@@ -103,9 +103,7 @@ def staff(reach=54, **kw):        # staff hitbox in front of the chest
 
 
 PICK_UP = itr(CX - 19, CY - 22, 37, 24, vrest=1, kind=2)
-VAULT1 = {'a': 295, 'Da': 270}        # during the vault: A = ice strike, DvA = combo
-AFTER_ICE = {'j': 290, 'Da': 270}     # after the ice strike: J = fire vault, DvA = combo
-VAULT2 = {'a': 282}                   # during the fire vault: A = fire strike
+VAULT1 = {'j': 290, 'Da': 270}        # during the vault: J = fire vault, DvA = combo
 
 
 def louis(injury):                # Louis EX's DvA hit, scaled
@@ -126,7 +124,7 @@ C = COMBO_PICS
 COMBO_HITS = [  # (picture, injury from Louis EX, reach, dvx, dvy)
     (C[0], 40, 62, 2, 0), (C[1], 40, 62, 2, 0), (C[2], 30, 62, 2, 0), (C[3], 60, 62, 2, 0),
     (C[4], 40, 62, 2, 0), (C[5], 30, 62, 2, 0), (C[0], 60, 62, 2, 0), (C[2], 70, 66, 3, 0),
-    (C[6], 55, 64, 2, 0), (C[7], 70, 68, 9, -12),
+    (C[6], 55, 64, 2, 0), (C[7], 70, 68, 0, -20),
 ]
 COMBO = ['# DvA (on its own, or out of either vault): ten staff strikes at 40% of Louis\n'
          '# EX\'s DvA, the last one launching and freezing',
@@ -135,10 +133,10 @@ for k, (picture, injury, reach, dvx, dvy) in enumerate(COMBO_HITS):
     last = k == len(COMBO_HITS) - 1
     COMBO.append(frame(271 + k, 'staff_combo', picture, 3, 1 if not last else 2, 272 + k, dvx=2,
                        sound=SWISH if k % 2 == 0 or last else None,
+                       hits={'j': 240} if last else None,
                        extra=staff(reach, dvx=dvx, dvy=dvy or -10, fall=70 if last else 1, vrest=6,
-                                   bdefend=60 if last else 16, injury=louis(injury),
-                                   effect=3 if last else 0)))
-COMBO.append(frame(271 + len(COMBO_HITS), 'staff_combo', C[7], 3, 4, 999))
+                                   bdefend=60 if last else 16, injury=louis(injury))))
+COMBO.append(frame(271 + len(COMBO_HITS), 'staff_combo', C[7], 3, 6, 999, hits={'j': 240}))   # J: vault after the launcher
 
 FRAMES = [
     '# Standing, walking, running (inputs live on standing, walking and defend)',
@@ -218,43 +216,32 @@ FRAMES = [
     '# ~200 px (m_pole.txt, object 66, drawn from her staff tip) over ~9 ticks,\n'
     '# holds, and retracts; the hitbox grows with it (90, 150, 200 px). J during it vaults.',
     frame(235, 'staff_ext', EXTEND[0], 3, 2, 236, mp=50),
-    frame(236, 'staff_ext', EXTEND[1], 3, 2, 237, sound=WHOOSH, hits={'j': 240},
+    frame(236, 'staff_ext', EXTEND[1], 3, 2, 237, sound=RUN_SND, hits={'j': 240},
           extra=opoint(66, CX + POLE_SPAWN[0], CY + POLE_SPAWN[1]) + staff(77, dvx=6, fall=40, vrest=20, bdefend=30, injury=32)),
     frame(237, 'staff_ext', EXTEND[1], 3, 2, 238, hits={'j': 240}, extra=staff(128, dvx=6, fall=40, vrest=20, bdefend=30, injury=32)),
     frame(238, 'staff_ext', EXTEND[2], 3, 3, 239, hits={'j': 240}, extra=staff(POLE_REACH, dvx=6, fall=40, vrest=20, bdefend=30, injury=32)),
     frame(239, 'staff_ext', EXTEND[2], 3, 4, 999, hits={'j': 240}),   # same staff line as 236-238 while the pole retracts
 
-    '# Vault (J during the extension): plant and vault over the staff (invulnerable\n'
-    '# launch, absolute dvy, icy aura). No hit of its own: A during it = the ice\n'
-    '# strike (295), DvA = the staff combo.',
-    frame(240, 'vault', VAULT_ICE[0], 3, 1, 241, dvx=3, body=False, hits=VAULT1),
-    frame(241, 'vault', VAULT_ICE[1], 3, 1, 242, dvx=VAULT_SPEED, dvy=ABSOLUTE - VAULT_LAUNCH, body=False, hits=VAULT1),
-    frame(242, 'vault', VAULT_ICE[2], 3, 3, 243, body=False, hits=VAULT1),
-    frame(243, 'vault', VAULT_ICE[3], 3, 3, 244, hits=VAULT1),
+    '# Vault (J during the stab, or right after the DvA launcher): a flip with an ICE\n'
+    '# strike built in (freezes). J while still in the air: the higher fire vault.',
+    frame(240, 'vault', VAULT_ICE[0], 3, 1, 241, dvx=3, body=False),
+    frame(241, 'vault', VAULT_ICE[1], 3, 1, 242, dvx=VAULT_SPEED, dvy=ABSOLUTE - VAULT_LAUNCH, body=False),
+    frame(242, 'vault', VAULT_ICE[2], 3, 2, 243, sound=VAULT_SND, hits=VAULT1,
+          extra=itr(CX - 20, CY - 60, 80, 110, dvx=2, fall=20, vrest=12, bdefend=30, injury=22, effect=3)),
+    frame(243, 'vault', VAULT_ICE[3], 3, 3, 244, hits=VAULT1,
+          extra=itr(CX - 20, CY - 50, 72, 110, dvx=2, fall=20, vrest=12, bdefend=30, injury=22, effect=3)),
     frame(244, 'vault', VAULT_ICE[3], 3, 4, 999, hits=VAULT1),
 
-    '# Ice strike (A during the vault): FREEZES (effect 3); then a long window where\n'
-    '# J = the fire vault (290), kept open through the landing (physics.lua).',
-    frame(295, 'ice_strike', VAULT_ICE[2], 3, 1, 296, body=False),
-    frame(296, 'ice_strike', VAULT_ICE[3], 3, 3, 297, sound=VAULT_SND, hits=AFTER_ICE,
-          extra=itr(CX - 20, CY - 50, 72, 110, dvx=2, fall=20, vrest=15, bdefend=30, injury=25, effect=3)),
-    frame(297, 'ice_strike', VAULT_ICE[3], 3, 14, 999, hits=AFTER_ICE),
-
-    '# Fire vault (J after the ice strike): another flip with a fire aura, no hit of\n'
-    '# its own; A during it = the fire strike (282).',
-    frame(290, 'vault2', VAULT_FIRE[0], 3, 1, 291, dvx=3, body=False, hits=VAULT2),
-    frame(291, 'vault2', VAULT_FIRE[1], 3, 1, 292, dvx=3, dvy=ABSOLUTE - VAULT2_LAUNCH, body=False, hits=VAULT2),
-    frame(292, 'vault2', VAULT_FIRE[2], 3, 3, 293, body=False, hits=VAULT2),
-    frame(293, 'vault2', VAULT_FIRE[3], 3, 3, 294, hits=VAULT2),
-    frame(294, 'vault2', VAULT_FIRE[3], 3, 4, 999, hits=VAULT2),
-
-    '# Fire strike (A during the fire vault): BURNS (effect 2) and leaves Firen\'s\n'
-    '# ground fire, with Firen\'s fire-trail sound.',
-    frame(282, 'fire_strike', VAULT_FIRE[2], 3, 1, 283, body=False),
-    frame(283, 'fire_strike', VAULT_FIRE[3], 3, 3, 284, sound=FIRE_SND,
-          extra=itr(CX - 20, CY - 50, 72, 110, dvx=6, fall=70, vrest=15, bdefend=30, injury=30, effect=2)
-          + opoint(FIREN_FLAME, CX + 20, CY + 2, action=GROUND_FIRE)),
-    frame(284, 'fire_strike', VAULT_FIRE[3], 3, 6, 999),
+    '# Fire vault (J during the first): higher, with a longer FIRE strike that burns\n'
+    '# and leaves Firen\'s ground fire (and his fire-trail sound).',
+    frame(290, 'vault2', VAULT_FIRE[0], 3, 1, 291, dvx=3, body=False),
+    frame(291, 'vault2', VAULT_FIRE[1], 3, 1, 292, dvx=4, dvy=ABSOLUTE - VAULT2_LAUNCH, body=False),
+    frame(292, 'vault2', VAULT_FIRE[2], 3, 3, 293, sound=FIRE_SND, hits={'Da': 270},
+          extra=itr(CX - 25, CY - 70, 90, 130, dvx=4, fall=30, vrest=8, bdefend=30, injury=14, effect=2)),
+    frame(293, 'vault2', VAULT_FIRE[3], 3, 4, 294, hits={'Da': 270},
+          extra=itr(CX - 25, CY - 50, 90, 120, dvx=7, fall=70, vrest=8, bdefend=30, injury=18, effect=2)
+          + opoint(FIREN_FLAME, CX + 30, CY + 2, action=GROUND_FIRE)),
+    frame(294, 'vault2', VAULT_FIRE[3], 3, 4, 999),
 
     '# D^A  Homing staff: a throwing motion that sends a spinning copy of the staff\n'
     '# (m_staff.txt, object 64) after the nearest enemy, like John\'s disc.',

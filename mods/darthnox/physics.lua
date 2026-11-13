@@ -8,7 +8,7 @@
 -- where they are on landing (now on the ground) instead.
 
 local KEEP_ON_LANDING = {
-    [63] = {{270, 284}, {295, 297}},   -- Mathilde: staff combo, fire strike, ice strike + its J window
+    [63] = {{270, 281}},   -- Mathilde: the staff combo
 }
 local CROUCH_ALTERNATE = 219
 
