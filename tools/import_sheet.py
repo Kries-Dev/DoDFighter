@@ -11,7 +11,8 @@ with a 1 px gutter) but may be any size and on a light background:
   * the background (near-white pixels connected to the picture's edges) is
     removed; light areas inside a sprite (a white shirt) stay
   * the picture is scaled to WIDTH x HEIGHT with an alpha-weighted box filter,
-    so sprite edges don't pick up a white halo
+    then light grey pixels left on the sprite edge (the blend with the white
+    background) are peeled off, so there's no white outline in game
   * colours are reduced to 255 (median cut) plus index 0 = pure black, the
     transparent colour; no sprite pixel is pure black
 Needs Pillow and numpy.
@@ -23,6 +24,8 @@ from PIL import Image
 
 BACKGROUND_MIN = 232      # a pixel is background-ish if all channels are at least this
 OPAQUE = 0.5              # coverage needed after scaling for a pixel to be drawn
+FRINGE_MIN, FRINGE_GREY = 135, 45   # edge pixels this light and this colourless are white-background blend
+FRINGE_PASSES = 2                   # peel up to this many pixels of fringe off the sprite edge
 
 
 def background(img):
@@ -47,6 +50,23 @@ def background(img):
     return bg
 
 
+def peel_fringe(rgb, opaque):
+    """Drop light, colourless pixels on the sprite edge: the anti-aliasing against
+    the white background, which shows as a white outline on a dark stage."""
+    lo, hi = rgb.min(axis=2).astype(int), rgb.max(axis=2).astype(int)
+    fringe_colour = (lo >= FRINGE_MIN) & (hi - lo <= FRINGE_GREY)
+    for _ in range(FRINGE_PASSES):
+        clear = ~opaque
+        edge = np.zeros_like(opaque)
+        edge[1:, :] |= clear[:-1, :]; edge[:-1, :] |= clear[1:, :]
+        edge[:, 1:] |= clear[:, :-1]; edge[:, :-1] |= clear[:, 1:]
+        drop = opaque & edge & fringe_colour
+        if not drop.any():
+            break
+        opaque = opaque & ~drop
+    return opaque
+
+
 def scale(channel, size):
     return np.asarray(Image.fromarray(channel.astype(np.float32), 'F').resize(size, Image.BOX))
 
@@ -60,6 +80,7 @@ def main(src, out, width, height):
     opaque = a >= OPAQUE
     rgb = np.where(opaque[..., None], rgb / np.maximum(a, 1e-6)[..., None], 0)
     rgb = np.clip(np.rint(rgb), 0, 255).astype(np.uint8)
+    opaque = peel_fringe(rgb, opaque)
     rgb[opaque & (rgb.max(axis=2) < 8)] = (8, 8, 8)            # pure black is the transparent key
     # 255 colours from the sprite pixels only, then index 0 = transparent black
     pixels = Image.fromarray(rgb[opaque].reshape(1, -1, 3), 'RGB')
