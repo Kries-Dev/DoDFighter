@@ -112,10 +112,11 @@ MOVES = [
     frame(248, 'counter', 42, 3, 3, 999),
 
     '# D>J  Lunge: a travelling stab that hits several times (re-hits every 5 ticks for\n'
-    '# 11 damage) with a wide, tall blade box, held long enough to see the afterimages',
+    '# 11 damage) with a wide, tall blade box, held long enough to see the afterimages.\n'
+    '# Invincible (no bdy) while the afterimages trail him (261-262), like Bat\'s dash.',
     frame(260, 'lunge', 44, 3, 2, 261, mp=75),
-    frame(261, 'lunge', 45, 3, 4, 262, dvx=LUNGE_SPEED, sound=SWORD, hits=LUNGE_CANCEL, extra=lunge_blade()),
-    frame(262, 'lunge', 46, 3, 6, 263, hits=LUNGE_CANCEL, extra=lunge_blade()),
+    frame(261, 'lunge', 45, 3, 4, 262, dvx=LUNGE_SPEED, sound=SWORD, hits=LUNGE_CANCEL, body=False, extra=lunge_blade()),
+    frame(262, 'lunge', 46, 3, 6, 263, hits=LUNGE_CANCEL, body=False, extra=lunge_blade()),
     frame(263, 'lunge', 42, 3, 5, 999, hits=LUNGE_CANCEL),
 
     '# D^A  Rising slash: crouch, launch (no hitbox, invincible, absolute dvy so hit lag\n'

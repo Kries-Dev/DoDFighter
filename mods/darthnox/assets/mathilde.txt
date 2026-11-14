@@ -334,7 +334,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 86 run_attack
-   pic: 41  state: 3  wait: 2  next: 87  dvx: 4  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/mrun.wav
+   pic: 41  state: 3  wait: 2  next: 87  dvx: 4  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\045.wav
    itr:
       kind: 0  x: 46  y: 33  w: 96  h: 26  dvx: 8  dvy: -3  fall: 70  vrest: 15  arest: 0  bdefend: 60  injury: 38  effect: 0
    itr_end:
@@ -743,7 +743,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 236 staff_ext
-   pic: 41  state: 3  wait: 2  next: 237  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/mrun.wav  hit_j: 240  hit_ja: 315
+   pic: 41  state: 3  wait: 2  next: 237  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: data\045.wav  hit_j: 240  hit_ja: 315
    opoint:
       kind: 1  x: 84  y: 48  action: 0  dvx: 0  dvy: 0  oid: 66  facing: 0
    opoint_end:
@@ -926,7 +926,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 321 air_ext
-   pic: 101  state: 3  wait: 2  next: 322  dvx: 550  dvy: 550  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/mrun.wav
+   pic: 101  state: 3  wait: 2  next: 322  dvx: 550  dvy: 550  dvz: 0  centerx: 44  centery: 89  sound: data\045.wav
    opoint:
       kind: 1  x: 77  y: 71  action: 0  dvx: 0  dvy: 0  oid: 67  facing: 0
    opoint_end:
@@ -994,7 +994,7 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 311 dive_stab
-   pic: 101  state: 3  wait: 2  next: 312  dvx: 9  dvy: 559  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/mrun.wav
+   pic: 101  state: 3  wait: 2  next: 312  dvx: 9  dvy: 559  dvz: 0  centerx: 44  centery: 89  sound: data\045.wav
    itr:
       kind: 0  x: 44  y: 44  w: 85  h: 100  dvx: 8  dvy: 8  fall: 70  vrest: 15  arest: 0  bdefend: 60  injury: 34  effect: 0
    itr_end:

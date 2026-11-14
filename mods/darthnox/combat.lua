@@ -10,6 +10,13 @@
 -- Also Mathilde's launcher strike (A during a vault, mathilde.txt 301/296):
 -- it launches a grounded target, but one already in the air only gets a small
 -- pop, so it starts a juggle instead of sending them sky-high.
+--
+-- Also our projectiles are tougher than a stock ball (DarthNox's crescent 62,
+-- Mathilde's homing staff 64), between a normal ball and Henry's piercing
+-- arrow: each shrugs off the first TOUGHNESS opponents that would break it (a
+-- clashing ball, a punch, a weapon) and keeps flying, breaking a clashing
+-- ball as it goes. The next one breaks it as usual. Piercing and vanishing
+-- balls (states 3006/3005, e.g. Henry's arrow) still beat it outright.
 
 return function(base)
     local fighter_id = 61
@@ -19,6 +26,23 @@ return function(base)
     local objects = require("base/game/objects")
     local kinds = require("base/game/constants").attack_kinds
     local parryable = {[kinds.plain] = true, [kinds.thrown_body] = true, [kinds.held_item] = true}
+    local TOUGH = {[62] = 1, [64] = 1}   -- projectile id -> opponents it shrugs off
+    local states = require("base/game/constants").frame_states
+    local FLYING, STRONG = states.flying_ball, {[states.vanishing_ball] = true, [states.flying_missile] = true}
+
+    local function state_of(value) return value.record.frame(value.frame).state end
+
+    -- true while `ball` can still shrug off `other` (the same opponent counts once)
+    local function shrugs(ball, other)
+        if not TOUGH[ball.record.id] or state_of(ball) ~= FLYING or STRONG[state_of(other)] then return false end
+        ball.dod_beaten = ball.dod_beaten or {}
+        if ball.dod_beaten[other] then return true end
+        local count = 0
+        for _ in pairs(ball.dod_beaten) do count = count + 1 end
+        if count >= TOUGH[ball.record.id] then return false end
+        ball.dod_beaten[other] = true
+        return true
+    end
     local apply = base.apply
 
     function base.apply(state, p)
@@ -37,6 +61,31 @@ return function(base)
                     victim.facing = attacker.x < victim.x and 1 or 0
                     attacker.hit_lag = 6              -- a beat of freeze sells the parry
                 end
+            end
+        end
+        -- Something hitting one of our tough projectiles: void it while it has toughness left.
+        if attacker then
+            for position = 1, attacker.hit_list_count do
+                local victim = objects.lookup(state, attacker.hit_list[position])
+                if victim and (victim.pair_rest[p] or 0) <= 0 and shrugs(victim, attacker) then
+                    victim.pair_rest[p] = 20
+                end
+            end
+        end
+        -- One of our tough projectiles hitting another ball: it breaks that ball
+        -- and, while it has toughness left, keeps flying (the engine would stop it).
+        local keep
+        if attacker and TOUGH[attacker.record.id] and state_of(attacker) == FLYING then
+            local balls_only, any = true, false
+            for position = 1, attacker.hit_list_count do
+                local victim = objects.lookup(state, attacker.hit_list[position])
+                if victim and (victim.pair_rest[p] or 0) <= 0 then
+                    any = true
+                    if victim.record.kind ~= attacker.record.kind or not shrugs(attacker, victim) then balls_only = false end
+                end
+            end
+            if any and balls_only then
+                keep = {frame = attacker.frame, wait = attacker.wait_counter, vx = attacker.vx, vy = attacker.vy, vz = attacker.vz}
             end
         end
         local tornado = attacker and attacker.record.id == TORNADO
@@ -61,6 +110,10 @@ return function(base)
             end
         end
         local result = apply(state, p)
+        if keep and attacker.frame ~= keep.frame then
+            attacker.frame, attacker.wait_counter = keep.frame, keep.wait
+            attacker.vx, attacker.vy, attacker.vz = keep.vx, keep.vy, keep.vz
+        end
         if launcher then
             for victim in pairs(airborne) do
                 -- the hit set its upward impulse (-13); an airborne target pops low

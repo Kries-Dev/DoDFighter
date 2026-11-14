@@ -17,9 +17,9 @@ A **fast fencer with low defence and medium attack.**
 
 | Input | Move | Frames | MP | What it does |
 |---|---|---|---|---|
-| D>A | Crescent | 235-238 | 60 | horizontal swing (sword swish) that launches a sword wave (`crescent.txt`, object 62) at ~11 px/tick: ~390 px, about half a screen; 21 damage, knocks down |
+| D>A | Crescent | 235-238 | 60 | horizontal swing (sword swish) that launches a sword wave (`crescent.txt`, object 62) at ~11 px/tick: ~390 px, about half a screen; 21 damage, knocks down. Tougher than a stock ball (`combat.lua`): it breaks the first ball, punch or weapon that meets it and keeps flying; the next one breaks it. Henry's piercing arrow still beats it |
 | DJA | Parry | 240-244 | 200 | ~1 s guard (241-243) with a blue aura. A hit landing in it is cancelled and he counters (245-248): an unblockable stab, 70 damage, leaves the victim dizzy. The counter has no hurtbox. |
-| D>J | Lunge (D^A cancels it into the rising slash) | 260-263 | 75 | travelling stab (~125 px) with a sword sound and three fading afterimages; wide, tall blade box that hits every 5 ticks (11 each, ~4 hits), last ones knock down |
+| D>J | Lunge (D^A cancels it into the rising slash) | 260-263 | 75 | travelling stab (~125 px) with a sword sound and three fading afterimages, invincible while they trail him (261-262, no hurtbox); wide, tall blade box that hits every 5 ticks (11 each, ~4 hits), last ones knock down |
 | D^A | Rising slash | 270-273 | 100 | invincible launch, then an upward sweep that launches (45 + 20); peaks at ~100 px whether it hits or not, then a plain fall (no hop) |
 | DvA | Flurry | 280-288 | 50 | three heavier stabs (high, low, middle, 14 each, with a swish) that keep the opponent flinching on his feet, then a finisher that knocks down (22). Press A during the third stab for another round of three (20 MP); it ends when MP runs out |
 
@@ -166,7 +166,7 @@ items) come from **Davis** (`object_data.lua` → `FIGHTERS`).
 | D>A, then DJA | Jump + air staff extension | 315-316, 320-324 | 20 | (the J starts the vault, so it costs its 20) she jumps ~80-100 px and, hanging there, shoots the staff out 35° down-forward like the D>A (`m_pole_d.txt`, object 67, same sound); the hitboxes follow the staff down to the ground, D>A's hit (32). Reaches a standing opponent ~95-190 px ahead. Also DJA during vault 1 |
 | DvA during a vault | Diving stab | 310-313 | 0 | a short hang, then she stabs 45° down while dropping along the staff (34, knockdown; spikes an airborne target). Art: her extension frames tilted 35° (`tools/make_mathilde_dive.py`) |
 | DvA | Staff combo | 270-281 | 40 | ten staff strikes from its own animation (motion arcs), 16-28 each; the final hit launches straight up and J on its last frame vaults. `physics.lua` keeps it going through a landing |
-| D^A | Homing staff | 245-248 | 75 | a conjure-and-fling cast that sends a spinning staff copy (`m_staff.txt`, object 64) after the nearest enemy like John's disc (`hit_Fa: 1`), 35 + knockdown |
+| D^A | Homing staff | 245-248 | 75 | a conjure-and-fling cast that sends a spinning staff copy (`m_staff.txt`, object 64) after the nearest enemy like John's disc (`hit_Fa: 1`), 35 + knockdown. As tough as the crescent: breaks the first ball, punch or weapon that meets it and keeps chasing |
 | D^J | Tornado | 250-258 | 200 | she twirls and sends a magic tornado (`m_tornado.txt`, object 65) drifting forward ~150 px; its whirlwind boxes match the drawing and lift whoever it touches once for ~1 s (`combat.lua`: no re-lifting, half landing damage), ~30-40. Sound: Freeze's whirlwind (LF2 `073.wav`) |
 | DvJ | Clone | 260-266 | 300 | dance spin in a ring of twinkling stars, then an AI copy of her appears behind her with Rudolf's clone sound (LF2 `062.wav`); `objects.lua` gives it 15 HP (Rudolf's clones have 10) |
 
@@ -180,7 +180,7 @@ Effects (`m_staff.bmp`, `m_tornado.bmp`, `m_pole.bmp`, `m_pole_d.bmp`) are drawn
 `tools/make_mathilde_fx.py`. Her sounds (`assets/snd/`: running stab, staff cast,
 vault strike, tornado, clone) were supplied as mp3, converted with
 `tools/to_wav.ps1` and made game-ready (lead-in silence trimmed, loudness
-normalised, ~1.2 s max) with `tools/prepare_sfx.py`. The first prepared versions of the other four (`m_run`, `m_vault`, `m_twist`, `m_clone`) loaded but were never heard in game while `m_staff.wav` played on every move, so they were rebuilt from the original uploads as `mrun`, `mvault`, `mtwist`, `mclone` (loudness matched to `m_staff`). Those played in game, but `mtwist` (tornado) still wasn't heard and `mclone` didn't sound magic, so LF2's Freeze whirlwind and Rudolf clone sounds replaced them (the files stay in `snd/`, unused); `mrun` had its quiet lead-in cut (`prepare_sfx.py ... 0.9 0.5`) so it hits on the stab. Her grab-and-hit keeps LF2's punch sound. Portraits `mathilde_f.bmp` / `mathilde_s.bmp`.
+normalised, ~1.2 s max) with `tools/prepare_sfx.py`. The first prepared versions of the other four (`m_run`, `m_vault`, `m_twist`, `m_clone`) loaded but were never heard in game while `m_staff.wav` played on every move, so they were rebuilt from the original uploads as `mrun`, `mvault`, `mtwist`, `mclone` (loudness matched to `m_staff`). Those played in game, but `mtwist` (tornado) still wasn't heard and `mclone` didn't sound magic, so LF2's Freeze whirlwind and Rudolf clone sounds replaced them (the files stay in `snd/`, unused); `mrun` was then dropped too: the running stab, D>A, DJA and diving stab play Deep's sword-dash swish (`data%.wav`). Her grab-and-hit keeps LF2's punch sound. Portraits `mathilde_f.bmp` / `mathilde_s.bmp`.
 
 Verified headless vs Deep: combo chain into the smash, extension 28, vault 89 px,
 homing staff curving onto a target 400 px away and off her line, tornado lifting

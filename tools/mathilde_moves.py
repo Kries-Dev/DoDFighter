@@ -41,7 +41,7 @@ PUNCH = 'data\\007.wav'           # LF2's punch impact (her grab-and-hit keeps i
 # m_staff.wav) under fresh names; the old m_run/m_vault/m_twist/m_clone files
 # loaded but were never heard in game, while m_staff.wav played on every move.
 STAFF_SND = 'mods/darthnox/snd/m_staff.wav'    # homing staff cast
-RUN_SND = 'mods/darthnox/snd/mrun.wav'         # running stab, D>A stab, diving stab
+RUN_SND = WHOOSH                                # running stab, D>A stab, DJA, diving stab (mrun.wav dropped: the user disliked it)
 VAULT_SND = 'mods/darthnox/snd/mvault.wav'     # vault strikes
 # mtwist.wav / mclone.wav stay in snd/ unused: LF2's whirlwind and clone sounds replaced them.
 FIRE_SND = 'data\\070.wav'        # Firen's fire-trail sound (second vault)

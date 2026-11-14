@@ -639,7 +639,8 @@ rowing_distance 4.000000
 <frame_end>
 
 # D>J  Lunge: a travelling stab that hits several times (re-hits every 5 ticks for
-# 11 damage) with a wide, tall blade box, held long enough to see the afterimages
+# 11 damage) with a wide, tall blade box, held long enough to see the afterimages.
+# Invincible (no bdy) while the afterimages trail him (261-262), like Bat's dash.
 <frame> 260 lunge
    pic: 44  state: 3  wait: 2  next: 261  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89  mp: 75
    bdy:
@@ -652,9 +653,6 @@ rowing_distance 4.000000
    itr:
       kind: 0  x: 65  y: 23  w: 78  h: 46  dvx: 2  dvy: 0  fall: 14  vrest: 4  arest: 0  bdefend: 12  injury: 11  effect: 1
    itr_end:
-   bdy:
-      kind: 0  x: 54  y: 17  w: 34  h: 72
-   bdy_end:
 <frame_end>
 
 <frame> 262 lunge
@@ -662,9 +660,6 @@ rowing_distance 4.000000
    itr:
       kind: 0  x: 65  y: 23  w: 78  h: 46  dvx: 2  dvy: 0  fall: 14  vrest: 4  arest: 0  bdefend: 12  injury: 11  effect: 1
    itr_end:
-   bdy:
-      kind: 0  x: 54  y: 17  w: 34  h: 72
-   bdy_end:
 <frame_end>
 
 <frame> 263 lunge

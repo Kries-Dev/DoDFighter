@@ -43,7 +43,7 @@ the whole cast are in `docs/roster.md`.
 | `catalog.lua` | adds fighters and spawned objects (`fighters_added`, `spawned`) and the stage |
 | `object_data.lua` | merges our frames over the base fighter (`FIGHTERS` table: base id, sound swaps); shifts inherited hitboxes to our sprite centre |
 | `match.lua` | per-fighter damage taken (`DEFENCE`); Urban Bridge music |
-| `combat.lua` | DarthNox's parry/counter; Mathilde's tornado lifts each fighter once with half landing damage |
+| `combat.lua` | DarthNox's parry/counter; Mathilde's tornado lifts each fighter once with half landing damage; crescent (62) and homing staff (64) shrug off their first clash (`TOUGH`) |
 | `objects.lua` | Mathilde's clone gets 15 HP |
 | `physics.lua` | Mathilde's combo (270–281) keeps going through a landing |
 | `camera.lua` | Urban Bridge side walls |
@@ -149,11 +149,16 @@ use 63 for Mathilde.
   - Strike starts and the air extension (300, 295, 320) clear her pair rest
     (`physics.lua`) so the stab's vrest can't void them.
   - Verified headless vs Deep: all of the above; 2nd vault refused at low MP.
-- **Sounds:** the rebuilt `mrun/mvault/mclone.wav` play in game (2026-11-14).
-  The user found the stab sound strange (its quiet lead-in made it land late;
-  now trimmed), the clone not magic, and the tornado silent, so the tornado
-  uses Freeze's whirlwind (`data\073.wav`) and the clone Rudolf's (`data\062.wav`).
-  **Ask the user how the stab, tornado and clone sound now.**
+- **Sounds:** tornado = Freeze's whirlwind (`data;.wav`), clone = Rudolf's
+  (`data2.wav`), and (2026-11-14, the user disliked `mrun.wav`) the running
+  stab, D>A, DJA and dive use Deep's sword-dash swish (`data%.wav`). Her own
+  `mrun/mtwist/mclone.wav` stay in `snd/` unused; `mvault` and `m_staff` play.
+- **2026-11-14 balance:** DarthNox's lunge is invincible during the afterimages;
+  crescent and homing staff each beat one clashing ball/punch/weapon and keep
+  going (between a stock ball and Henry's piercing arrow). Verified headless.
+- **AI:** `base/game/ai.lua` only has special-move routines for stock fighter
+  ids, so the CPU never uses DarthNox's or Mathilde's specials (offered to the
+  user: an `ai.lua` extension that does).
 - The user plans **3–4 fighters** to start; the next one is a new design from
   the user.
 - **Ideas offered but not done:**
