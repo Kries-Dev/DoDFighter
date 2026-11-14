@@ -112,7 +112,11 @@ def catch(x, y, w, h, catching, caught):
             f'  bdefend: 0  injury: 0  effect: 0  catchingact: {catching} {catching}  caughtact: {caught} {caught}\n   itr_end:\n')
 
 
-def blade(reach=50, y=58, h=28, **kw):   # hidden-blade hitbox in front of the chest
+SHARP = 1                         # itr effect 1: LF2's sword/slash hit, not the punch spark
+
+
+def blade(reach=50, y=58, h=28, **kw):   # hidden-blade hitbox in front of the chest: a slash hit
+    kw.setdefault('effect', SHARP)
     return itr(CX + 4, CY - y, reach, h, **kw)
 
 
@@ -159,7 +163,7 @@ FRAMES = [
     '# dash attack: the same stab with afterimages, harder.',
     frame(80, 'jump_attack', SLASH[0], 3, 1, 81, sound=SWISH),
     frame(81, 'jump_attack', SLASH[1], 3, 2, 82,
-          extra=itr(CX - 4, CY - 64, 64, 84, dvx=7, dvy=5, fall=70, arest=15, bdefend=60, injury=35)),
+          extra=itr(CX - 4, CY - 64, 64, 84, dvx=7, dvy=5, fall=70, arest=15, bdefend=60, injury=35, effect=SHARP)),
     frame(82, 'jump_attack', SLASH[2], 3, 9, 999),
     frame(85, 'run_attack', THRUST[0], 3, 2, 86, dvx=6),
     frame(86, 'run_attack', THRUST[1], 3, 2, 87, dvx=8, sound=SWISH,
@@ -304,7 +308,7 @@ KUNAI_SPEED, KUNAI_DAMAGE, KUNAI_DRAIN = 15, 22, 25   # ~20 frames of flight: ~6
 
 def kunai_object():
     c = (20, 7)
-    hit = itr(4, 2, 34, 10, dvx=4, fall=40, vrest=10, bdefend=16, injury=KUNAI_DAMAGE)
+    hit = itr(4, 2, 34, 10, dvx=4, fall=40, vrest=10, bdefend=16, injury=KUNAI_DAMAGE, effect=SHARP)
     body = bdy(4, 2, 34, 10)
     fly = [obj_frame(n, 'flying', n, 3000, 1, n + 1 if n < 3 else 0, c, dvx=KUNAI_SPEED,
                      hits=f'hit_a: {KUNAI_DRAIN}  hit_d: 40  hit_j: 0', extra=hit + body) for n in range(4)]

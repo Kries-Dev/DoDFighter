@@ -37,6 +37,7 @@ end
 -- the rope (71) shortens with them; his kunai (69) fall in an arc.
 local COD1EH, SMOKE, TELEPORT_FRAME = 68, 70, 264
 local KUNAI, KUNAI_GRAVITY, KUNAI_GONE = 69, 0.5, 40   -- his kunai fall in an arc and vanish on the ground
+local KUNAI_SPREAD = 0.6                               -- the fan's depth spread (opoint facing 30: -5/0/+5) narrowed by 40%
 local ROPE, REEL_FRAME, REEL_END, REEL_SPEED = 71, 277, 278, 5   -- Scorpion-style: ~5 px a tick
 local ROPE_TRACK, ROPE_SHORT = 20, 7                   -- rope object: held lengths 20-35; 7 = last retract frame
 local LAND_TO = {[68] = {[284] = 288, [285] = 288, [286] = 288, [287] = 288}}
@@ -110,7 +111,7 @@ end
 
 local function kunai_fall(value)
     if value.frame > 3 then return end
-    if value.dod_vy == nil then value.dod_vy = value.vy end
+    if value.dod_vy == nil then value.dod_vy, value.vz = value.vy, value.vz * KUNAI_SPREAD end
     value.vy = 0
     value.y = value.y + value.dod_vy
     value.dod_vy = value.dod_vy + KUNAI_GRAVITY

@@ -211,11 +211,14 @@ objects `c_kunai.txt` (69), `c_smoke.txt` (70), `c_rope.txt` (71), drawn by
 
 | Input | Move | Frames | MP | What it does |
 |---|---|---|---|---|
-| D>A | Kunai fan | 235-238 | 45 | three kunai fanned out in depth (opoint `facing: 30`), tossed slightly up and dropping in an arc like Rudolf's stars (gravity in `physics.lua`, gone when they land ~350 px out), 22 each (19 on Deep) |
+| D>A | Kunai fan | 235-238 | 45 | three kunai fanned out in depth (opoint `facing: 30`, spread narrowed to 60% in `physics.lua`), tossed slightly up and dropping in an arc like Rudolf's stars (gravity in `physics.lua`, gone when they land ~350 px out), 22 each (19 on Deep) |
 | D^J | Smoke bomb | 250-254 | 100 | a smoke cloud at his feet and a back flip ~170 px away (first ticks invulnerable). The cloud lasts ~3 s; enemies inside move at 45% speed (`physics.lua`; Deep: 65 px in 30 ticks instead of 150) |
 | DvA | Rope blade | 270-278 | 60 | Scorpion-style: the blade shoots out on a rope to ~210 px; a hit (20) dizzies the target, he holds the pull (277) and reels them in at 5 px a tick (~1 s over full range) while the rope shortens with them (`combat.lua` + `physics.lua`; the daze only starts counting when they arrive), so A follows with his blade combo (rope + A: ~100 on Deep) |
 | DvJ | Teleport stab | 260-268 | 150 | hand seal, he vanishes in a puff, reappears behind the nearest enemy (`physics.lua`) and stabs them in the back, 45, knockdown |
 | DJA | Izuna drop | 280-290 | 150 | command grab (catches through a block), leaps up with them, flips and drives them head-first into the ground with the stone's heavy thud (`data.wav`) and a crunch (`021`); they bounce ~70 px up: 50 + 20 on landing (65 on Deep). The landing becomes the slam (`physics.lua`) |
+
+Every hit with the arm blade (stabs, slashes, combo, teleport, rope) and the kunai use
+LF2's slash hit (`effect: 1`) instead of the punch spark.
 
 His standing, walking and defend frames carry his own inputs only:
 `object_data.lua` has `own_inputs = true` for him, so Rudolf's transform,
