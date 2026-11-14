@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: MIT
 -- DoD Fighter — our fighters' sprites and authored frames over a stock fighter's
--- mechanics (DarthNox over Deep, Mathilde over Davis; see FIGHTERS below).
+-- mechanics (DarthNox over Deep, Mathilde over Davis, Cod1eh over Rudolf; see FIGHTERS below).
 --
 -- The art set is incomplete (8 cells: idle + walk). Rather than block on
 -- drawing ~200 more frames, this inherits a base fighter's full frame table —
@@ -32,7 +32,12 @@ local SWORD_SOUNDS = {["data\\007.wav"] = "data\\008.wav", ["data\\014.wav"] = "
 local FIGHTERS = {
     ["mods/darthnox/darthnox.txt"] = {base = 1, sounds = SWORD_SOUNDS},   -- DarthNox over Deep
     ["mods/darthnox/mathilde.txt"] = {base = 11},   -- Mathilde over Davis
+    -- Cod1eh over Rudolf: Rudolf's A already throws shurikens. own_inputs: his
+    -- standing/walking/defend frames replace Rudolf's special-move inputs even
+    -- where they are all 0, so he doesn't inherit transform, vanish or clone.
+    ["mods/darthnox/cod1eh.txt"] = {base = 5, sounds = SWORD_SOUNDS, own_inputs = true},
 }
+local INPUT_STATES = {[0] = true, [1] = true, [7] = true}   -- standing, walking, defend
 
 return function(base)
     local load = base.load
@@ -116,7 +121,9 @@ return function(base)
                 local swap = fighter.sounds
                 if swap and own.sound and swap[own.sound:lower()] then own.sound = swap[own.sound:lower()] end
                 own.picture = (mine and mine.picture) or IDLE_PICTURE
-                if mine and has_hits(mine) then own.hits = mine.hits end
+                if mine and (has_hits(mine) or (fighter.own_inputs and INPUT_STATES[frame.state])) then
+                    own.hits = mine.hits
+                end
             end
             if center_x then own.center_x, own.center_y = center_x, center_y end
             copy.frames[index] = own

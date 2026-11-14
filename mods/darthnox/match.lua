@@ -6,7 +6,7 @@
 -- its own music.
 
 -- armor multipliers: damage taken is x 100/armor, so 0.91 = +10%, 0.80 = +25%
-local DEFENCE = {[61] = 0.91, [63] = 0.80}   -- DarthNox, Mathilde
+local DEFENCE = {[61] = 0.91, [63] = 0.80, [68] = 0.87}   -- DarthNox, Mathilde, Cod1eh
 
 return function(base)
     local stage_path = "mods/darthnox/bg/bridge.txt"

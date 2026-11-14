@@ -37,3 +37,7 @@ asset=mods/darthnox/snd/m_staff.wav|assets/snd/m_staff.wav
 asset=mods/darthnox/snd/mvault.wav|assets/snd/mvault.wav
 asset=mods/darthnox/snd/mtwist.wav|assets/snd/mtwist.wav
 asset=mods/darthnox/snd/mclone.wav|assets/snd/mclone.wav
+asset=mods/darthnox/cod1eh.txt|assets/cod1eh.txt
+asset=mods/darthnox/cod1eh.bmp|assets/cod1eh.bmp
+asset=mods/darthnox/cod1eh_f.bmp|assets/cod1eh_f.bmp
+asset=mods/darthnox/cod1eh_s.bmp|assets/cod1eh_s.bmp

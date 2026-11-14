@@ -18,6 +18,7 @@ Read from the game data by a headless probe (OpenLF2 + the DarthNox mod,
 | Fighter | Walk | Run | Jump (speed → ≈px) | Dash | Punch dmg | Armor | Invulnerable moves |
 |---|---|---|---|---|---|---|---|
 | **Mathilde** (63) | **7.0** | **13.5** | 16.3 → 86 | 21 | 22 (staff), chains into a 40 smash | none; **takes +25% damage** | vault launch; roll |
+| **Cod1eh** (68) | 6.0 | 12.5 | 17.0 → 94 | 20 | (shuriken, Rudolf's) | none; **takes +15% damage** | roll |
 | **DarthNox** (61) | **6.0** | 10.5 | 16.3 → 86 | 19 | 30 (sword) | none; **takes +10% damage** | D^A launch (4 ticks); parry counter stab (whole stab); roll |
 | Davis (11) | 5.0 | 10.0 | 16.3 → 86 | 18 | 20 | — | D^A (4 of 21 ticks); roll |
 | Deep (1) | 5.0 | 8.5 | 16.3 → 86 | 16 | 35 | — | roll |

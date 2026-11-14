@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: MIT
--- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63), the objects their
+-- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63, Cod1eh 68), the objects their
 -- moves spawn (62, 64-67) and the Urban Bridge stage without editing base scripts.
 
 return function(base)
@@ -8,6 +8,7 @@ return function(base)
     local fighters_added = {
         {id = 61, path = "mods/darthnox/darthnox.txt"},
         {id = 63, path = "mods/darthnox/mathilde.txt"},
+        {id = 68, path = "mods/darthnox/cod1eh.txt"},
     }
     local spawned = {
         {id = 62, kind = 3, path = "mods/darthnox/crescent.txt"},   -- DarthNox's crescent
