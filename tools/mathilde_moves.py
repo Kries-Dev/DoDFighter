@@ -41,7 +41,7 @@ PUNCH = 'data\\007.wav'           # LF2's punch impact (her grab-and-hit keeps i
 # m_staff.wav) under fresh names; the old m_run/m_vault/m_twist/m_clone files
 # loaded but were never heard in game, while m_staff.wav played on every move.
 STAFF_SND = 'mods/darthnox/snd/m_staff.wav'    # homing staff cast
-RUN_SND = WHOOSH                                # running stab, D>A stab, DJA, diving stab (mrun.wav dropped: the user disliked it)
+STAB_SND = 'mods/darthnox/snd/mrun.wav'        # D>A stab, DJA, diving stab (her own)
 VAULT_SND = 'mods/darthnox/snd/mvault.wav'     # vault strikes
 # mtwist.wav / mclone.wav stay in snd/ unused: LF2's whirlwind and clone sounds replaced them.
 FIRE_SND = 'data\\070.wav'        # Firen's fire-trail sound (second vault)
@@ -200,7 +200,8 @@ FRAMES = [
     frame(81, 'jump_attack', SMASH[1], 3, 1, 82, extra=itr(CX - 8, CY - 80, 74, 80, dvx=7, dvy=7, fall=70, arest=15, bdefend=60, injury=40)),
     frame(82, 'jump_attack', SMASH[2], 3, 9, 999),
     frame(85, 'run_attack', EXTEND[0], 3, 3, 86, dvx=6),
-    frame(86, 'run_attack', EXTEND[1], 3, 2, 87, dvx=4, sound=RUN_SND, extra=staff(96, dvx=8, dvy=-3, fall=70, vrest=15, bdefend=60, injury=38)),
+    frame(86, 'run_attack', EXTEND[1], 3, 2, 87, dvx=4, sound=VAULT_SND,   # the user wanted anything but mrun here
+          extra=staff(96, dvx=8, dvy=-3, fall=70, vrest=15, bdefend=60, injury=38)),
     frame(87, 'run_attack', EXTEND[2], 3, 3, 88),
     frame(88, 'run_attack', EXTEND[3], 3, 3, 999),
     *[pic(n, 'dash_attack', p) for n, p in zip((90, 91, 92, 93, 94), SMASH + (34, 34))],
@@ -241,7 +242,7 @@ FRAMES = [
     '# ~200 px (m_pole.txt, object 66, drawn from her staff tip) over ~9 ticks,\n'
     '# holds, and retracts; the hitbox grows with it (90, 150, 200 px). J during it vaults.',
     frame(235, 'staff_ext', EXTEND[0], 3, 2, 236, mp=50),
-    frame(236, 'staff_ext', EXTEND[1], 3, 2, 237, sound=RUN_SND, hits={'j': 240, 'ja': 315},
+    frame(236, 'staff_ext', EXTEND[1], 3, 2, 237, sound=STAB_SND, hits={'j': 240, 'ja': 315},
           extra=opoint(66, CX + POLE_SPAWN[0], CY + POLE_SPAWN[1]) + staff(77, dvx=6, fall=40, vrest=20, bdefend=30, injury=32)),
     frame(237, 'staff_ext', EXTEND[1], 3, 2, 238, hits={'j': 240, 'ja': 315}, extra=staff(128, dvx=6, fall=40, vrest=20, bdefend=30, injury=32)),
     frame(238, 'staff_ext', EXTEND[2], 3, 3, 239, hits={'j': 240, 'ja': 315}, extra=staff(POLE_REACH, dvx=6, fall=40, vrest=20, bdefend=30, injury=32)),
@@ -273,7 +274,7 @@ FRAMES = [
     frame(315, 'air_ext_jump', JUMP[0], 3, 1, 316, dvx=3, dvy=ABSOLUTE - DIAG_JUMP, body=False),
     frame(316, 'air_ext_jump', JUMP[1], 3, 4, 320, dvx=3),
     frame(320, 'air_ext', DIVE[0], 3, 1, 321, dvx=ABSOLUTE, dvy=ABSOLUTE),
-    frame(321, 'air_ext', DIVE[1], 3, 2, 322, dvx=ABSOLUTE, dvy=ABSOLUTE, sound=RUN_SND,
+    frame(321, 'air_ext', DIVE[1], 3, 2, 322, dvx=ABSOLUTE, dvy=ABSOLUTE, sound=STAB_SND,
           extra=opoint(67, CX + DIAG_SPAWN[0], CY + DIAG_SPAWN[1]) + diag_staff(DIAG_REACH[0])),
     frame(322, 'air_ext', DIVE[1], 3, 2, 323, dvx=ABSOLUTE, dvy=ABSOLUTE, extra=diag_staff(DIAG_REACH[1])),
     frame(323, 'air_ext', DIVE[2], 3, 3, 324, dvx=ABSOLUTE, dvy=ABSOLUTE, extra=diag_staff(DIAG_REACH[2])),
@@ -284,7 +285,7 @@ FRAMES = [
     '# knocks down a standing one.',
     frame(310, 'dive_stab', DIVE[0], 3, 1, 311, dvy=ABSOLUTE - 3),
     *[frame(311 + i, 'dive_stab', DIVE[1 + i], 3, 2 + i, 312 + i, dvx=DIVE_SPEED, dvy=ABSOLUTE + DIVE_SPEED,
-            sound=RUN_SND if i == 0 else None,
+            sound=STAB_SND if i == 0 else None,
             extra=itr(CX, CY - 45, 85, 100, dvx=8, dvy=8, fall=70, vrest=15, bdefend=60, injury=34)) for i in range(2)],
     frame(313, 'dive_stab', DIVE[3], 3, 4, 999, dvx=4, dvy=ABSOLUTE + DIVE_SPEED),
 

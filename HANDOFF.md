@@ -151,9 +151,10 @@ use 63 for Mathilde.
     (`physics.lua`) so the stab's vrest can't void them.
   - Verified headless vs Deep: all of the above; 2nd vault refused at low MP.
 - **Sounds:** tornado = Freeze's whirlwind (`data;.wav`), clone = Rudolf's
-  (`data2.wav`), and (2026-11-14, the user disliked `mrun.wav`) the running
-  stab, D>A, DJA and dive use Deep's sword-dash swish (`data%.wav`). Her own
-  `mrun/mtwist/mclone.wav` stay in `snd/` unused; `mvault` and `m_staff` play.
+  (`data2.wav`), D>A, DJA and dive = her `mrun.wav`; the running
+  attack = her `mvault.wav` (the user asked for anything but `mrun` on run A
+  only; giving her stabs Deep's swish was a mistake, reverted). `mtwist` and
+  `mclone` stay in `snd/` unused.
 - **2026-11-14 balance:** DarthNox's lunge is invincible during the afterimages;
   crescent and homing staff each beat one clashing ball/punch/weapon and keep
   going (between a stock ball and Henry's piercing arrow). Verified headless.
