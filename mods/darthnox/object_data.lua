@@ -42,8 +42,8 @@ local INPUT_STATES = {[0] = true, [1] = true, [7] = true}   -- standing, walking
 -- Stock fighters with restyled sheets: their data stays stock, only the listed
 -- sheets (by position in the file: 1 = pictures 0-69) come from the mod.
 local RESTYLED = {
-    -- the user's black-and-white Bandit: sheet 1 drawn by the user, sheet 2 (hurt,
-    -- run/dash attacks, weapon moves, fire/ice) recoloured to match (tools/recolor_bandit.py)
+    -- the user's black-and-white Bandit, both sheets drawn by the user (art/bandit_0_edit.webp,
+    -- art/bandit_1_edit.webp: hurt, run/dash attacks, weapon moves, fire/ice), via tools/import_sheet.py
     ["data/bandit.dat"] = {[1] = "mods/darthnox/bandit_0.bmp", [2] = "mods/darthnox/bandit_1.bmp"},
 }
 
