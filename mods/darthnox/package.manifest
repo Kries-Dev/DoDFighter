@@ -14,6 +14,7 @@ extend=base/game/combat|combat.lua
 extend=base/game/music|music.lua
 extend=base/game/objects|objects.lua
 extend=base/game/physics|physics.lua
+extend=base/game/ai|ai.lua
 asset=mods/darthnox/bg/bridge.txt|assets/bg/bridge.txt
 asset=mods/darthnox/bg/bridge.bmp|assets/bg/bridge.bmp
 asset=mods/darthnox/bg/gravity_stars.wma|assets/bg/gravity_stars.wma

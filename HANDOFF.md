@@ -45,6 +45,7 @@ the whole cast are in `docs/roster.md`.
 | `match.lua` | per-fighter damage taken (`DEFENCE`); Urban Bridge music |
 | `combat.lua` | DarthNox's parry/counter; Mathilde's tornado lifts each fighter once with half landing damage; crescent (62) and homing staff (64) shrug off their first clash (`TOUGH`) |
 | `objects.lua` | Mathilde's clone gets 15 HP |
+| `ai.lua` | computer control for DarthNox's and Mathilde's specials |
 | `physics.lua` | Mathilde's combo (270–281) keeps going through a landing |
 | `camera.lua` | Urban Bridge side walls |
 | `music.lua` | no menu music (`MENU_MUSIC = false`) |
@@ -157,8 +158,10 @@ use 63 for Mathilde.
   crescent and homing staff each beat one clashing ball/punch/weapon and keep
   going (between a stock ball and Henry's piercing arrow). Verified headless.
 - **AI:** `base/game/ai.lua` only has special-move routines for stock fighter
-  ids, so the CPU never uses DarthNox's or Mathilde's specials (offered to the
-  user: an `ai.lua` extension that does).
+  ids, so `mods/darthnox/ai.lua` wraps `ai.control`: after the base AI picks
+  keys for 61/63 it may start a special (range + MP + per-tick chance, more
+  often at higher difficulty) or press A/J for follow-ups (flurry rounds, vault
+  chain, DJA). CPU-vs-CPU headless runs used every special; not yet watched in game.
 - The user plans **3–4 fighters** to start; the next one is a new design from
   the user.
 - **Ideas offered but not done:**
