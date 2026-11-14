@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Turn an edited (often upscaled) picture of an LF2 sprite sheet back into a
-game-ready 8-bit sheet.
+game-ready 8-bit sheet. The background may be white or black (found from the
+corners); black is best, since edge blending into black reads as outline in game.
 
     python tools/import_sheet.py EDITED.png|webp OUT.bmp WIDTH HEIGHT [STOCK.bmp]
 
@@ -26,14 +27,19 @@ from collections import deque
 import numpy as np
 from PIL import Image
 
-BACKGROUND_MIN = 232      # a pixel is background-ish if all channels are at least this
+BACKGROUND_MIN = 232      # light background: a pixel is background-ish if all channels are at least this
+DARK_MAX = 12             # black background: ... if no channel is above this (outlines are darker greys, 16+)
 OPAQUE = 0.5              # coverage needed after scaling for a pixel to be drawn
 FRINGE_MIN, FRINGE_GREY = 135, 45   # edge pixels this light and this colourless are white-background blend
 FRINGE_PASSES = 2                   # peel up to this many pixels of fringe off the sprite edge
 
 
 def background(img):
-    light = img.min(axis=2) >= BACKGROUND_MIN
+    corners = [img[2, 2], img[2, -3], img[-3, 2], img[-3, -3]]
+    if max(int(c.max()) for c in corners) <= DARK_MAX:     # drawn on black (LF2's own key colour)
+        light = img.max(axis=2) <= DARK_MAX
+    else:
+        light = img.min(axis=2) >= BACKGROUND_MIN
     H, W = light.shape
     bg = np.zeros((H, W), bool)
     q = deque()
