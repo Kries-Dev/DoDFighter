@@ -1084,16 +1084,16 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 288 izuna_slam
-   pic: 91  state: 9  wait: 2  next: 289  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86  sound: data\030.wav
+   pic: 91  state: 9  wait: 2  next: 289  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86  sound: data\010.wav
    cpoint:
       kind: 1  x: 98  y: 66  injury: 50  vaction: 136  aaction: 0  jaction: 0  taction: 0  throwvx: 0  throwvy: 0  throwvz: 0  hurtable: 0  throwinjury: 0  decrease: 0  dircontrol: 0  cover: 11
    cpoint_end:
 <frame_end>
 
 <frame> 289 izuna_slam
-   pic: 91  state: 9  wait: 2  next: 290  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 91  state: 9  wait: 2  next: 290  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86  sound: data\021.wav
    cpoint:
-      kind: 1  x: 98  y: 66  injury: 0  vaction: 181  aaction: 0  jaction: 0  taction: 0  throwvx: 6  throwvy: -6  throwvz: 0  hurtable: 0  throwinjury: 20  decrease: 0  dircontrol: 0  cover: 11
+      kind: 1  x: 98  y: 66  injury: 0  vaction: 181  aaction: 0  jaction: 0  taction: 0  throwvx: 3  throwvy: -12  throwvz: 0  hurtable: 0  throwinjury: 20  decrease: 0  dircontrol: 0  cover: 11
    cpoint_end:
 <frame_end>
 

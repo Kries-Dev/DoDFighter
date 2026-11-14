@@ -47,7 +47,8 @@ PUFF = 30                                         # smoke object action: a short
 KUNAI_SND = 'data\\008.wav'
 SMOKE_SND = 'data\\061.wav'     # Rudolf's vanish puff
 ROPE_SND = 'data\\008.wav'      # a swish as the rope shoots out (045 sounded like Deep)
-SLAM_SND = 'data\\030.wav'      # a heavy landing thud
+SLAM_SND = 'data\\010.wav'      # the stone's heavy drop/hit thud (a rock falling)
+CRUNCH_SND = 'data\\021.wav'    # the stone breaking: the crunch as they bounce
 
 SWISH = 'data\\008.wav'           # weapon swing (object_data.lua also swaps Rudolf's punch sounds for it)
 
@@ -267,8 +268,8 @@ FRAMES = [
     frame(286, 'izuna', DIVE[2], 9, 3, 287, dvy=ABSOLUTE, extra=cpoint(CX + 8, CY - 30, 136, cover=11)),
     frame(287, 'izuna', DIVE[2], 9, 40, 288, dvy=ABSOLUTE + 16, extra=cpoint(CX + 8, CY - 30, 136, cover=11)),
     frame(288, 'izuna_slam', DIVE[3], 9, 2, 289, sound=SLAM_SND, body=False, extra=cpoint(CX + 26, CY - 20, 136, injury=50, cover=11)),
-    frame(289, 'izuna_slam', DIVE[3], 9, 2, 290, body=False,
-          extra=cpoint(CX + 26, CY - 20, 181, throwvx=6, throwvy=-6, throwinjury=20, cover=11)),
+    frame(289, 'izuna_slam', DIVE[3], 9, 2, 290, body=False, sound=CRUNCH_SND,   # they bounce up off the ground
+          extra=cpoint(CX + 26, CY - 20, 181, throwvx=3, throwvy=-12, throwinjury=20, cover=11)),
     frame(290, 'izuna_slam', DIVE[3], 3, 8, 999, body=False),   # (the thrown body would hit him)
 ]
 

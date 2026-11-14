@@ -27,7 +27,7 @@ MOVEMENT = {
     'jump_distance': 10.0, 'dash_distance': 19.0,
 }
 
-LUNGE_SPEED = 12                  # D>J travels ~125 px
+LUNGE_SPEED = 14                  # D>J travels ~145 px (was 12, ~125 px; +15% on request)
 CRESCENT_SPEED = 11               # crescent dvx (half of the first version's 22)
 CRESCENT_DAMAGE = 25               # crescent hit: 21 HP on a normal-defence fighter (was 12 HP, +75%)
 CRESCENT_DRAIN = 16               # crescent hp lost per frame; half the speed needs half the drain for ~420 px
@@ -131,8 +131,9 @@ MOVES = [
     '# DvA  Flurry: three heavier stabs (high, low, middle), each with a wind-up and a\n'
     '# swish. fall 5 with ~8 ticks between stabs keeps the victim flinching instead\n'
     '# of staggering to the floor (the engine steps its stun counter 20/40/60, and\n'
-    '# it drains 1 per tick). Press A during the third stab for another round of\n'
-    '# three (287, 20 MP); otherwise the finisher (286) knocks down.',
+    '# it drains 1 per tick). Press A during the third stab for one more round of\n'
+    '# three (287, 290-294, 20 MP); it can\'t be extended again (no infinite),\n'
+    '# and either way the finisher (286) knocks down.',
     frame(280, 'flurry', 16, 3, 1, 281, mp=50),
     frame(281, 'flurry', 52, 3, 2, 282, sound=SLASH, extra=flurry_hit()),
     frame(282, 'flurry', 16, 3, 1, 283),
@@ -141,7 +142,12 @@ MOVES = [
     frame(285, 'flurry', 54, 3, 2, 286, sound=SLASH, hits={'a': 287}, extra=flurry_hit()),
     frame(286, 'flurry', 17, 3, 2, 288, dvx=4, sound=SLASH, extra=blade(60, dvx=9, fall=70, vrest=10, bdefend=30, injury=22)),
     frame(288, 'flurry', 18, 3, 3, 999),
-    frame(287, 'flurry', 16, 3, 1, 281, mp=FLURRY_EXTRA_MP),
+    frame(287, 'flurry', 16, 3, 1, 290, mp=FLURRY_EXTRA_MP),
+    frame(290, 'flurry', 52, 3, 2, 291, sound=SLASH, extra=flurry_hit()),
+    frame(291, 'flurry', 16, 3, 1, 292),
+    frame(292, 'flurry', 53, 3, 2, 293, sound=SLASH, extra=flurry_hit()),
+    frame(293, 'flurry', 16, 3, 1, 294),
+    frame(294, 'flurry', 54, 3, 2, 286, sound=SLASH, extra=flurry_hit()),   # no hit_a: the repeat is final
 ]
 
 # A punch-frame itr that picks up an item when attacking over it (Deep's 60/65), at our feet.

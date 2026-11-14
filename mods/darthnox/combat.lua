@@ -23,6 +23,7 @@ return function(base)
     local TORNADO = 65   -- Mathilde's D^J tornado object
     local MATHILDE, LAUNCHERS, LOW_POP = 63, {[301] = true, [296] = true}, -5.0
     local parry_first, parry_last, counter_frame = 241, 243, 245
+    local PARRY_HEAL = 50
     local objects = require("base/game/objects")
     local kinds = require("base/game/constants").attack_kinds
     local parryable = {[kinds.plain] = true, [kinds.thrown_body] = true, [kinds.held_item] = true}
@@ -59,6 +60,9 @@ return function(base)
                    and (victim.pair_rest[p] or 0) <= 0 then
                     victim.pair_rest[p] = 20          -- this attacker's hit is void
                     victim.frame = counter_frame
+                    -- a successful parry restores PARRY_HEAL hp (up to his max)
+                    victim.hp = math.min(victim.max_hp, victim.hp + PARRY_HEAL)
+                    if victim.dark_hp < victim.hp then victim.dark_hp = victim.hp end
                     victim.facing = attacker.x < victim.x and 1 or 0
                     attacker.hit_lag = 6              -- a beat of freeze sells the parry
                 end

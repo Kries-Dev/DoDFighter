@@ -57,7 +57,7 @@ direct hit here.
 |---|---|
 | **Mathilde** | D>A staff extension 50 MP, ~200 px, 32 (J: vault, freezing strike 22; J again: fire vault, burning strike 30 + ground fire) · DvA staff combo 40 MP, 10 hits ~148, last hit freezes (also out of either vault) · D^A homing staff 75 MP, 35 · D^J tornado 200 MP, drifts forward and lifts for ~1 s, ~35 · DvJ clone 300 MP, AI copy with 15 HP |
 | **Cod1eh** | D>A kunai fan 45 MP, 3 kunai × 22 spread in depth, falling arc · D^J smoke bomb 100 MP, back flip ~170 px, cloud slows enemies to 45% for ~3 s · DvA rope blade 60 MP, ~210 px, 20 + dizzy + slow reel-in (A: blade combo, ~100 total) · DvJ teleport stab 150 MP, behind the nearest enemy, 45 · DJA Izuna drop 150 MP, command grab, 70 (65 on Deep) · roll ~165 px, longer i-frames |
-| **DarthNox** | D>A crescent 60 MP, proj 21 · D>J lunge 75 MP, 11 × ~4 hits · D^A rising slash 100 MP, 45 (+20), i-frames on launch · DvA flurry 50 MP, 3 × 14 + 22 finisher (+20 MP per extra round) · DJA parry 200 MP, counter 70 + dizzy, counter is invulnerable · D>J can cancel into D^A |
+| **DarthNox** | D>A crescent 60 MP, proj 21 · D>J lunge 75 MP, ~145 px, 11 × ~4 hits · D^A rising slash 100 MP, 45 (+20), i-frames on launch · DvA flurry 50 MP, 3 × 14 + 22 finisher (one extra round for 20 MP, no more) · DJA parry 200 MP, counter 70 + dizzy, +50 HP on a parry, counter is invulnerable · D>J can cancel into D^A |
 | Davis | D>A ball 40 · D^A dragon punch 225 MP, 85 · DvA many punch 75 MP, 45 · D^J jump hit 25 MP |
 | Deep | D>A blast 75 MP, proj · DvA jump sword 75 MP, 54 · D>J dash sword 150 MP, 54 · D^J jump sword |
 | Dennis | D>A ball 40 · D^A chase ball 100 · DvA many foot 75 MP, 45 · D>J whirlwind kick 75 MP, 45 |

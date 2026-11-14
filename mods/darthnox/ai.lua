@@ -70,7 +70,7 @@ end
 local function darthnox(state, S, T, dx, dz, skill)
     local mp, f, ts = S.mp, S.frame, state_of(T)
     -- Flurry: mash A for more rounds while the target is still in front.
-    if f >= 281 and f <= 287 then
+    if (f >= 281 and f <= 287) or (f >= 290 and f <= 294) then
         if dx < 70 and dz < 10 and mp >= 20 and chance(3, skill) then tap(S, "attack") end
         return
     end

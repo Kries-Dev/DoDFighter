@@ -184,6 +184,9 @@ use 63 for Mathilde.
   Kunai fan: 3 kunai, 45 MP, falling arc. Teleport 150 MP. Rope blade reels in slowly
   (5 px/tick, he holds the pull, the rope object 71 shows a matching length 20-35).
   **Never use `data%.wav` for our fighters: the user hears it as Deep's voice.**
+- **2026-11-14 tweaks:** Izuna slam = stone thud `010` + crunch `021`, victim bounces
+  ~70 px (throwvy -12). DarthNox: lunge speed 14 (+15%), flurry repeats once only
+  (290-294 has no hit_a; it was an infinite), parry restores 50 HP (`combat.lua`).
 - The user plans **3–4 fighters** to start.
 - **Ideas offered but not done:**
   - per-fighter HP (LF2 gives everyone 500)
