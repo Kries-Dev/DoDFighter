@@ -18,7 +18,7 @@ Read from the game data by a headless probe (OpenLF2 + the DarthNox mod,
 | Fighter | Walk | Run | Jump (speed → ≈px) | Dash | Punch dmg | Armor | Invulnerable moves |
 |---|---|---|---|---|---|---|---|
 | **Mathilde** (63) | **7.0** | **13.5** | 16.3 → 86 | 21 | 22 (staff), chains into a 40 smash | none; **takes +25% damage** | vault launch; roll |
-| **Cod1eh** (68) | 6.0 | 12.5 | 17.0 → 94 | 20 | (shuriken, Rudolf's) | none; **takes +15% damage** | roll |
+| **Cod1eh** (68) | 6.0 | 12.5 | 17.0 → 94 | 20 | (shuriken, Rudolf's) | none; **takes +15% damage** | smoke-bomb flip (2 ticks); teleport (vanished); Izuna slam; roll (longer) |
 | **DarthNox** (61) | **6.0** | 10.5 | 16.3 → 86 | 19 | 30 (sword) | none; **takes +10% damage** | D^A launch (4 ticks); parry counter stab (whole stab); roll |
 | Davis (11) | 5.0 | 10.0 | 16.3 → 86 | 18 | 20 | — | D^A (4 of 21 ticks); roll |
 | Deep (1) | 5.0 | 8.5 | 16.3 → 86 | 16 | 35 | — | roll |
@@ -56,6 +56,7 @@ direct hit here.
 | Fighter | Moves |
 |---|---|
 | **Mathilde** | D>A staff extension 50 MP, ~200 px, 32 (J: vault, freezing strike 22; J again: fire vault, burning strike 30 + ground fire) · DvA staff combo 40 MP, 10 hits ~148, last hit freezes (also out of either vault) · D^A homing staff 75 MP, 35 · D^J tornado 200 MP, drifts forward and lifts for ~1 s, ~35 · DvJ clone 300 MP, AI copy with 15 HP |
+| **Cod1eh** | D>A kunai fan 75 MP, 5 kunai × 22 spread in depth · D^J smoke bomb 100 MP, back flip ~170 px, cloud slows enemies to 45% for ~3 s · DvA rope blade 60 MP, ~210 px, 20 + dizzy + reel-in (A: blade combo, 69 total) · DvJ teleport stab 120 MP, behind the nearest enemy, 45 · DJA Izuna drop 150 MP, command grab, 70 (65 on Deep) · roll ~165 px, longer i-frames |
 | **DarthNox** | D>A crescent 60 MP, proj 21 · D>J lunge 75 MP, 11 × ~4 hits · D^A rising slash 100 MP, 45 (+20), i-frames on launch · DvA flurry 50 MP, 3 × 14 + 22 finisher (+20 MP per extra round) · DJA parry 200 MP, counter 70 + dizzy, counter is invulnerable · D>J can cancel into D^A |
 | Davis | D>A ball 40 · D^A dragon punch 225 MP, 85 · DvA many punch 75 MP, 45 · D^J jump hit 25 MP |
 | Deep | D>A blast 75 MP, proj · DvA jump sword 75 MP, 54 · D>J dash sword 150 MP, 54 · D^J jump sword |

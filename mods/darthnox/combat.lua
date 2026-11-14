@@ -26,6 +26,7 @@ return function(base)
     local objects = require("base/game/objects")
     local kinds = require("base/game/constants").attack_kinds
     local parryable = {[kinds.plain] = true, [kinds.thrown_body] = true, [kinds.held_item] = true}
+    local COD1EH, ROPE_FIRST, ROPE_LAST, ROPE_PULL_TICKS = 68, 271, 274, 8
     local TOUGH = {[62] = 1, [64] = 1}   -- projectile id -> opponents it shrugs off
     local states = require("base/game/constants").frame_states
     local FLYING, STRONG = states.flying_ball, {[states.vanishing_ball] = true, [states.flying_missile] = true}
@@ -109,7 +110,25 @@ return function(base)
                 if victim and victim.y_int < 0 then airborne[victim] = true end
             end
         end
+        -- Cod1eh's DvA rope blade: whoever it hurts is reeled in (physics.lua).
+        local rope = attacker and attacker.record.id == COD1EH and attacker.frame_at_pass >= ROPE_FIRST
+            and attacker.frame_at_pass <= ROPE_LAST
+        local hp_before = {}
+        if rope then
+            for position = 1, attacker.hit_list_count do
+                local victim = objects.lookup(state, attacker.hit_list[position])
+                if victim and victim.record.kind == 0 then hp_before[victim] = victim.hp end
+            end
+        end
         local result = apply(state, p)
+        if rope then
+            for victim, hp in pairs(hp_before) do
+                local s = state_of(victim)
+                if victim.hp < hp and s ~= states.defending and s ~= states.broken_defend then
+                    victim.dod_pull = {by = attacker, ticks = ROPE_PULL_TICKS}
+                end
+            end
+        end
         if keep and attacker.frame ~= keep.frame then
             attacker.frame, attacker.wait_counter = keep.frame, keep.wait
             attacker.vx, attacker.vy, attacker.vz = keep.vx, keep.vy, keep.vz

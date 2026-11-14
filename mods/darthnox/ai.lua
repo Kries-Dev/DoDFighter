@@ -2,7 +2,7 @@
 -- DoD Fighter — computer control for our fighters' special moves.
 --
 -- The base AI (base/game/ai.lua) only knows the stock fighters' specials, by
--- record id; DarthNox (61) and Mathilde (63) got just the generic walking,
+-- record id; DarthNox (61), Mathilde (63) and Cod1eh (68) got just the generic walking,
 -- punching and jumping. After the base AI has picked its keys for one of them,
 -- this may start one of their moves instead, the same way the base AI does
 -- (marking a D-direction-A/J sequence complete, so the frame's hit_ field
@@ -18,7 +18,7 @@ local complete = constants.combo_states.complete
 local kinds = constants.record_kinds
 local states = constants.frame_states
 
-local DARTHNOX, MATHILDE = 61, 63
+local DARTHNOX, MATHILDE, COD1EH = 61, 63, 68
 local FACING_RIGHT = 0
 
 local function random(range) return engine.random(range) end
@@ -134,6 +134,31 @@ local function mathilde(state, S, T, dx, dz, skill)
     end
 end
 
+local function cod1eh(state, S, T, dx, dz, skill)
+    local mp, f = S.mp, S.frame
+    local ahead = facing_target(S, T)
+    -- A dizzy target in reach (after a rope pull): A starts his blade combo.
+    if state_of(T) == states.dizzy and dx < 75 and dz < 12 and ahead and chance(3, skill) then
+        tap(S, "attack") return
+    end
+    if not ready(S) then return end
+    if dz < 10 and dx < 45 and mp >= 150 and ahead and chance(25, skill) then
+        start(S, combo.jump_attack) return                                  -- Izuna drop
+    end
+    if dz < 15 and dx < 80 and mp >= 100 and state_of(T) == states.attacking and (S.hp < 300 and chance(8, skill) or chance(30, skill)) then
+        start(S, combo.up_jump) return                                      -- smoke bomb out
+    end
+    if dz < 10 and dx > 90 and dx < 210 and mp >= 60 and ahead and chance(25, skill) then
+        start(S, combo.down_attack) return                                  -- rope blade
+    end
+    if dz < 40 and dx > 200 and dx < 450 and mp >= 75 and chance(30, skill) then
+        forward(S, T, true) return                                          -- kunai fan
+    end
+    if dx > 200 and mp >= 120 and chance(40, skill) then
+        start(S, combo.down_jump) return                                    -- teleport stab
+    end
+end
+
 return function(base)
     local control = base.control
 
@@ -141,13 +166,14 @@ return function(base)
         local result = control(state, index, mode, context)
         local S = state.items[index]
         local id = S and S.record.id
-        if (id == DARTHNOX or id == MATHILDE) and S.hp > 0 and not S.human then
+        if (id == DARTHNOX or id == MATHILDE or id == COD1EH) and S.hp > 0 and not S.human then
             local T = nearest_enemy(state, S)
             if T then
                 local dx, dz = math.abs(T.x_int - S.x_int), math.abs(T.z_int - S.z_int)
                 local skill = math.max(0, state.ai_skill or 0)
                 if id == DARTHNOX then darthnox(state, S, T, dx, dz, skill)
-                else mathilde(state, S, T, dx, dz, skill) end
+                elseif id == MATHILDE then mathilde(state, S, T, dx, dz, skill)
+                else cod1eh(state, S, T, dx, dz, skill) end
             end
         end
         return result

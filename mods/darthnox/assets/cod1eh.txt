@@ -2,8 +2,8 @@
 name: Cod1eh
 head: mods/darthnox/cod1eh_f.bmp
 small: mods/darthnox/cod1eh_s.bmp
-file(0-71): mods/darthnox/cod1eh.bmp
-w: 118  h: 87  row: 4  col: 18
+file(0-91): mods/darthnox/cod1eh.bmp
+w: 118  h: 87  row: 4  col: 23
 walking_frame_rate 3
 walking_speed 6.000000
 walking_speedz 2.800000
@@ -30,35 +30,35 @@ rowing_distance 5.000000
 
 # Standing, walking, running (inputs live on standing, walking and defend)
 <frame> 0 standing
-   pic: 0  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 0  hit_Ua: 0  hit_Da: 0  hit_Fj: 0  hit_Uj: 0  hit_Dj: 0  hit_ja: 0
+   pic: 0  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 235  hit_Ua: 0  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 280
 <frame_end>
 
 <frame> 1 standing
-   pic: 1  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 0  hit_Ua: 0  hit_Da: 0  hit_Fj: 0  hit_Uj: 0  hit_Dj: 0  hit_ja: 0
+   pic: 1  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 235  hit_Ua: 0  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 280
 <frame_end>
 
 <frame> 2 standing
-   pic: 2  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 0  hit_Ua: 0  hit_Da: 0  hit_Fj: 0  hit_Uj: 0  hit_Dj: 0  hit_ja: 0
+   pic: 2  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 235  hit_Ua: 0  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 280
 <frame_end>
 
 <frame> 3 standing
-   pic: 3  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 0  hit_Ua: 0  hit_Da: 0  hit_Fj: 0  hit_Uj: 0  hit_Dj: 0  hit_ja: 0
+   pic: 3  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 235  hit_Ua: 0  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 280
 <frame_end>
 
 <frame> 5 walking
-   pic: 4  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 0  hit_Ua: 0  hit_Da: 0  hit_Fj: 0  hit_Uj: 0  hit_Dj: 0  hit_ja: 0
+   pic: 4  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 235  hit_Ua: 0  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 280
 <frame_end>
 
 <frame> 6 walking
-   pic: 5  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 0  hit_Ua: 0  hit_Da: 0  hit_Fj: 0  hit_Uj: 0  hit_Dj: 0  hit_ja: 0
+   pic: 5  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 235  hit_Ua: 0  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 280
 <frame_end>
 
 <frame> 7 walking
-   pic: 6  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 0  hit_Ua: 0  hit_Da: 0  hit_Fj: 0  hit_Uj: 0  hit_Dj: 0  hit_ja: 0
+   pic: 6  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 235  hit_Ua: 0  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 280
 <frame_end>
 
 <frame> 8 walking
-   pic: 7  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 0  hit_Ua: 0  hit_Da: 0  hit_Fj: 0  hit_Uj: 0  hit_Dj: 0  hit_ja: 0
+   pic: 7  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 235  hit_Ua: 0  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 280
 <frame_end>
 
 <frame> 9 running
@@ -430,7 +430,8 @@ rowing_distance 5.000000
    bdy_end:
 <frame_end>
 
-# Roll (run + D): invulnerable (no bdy), picks up items
+# Roll (run + D): invulnerable (no bdy), picks up items. Further than the stock
+# roll (dvx 11, one more frame: ~165 px) and that frame is invulnerable too.
 <frame> 100 rowing
    pic: 53  state: 6  wait: 2  next: 101  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
 <frame_end>
@@ -440,42 +441,42 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 102 rowing
-   pic: 52  state: 6  wait: 2  next: 103  dvx: 10  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   pic: 52  state: 6  wait: 2  next: 103  dvx: 11  dvy: 0  dvz: 0  centerx: 64  centery: 86
    itr:
       kind: 7  x: 61  y: 61  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
    itr_end:
 <frame_end>
 
 <frame> 103 rowing
-   pic: 53  state: 6  wait: 2  next: 104  dvx: 10  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   pic: 53  state: 6  wait: 2  next: 104  dvx: 11  dvy: 0  dvz: 0  centerx: 64  centery: 86
    itr:
       kind: 7  x: 61  y: 61  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
    itr_end:
 <frame_end>
 
 <frame> 104 rowing
-   pic: 54  state: 6  wait: 2  next: 105  dvx: 10  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   pic: 54  state: 6  wait: 2  next: 105  dvx: 11  dvy: 0  dvz: 0  centerx: 64  centery: 86
    itr:
       kind: 7  x: 61  y: 61  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
    itr_end:
 <frame_end>
 
 <frame> 105 rowing
-   pic: 55  state: 6  wait: 2  next: 219  dvx: 10  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   pic: 55  state: 6  wait: 2  next: 106  dvx: 11  dvy: 0  dvz: 0  centerx: 64  centery: 86
    itr:
       kind: 7  x: 61  y: 61  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
    itr_end:
 <frame_end>
 
 <frame> 106 rowing
-   pic: 53  state: 6  wait: 2  next: 219  dvx: 10  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   pic: 52  state: 6  wait: 2  next: 219  dvx: 11  dvy: 0  dvz: 0  centerx: 64  centery: 86
    itr:
       kind: 7  x: 61  y: 61  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
    itr_end:
 <frame_end>
 
 <frame> 107 rowing
-   pic: 55  state: 6  wait: 2  next: 219  dvx: 10  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   pic: 55  state: 6  wait: 2  next: 219  dvx: 11  dvy: 0  dvz: 0  centerx: 64  centery: 86
    itr:
       kind: 7  x: 61  y: 61  w: 13  h: 25  dvx: 0  dvy: 0  fall: 0  vrest: 1  arest: 0  bdefend: 0  injury: 0  effect: 0
    itr_end:
@@ -491,11 +492,11 @@ rowing_distance 5.000000
 
 # Block, broken block, picking up
 <frame> 110 defend
-   pic: 49  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 0  hit_Ua: 0  hit_Da: 0  hit_Fj: 0  hit_Uj: 0  hit_Dj: 0  hit_ja: 0
+   pic: 49  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 235  hit_Ua: 0  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 280
 <frame_end>
 
 <frame> 111 defend
-   pic: 50  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 0  hit_Ua: 0  hit_Da: 0  hit_Fj: 0  hit_Uj: 0  hit_Dj: 0  hit_ja: 0
+   pic: 50  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  hit_Fa: 235  hit_Ua: 0  hit_Da: 270  hit_Fj: 0  hit_Uj: 250  hit_Dj: 260  hit_ja: 280
 <frame_end>
 
 <frame> 95 dash_defend
@@ -783,4 +784,304 @@ rowing_distance 5.000000
 
 <frame> 219 crouch2
    pic: 20  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+<frame_end>
+
+# D>A  Kunai fan: arms crossed, then flung wide; five kunai (c_kunai.txt) fanned
+# out in depth (opoint facing 50 = five objects spread from -5 to +5 in z).
+<frame> 235 kunai_fan
+   pic: 72  state: 3  wait: 2  next: 236  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  mp: 75
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 236 kunai_fan
+   pic: 73  state: 3  wait: 1  next: 237  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 237 kunai_fan
+   pic: 74  state: 3  wait: 1  next: 238  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  sound: data\008.wav
+   opoint:
+      kind: 1  x: 88  y: 36  action: 0  dvx: 0  dvy: 0  oid: 69  facing: 50
+   opoint_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 238 kunai_fan
+   pic: 74  state: 3  wait: 6  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+# D^J  Smoke bomb: he slams a smoke bomb at his feet (c_smoke.txt: a cloud that
+# lingers ~3 s and slows enemies inside it, physics.lua) and back-flips away.
+# Invulnerable for the first ticks of the flip.
+<frame> 250 smoke_bomb
+   pic: 76  state: 3  wait: 1  next: 251  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  mp: 100
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 251 smoke_bomb
+   pic: 77  state: 3  wait: 1  next: 252  dvx: -10  dvy: 539  dvz: 0  centerx: 64  centery: 86  sound: data\061.wav
+   opoint:
+      kind: 1  x: 64  y: 86  action: 0  dvx: 0  dvy: 0  oid: 70  facing: 0
+   opoint_end:
+<frame_end>
+
+<frame> 252 smoke_bomb
+   pic: 77  state: 3  wait: 3  next: 253  dvx: -10  dvy: 0  dvz: 0  centerx: 64  centery: 86
+<frame_end>
+
+<frame> 253 smoke_bomb
+   pic: 78  state: 3  wait: 4  next: 254  dvx: -10  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 254 smoke_bomb
+   pic: 79  state: 3  wait: 30  next: 999  dvx: -10  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+# DvJ  Teleport stab: a hand seal, he vanishes in a puff, reappears behind the
+# nearest enemy (physics.lua moves him on entering 264) and stabs them in the back.
+<frame> 260 teleport
+   pic: 80  state: 3  wait: 2  next: 261  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  mp: 120
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 261 teleport
+   pic: 81  state: 3  wait: 2  next: 262  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 262 teleport
+   pic: 82  state: 3  wait: 1  next: 263  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  sound: data\061.wav
+   opoint:
+      kind: 1  x: 64  y: 86  action: 30  dvx: 0  dvy: 0  oid: 70  facing: 0
+   opoint_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 263 teleport
+   pic: 23  state: 3  wait: 4  next: 264  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+<frame_end>
+
+<frame> 264 teleport
+   pic: 23  state: 3  wait: 1  next: 265  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+<frame_end>
+
+<frame> 265 teleport
+   pic: 28  state: 3  wait: 1  next: 266  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   opoint:
+      kind: 1  x: 64  y: 86  action: 30  dvx: 0  dvy: 0  oid: 70  facing: 0
+   opoint_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 266 teleport
+   pic: 29  state: 3  wait: 2  next: 267  dvx: 3  dvy: 0  dvz: 0  centerx: 64  centery: 86  sound: data\008.wav
+   itr:
+      kind: 0  x: 68  y: 28  w: 60  h: 28  dvx: 6  dvy: -4  fall: 70  vrest: 15  arest: 0  bdefend: 60  injury: 45  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 267 teleport
+   pic: 30  state: 3  wait: 3  next: 268  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 268 teleport
+   pic: 30  state: 3  wait: 4  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+# DvA  Rope blade: he punches his arm out and the blade shoots off on a rope
+# (c_rope.txt, visual) to ~210 px; the hitboxes grow with it. A hit dizzies the
+# target and combat.lua/physics.lua reel them in to his feet, ready for his
+# blade combo (A on a dizzy target).
+<frame> 270 rope_blade
+   pic: 84  state: 3  wait: 2  next: 271  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  mp: 60
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 271 rope_blade
+   pic: 30  state: 3  wait: 1  next: 272  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  sound: data\045.wav
+   opoint:
+      kind: 1  x: 90  y: 36  action: 0  dvx: 0  dvy: 0  oid: 71  facing: 0
+   opoint_end:
+   itr:
+      kind: 0  x: 68  y: 28  w: 70  h: 28  dvx: 0  dvy: 0  fall: 50  vrest: 30  arest: 0  bdefend: 16  injury: 20  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 272 rope_blade
+   pic: 30  state: 3  wait: 1  next: 273  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   itr:
+      kind: 0  x: 68  y: 28  w: 140  h: 28  dvx: 0  dvy: 0  fall: 50  vrest: 30  arest: 0  bdefend: 16  injury: 20  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 273 rope_blade
+   pic: 30  state: 3  wait: 1  next: 274  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   itr:
+      kind: 0  x: 68  y: 28  w: 200  h: 28  dvx: 0  dvy: 0  fall: 50  vrest: 30  arest: 0  bdefend: 16  injury: 20  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 274 rope_blade
+   pic: 30  state: 3  wait: 3  next: 275  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   itr:
+      kind: 0  x: 68  y: 28  w: 210  h: 28  dvx: 0  dvy: 0  fall: 50  vrest: 30  arest: 0  bdefend: 16  injury: 20  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 275 rope_blade
+   pic: 85  state: 3  wait: 3  next: 276  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 276 rope_blade
+   pic: 85  state: 3  wait: 2  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+# DJA  Izuna drop: a command grab (itr kind 3 catches anyone, even blocking).
+# He leaps up with them, flips upside down and drives them head-first into the
+# ground (physics.lua turns the landing into the slam, 288): 50 on impact, then
+# they bounce away (thrown, 20 more when they land).
+<frame> 280 izuna_grab
+   pic: 56  state: 3  wait: 2  next: 281  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  mp: 150
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 281 izuna_grab
+   pic: 57  state: 3  wait: 2  next: 282  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   itr:
+      kind: 3  x: 66  y: 24  w: 46  h: 56  dvx: 0  dvy: 0  fall: 0  vrest: 7  arest: 0  bdefend: 0  injury: 0  effect: 0  catchingact: 283 283  caughtact: 132 132
+   itr_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 282 izuna_grab
+   pic: 58  state: 3  wait: 5  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 283 izuna
+   pic: 59  state: 9  wait: 2  next: 284  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   cpoint:
+      kind: 1  x: 94  y: 46  injury: 0  vaction: 132  aaction: 0  jaction: 0  taction: 0  throwvx: 0  throwvy: 0  throwvz: 0  hurtable: 0  throwinjury: 0  decrease: 0  dircontrol: 0  cover: 10
+   cpoint_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 284 izuna
+   pic: 88  state: 9  wait: 1  next: 285  dvx: 0  dvy: 536  dvz: 0  centerx: 64  centery: 86
+   cpoint:
+      kind: 1  x: 84  y: 16  injury: 0  vaction: 134  aaction: 0  jaction: 0  taction: 0  throwvx: 0  throwvy: 0  throwvz: 0  hurtable: 0  throwinjury: 0  decrease: 0  dircontrol: 0  cover: 10
+   cpoint_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 285 izuna
+   pic: 89  state: 9  wait: 3  next: 286  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   cpoint:
+      kind: 1  x: 74  y: 26  injury: 0  vaction: 136  aaction: 0  jaction: 0  taction: 0  throwvx: 0  throwvy: 0  throwvz: 0  hurtable: 0  throwinjury: 0  decrease: 0  dircontrol: 0  cover: 11
+   cpoint_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 286 izuna
+   pic: 90  state: 9  wait: 3  next: 287  dvx: 0  dvy: 550  dvz: 0  centerx: 64  centery: 86
+   cpoint:
+      kind: 1  x: 72  y: 56  injury: 0  vaction: 136  aaction: 0  jaction: 0  taction: 0  throwvx: 0  throwvy: 0  throwvz: 0  hurtable: 0  throwinjury: 0  decrease: 0  dircontrol: 0  cover: 11
+   cpoint_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 287 izuna
+   pic: 90  state: 9  wait: 40  next: 288  dvx: 0  dvy: 566  dvz: 0  centerx: 64  centery: 86
+   cpoint:
+      kind: 1  x: 72  y: 56  injury: 0  vaction: 136  aaction: 0  jaction: 0  taction: 0  throwvx: 0  throwvy: 0  throwvz: 0  hurtable: 0  throwinjury: 0  decrease: 0  dircontrol: 0  cover: 11
+   cpoint_end:
+   bdy:
+      kind: 0  x: 49  y: 14  w: 30  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 288 izuna_slam
+   pic: 91  state: 9  wait: 2  next: 289  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86  sound: data\030.wav
+   cpoint:
+      kind: 1  x: 90  y: 66  injury: 50  vaction: 136  aaction: 0  jaction: 0  taction: 0  throwvx: 0  throwvy: 0  throwvz: 0  hurtable: 0  throwinjury: 0  decrease: 0  dircontrol: 0  cover: 11
+   cpoint_end:
+<frame_end>
+
+<frame> 289 izuna_slam
+   pic: 91  state: 9  wait: 2  next: 290  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
+   cpoint:
+      kind: 1  x: 90  y: 66  injury: 0  vaction: 181  aaction: 0  jaction: 0  taction: 0  throwvx: 6  throwvy: -6  throwvz: 0  hurtable: 0  throwinjury: 20  decrease: 0  dircontrol: 0  cover: 11
+   cpoint_end:
+<frame_end>
+
+<frame> 290 izuna_slam
+   pic: 91  state: 3  wait: 8  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 64  centery: 86
 <frame_end>
