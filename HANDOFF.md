@@ -33,6 +33,7 @@ itself**: copy files, install, push and relaunch, never give manual steps.
 | Cod1eh (ninja, hidden blade) | 68 | `assets/cod1eh.txt`, generated **whole** by `tools/cod1eh_moves.py` | base: Rudolf (5), whose A throws shurikens; takes +15% damage (armor 87) |
 | Kunai / smoke / rope blade | 69 / 70 / 71 | `c_kunai.txt`, `c_smoke.txt`, `c_rope.txt` (generated) | art from `tools/make_cod1eh_fx.py` |
 | Homing staff / tornado / extending pole / diagonal pole | 64 / 65 / 66 / 67 | `m_staff.txt`, `m_tornado.txt`, `m_pole.txt`, `m_pole_d.txt` (all generated) | art from `tools/make_mathilde_fx.py` |
+| Bandit restyle (stock fighter 30) | — | `assets/bandit_0.bmp` (pictures 0-69) from the user's edit `art/bandit_0_edit.webp` via `tools/import_sheet.py` | `object_data.lua` `RESTYLED` swaps only that sheet; data stays stock. `bandit_1.bmp` (70-139: hurt, run/dash attack, weapon moves, ice/fire) is still the stock look |
 | Urban Bridge stage | bg id 61 | `assets/bg/bridge.txt` + `.bmp` | side walls x 60–734 (`camera.lua`); music Gravity Stars (WMA 8) |
 
 Moves, frames and damage are in `mods/darthnox/README.md`; balance numbers for
@@ -43,7 +44,7 @@ the whole cast are in `docs/roster.md`.
 | File | Does |
 |---|---|
 | `catalog.lua` | adds fighters and spawned objects (`fighters_added`, `spawned`) and the stage |
-| `object_data.lua` | merges our frames over the base fighter (`FIGHTERS` table: base id, sound swaps); shifts inherited hitboxes to our sprite centre |
+| `object_data.lua` | merges our frames over the base fighter (`FIGHTERS` table: base id, sound swaps); shifts inherited hitboxes to our sprite centre; `RESTYLED` swaps sheets of stock fighters (Bandit) |
 | `match.lua` | per-fighter damage taken (`DEFENCE`); Urban Bridge music |
 | `combat.lua` | DarthNox's parry/counter; Mathilde's tornado lifts each fighter once with half landing damage; crescent (62) and homing staff (64) shrug off their first clash (`TOUGH`) |
 | `objects.lua` | Mathilde's clone gets 15 HP |

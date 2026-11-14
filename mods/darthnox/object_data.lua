@@ -39,11 +39,26 @@ local FIGHTERS = {
 }
 local INPUT_STATES = {[0] = true, [1] = true, [7] = true}   -- standing, walking, defend
 
+-- Stock fighters with restyled sheets: their data stays stock, only the listed
+-- sheets (by position in the file: 1 = pictures 0-69) come from the mod.
+local RESTYLED = {
+    ["data/bandit.dat"] = {[1] = "mods/darthnox/bandit_0.bmp"},   -- the user's black-and-white Bandit
+}
+
+local function restyle(data, sheets)
+    for index, resource in pairs(sheets) do
+        local sheet = data.sheets and data.sheets[index]
+        if sheet then sheet.resource, sheet.path = resource, resource:gsub("/", "\\") end
+    end
+    return data
+end
+
 return function(base)
     local load = base.load
     local cache = {}
 
     function base.load(path)
+        if RESTYLED[path] then return restyle(load(path), RESTYLED[path]) end
         local fighter = FIGHTERS[path]
         if not fighter then return load(path) end
         if cache[path] then return cache[path] end
