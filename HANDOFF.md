@@ -178,6 +178,12 @@ use 63 for Mathilde.
   (rope hit → `dod_pull`), `ai.lua` (all used by the CPU). Verified headless; **not
   yet seen in game: ask how they look and feel** (the held victim's position in the
   Izuna drop is a guess from Louis's catch).
+- **Cod1eh rework (2026-11-14, user feedback):** art redone as AutoSprite "Cod1eh v2"
+  `cmwgkkt7e00gdbhdkkqq4u1p5` (Idle Lock `cmwgko3qo00q5ou52ipce15yv`): bracer + empty
+  fists, blade only in stab clips (v1 held a sword everywhere, which the user hated).
+  Kunai fan: 3 kunai, 45 MP, falling arc. Teleport 150 MP. Rope blade reels in slowly
+  (5 px/tick, he holds the pull, the rope object 71 shows a matching length 20-35).
+  **Never use `data%.wav` for our fighters: the user hears it as Deep's voice.**
 - The user plans **3–4 fighters** to start.
 - **Ideas offered but not done:**
   - per-fighter HP (LF2 gives everyone 500)

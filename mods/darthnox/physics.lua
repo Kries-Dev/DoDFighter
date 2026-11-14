@@ -33,8 +33,12 @@ end
 -- Cod1eh (68): his Izuna drop (284-287, in the air) turns into the slam (288)
 -- on landing; DvJ teleports him behind the nearest enemy on entering 264; his
 -- D^J smoke (object 70, frames below 24) slows enemies inside it; a DvA rope
--- hit (combat.lua sets dod_pull) reels the target in to his feet.
+-- hit (combat.lua sets dod_pull) reels the target in to his feet, slowly, while
+-- the rope (71) shortens with them; his kunai (69) fall in an arc.
 local COD1EH, SMOKE, TELEPORT_FRAME = 68, 70, 264
+local KUNAI, KUNAI_GRAVITY, KUNAI_GONE = 69, 0.5, 40   -- his kunai fall in an arc and vanish on the ground
+local ROPE, REEL_FRAME, REEL_END, REEL_SPEED = 71, 277, 278, 5   -- Scorpion-style: ~5 px a tick
+local ROPE_TRACK, ROPE_SHORT = 20, 7                   -- rope object: held lengths 20-35; 7 = last retract frame
 local LAND_TO = {[68] = {[284] = 288, [285] = 288, [286] = 288, [287] = 288}}
 local SMOKE_REACH_X, SMOKE_REACH_Z, SMOKE_LAST_FRAME = 70, 28, 23
 local SLOW_TICKS, SLOW_FACTOR = 15, 0.45     -- slowed while inside and half a second after
@@ -69,15 +73,49 @@ local function teleport(match, value)
     value.x_int, value.z_int, value.y_int = trunc(value.x), trunc(value.z), 0
 end
 
+local function toward(from, to, speed)
+    if math.abs(to - from) <= speed then return to end
+    return from + (to > from and speed or -speed)
+end
+
+-- Reel a rope-blade victim in toward Cod1eh at a steady pace. Their (dizzy)
+-- frame is held so the daze starts counting only once they arrive.
 local function reel(value)
-    local pull, by = value.dod_pull, value.dod_pull.by
+    local by = value.dod_pull.by
     local goal = by.x + (by.facing == 0 and 50 or -50)
-    value.x = value.x + (goal - value.x) / pull.ticks
-    value.z = value.z + (by.z - value.z) / pull.ticks
+    value.x = toward(value.x, goal, REEL_SPEED)
+    value.z = toward(value.z, by.z, 2)
     value.vx, value.vz = 0, 0
+    value.wait_counter = 0
     value.x_int, value.z_int = trunc(value.x), trunc(value.z)
-    pull.ticks = pull.ticks - 1
-    if pull.ticks <= 0 or by.hp <= 0 then value.dod_pull = nil end
+    if (value.x == goal and value.z == by.z) or by.hp <= 0 or by.frame ~= REEL_FRAME then
+        value.dod_pull = nil
+        by.dod_reel = nil
+        if by.frame == REEL_FRAME then by.frame, by.wait_counter = REEL_END, 0 end
+    end
+end
+
+-- The rope object shows the length that reaches the target being reeled in.
+local function rope_follow(match, value)
+    local owner = match.items[value.owner]
+    local victim = owner and owner.record.id == COD1EH and owner.dod_reel
+    if victim then
+        local length = math.abs(victim.x - value.x) - 6
+        local k = math.max(0, math.min(15, math.floor((length - 15) / 13 + 0.5)))
+        value.frame, value.wait_counter = ROPE_TRACK + k, 0
+    elseif value.frame >= ROPE_TRACK then
+        value.frame, value.wait_counter = ROPE_SHORT, 0
+    end
+end
+
+local function kunai_fall(value)
+    if value.frame > 3 then return end
+    if value.dod_vy == nil then value.dod_vy = value.vy end
+    value.vy = 0
+    value.y = value.y + value.dod_vy
+    value.dod_vy = value.dod_vy + KUNAI_GRAVITY
+    if value.y >= 0 then value.y, value.frame, value.wait_counter = 0, KUNAI_GONE, 0 end
+    value.y_int = trunc(value.y)
 end
 
 return function(base)
@@ -98,7 +136,10 @@ return function(base)
             end
             if value.dod_pull then reel(value) end
         end
+        if value.record.id == KUNAI then kunai_fall(value) end
+        if value.record.id == ROPE then rope_follow(match, value) end
         if value.record.id == COD1EH then
+            if value.dod_reel and value.frame ~= REEL_FRAME then value.dod_reel = nil end
             if value.frame == TELEPORT_FRAME then
                 if not value.dod_teleported then teleport(match, value); value.dod_teleported = true end
             else

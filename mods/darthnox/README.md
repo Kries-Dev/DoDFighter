@@ -211,29 +211,35 @@ objects `c_kunai.txt` (69), `c_smoke.txt` (70), `c_rope.txt` (71), drawn by
 
 | Input | Move | Frames | MP | What it does |
 |---|---|---|---|---|
-| D>A | Kunai fan | 235-238 | 75 | five kunai fanned out in depth (opoint `facing: 50`), 22 each (19 on Deep), break on a hit |
+| D>A | Kunai fan | 235-238 | 45 | three kunai fanned out in depth (opoint `facing: 30`), tossed slightly up and dropping in an arc like Rudolf's stars (gravity in `physics.lua`, gone when they land ~350 px out), 22 each (19 on Deep) |
 | D^J | Smoke bomb | 250-254 | 100 | a smoke cloud at his feet and a back flip ~170 px away (first ticks invulnerable). The cloud lasts ~3 s; enemies inside move at 45% speed (`physics.lua`; Deep: 65 px in 30 ticks instead of 150) |
-| DvA | Rope blade | 270-276 | 60 | the blade shoots out on a rope to ~210 px; a hit (20) dizzies the target and reels them in to 50 px in front of him (`combat.lua` + `physics.lua`), so A follows with his blade combo (rope + A: 69 on Deep) |
-| DvJ | Teleport stab | 260-268 | 120 | hand seal, he vanishes in a puff, reappears behind the nearest enemy (`physics.lua`) and stabs them in the back, 45, knockdown |
+| DvA | Rope blade | 270-278 | 60 | Scorpion-style: the blade shoots out on a rope to ~210 px; a hit (20) dizzies the target, he holds the pull (277) and reels them in at 5 px a tick (~1 s over full range) while the rope shortens with them (`combat.lua` + `physics.lua`; the daze only starts counting when they arrive), so A follows with his blade combo (rope + A: ~100 on Deep) |
+| DvJ | Teleport stab | 260-268 | 150 | hand seal, he vanishes in a puff, reappears behind the nearest enemy (`physics.lua`) and stabs them in the back, 45, knockdown |
 | DJA | Izuna drop | 280-290 | 150 | command grab (catches through a block), leaps up with them, flips and drives them head-first into the ground: 50 + 20 when they bounce (65 on Deep). The landing becomes the slam (`physics.lua`) |
 
 His standing, walking and defend frames carry his own inputs only:
 `object_data.lua` has `own_inputs = true` for him, so Rudolf's transform,
 vanish and clone can't be reached. The CPU uses all of the above (`ai.lua`).
 
-Sheet `cod1eh.bmp`: 476×2024, 92 cells of 118×87 (`row: 4  col: 23`), centre
-64,86, scale **s0.351931** (idle 82 px). AutoSprite character "Cod1eh"
-(`cmwghibin0036mf37uswhkfd3`), Idle Lock pose `cmwghkcce0045mf37pk6htnbg`.
+Sheet `cod1eh.bmp`: 472×2093, 92 cells of 117×90 (`row: 4  col: 23`), centre
+72,86, scale **s0.350427** (idle 82 px). AutoSprite character "Cod1eh"
+v2 (`cmwgkkt7e00gdbhdkkqq4u1p5`: a steel bracer and empty fists; the hidden blade
+only appears in the stab clips), Idle Lock pose `cmwgko3qo00q5ou52ipce15yv`. The first
+version (`cmwghibin0036mf37uswhkfd3`) carried a curved sword in every clip and was
+replaced.
 Rows: idle, walk, run, sidearm throw, overhand throw, jump, slash, thrust,
 thrust + trail, blade combo, hurt, fall, block, roll, grab, toss, ice, burn,
 kunai fan, back flip, hand seal, rope throw, Izuna dive. Picture 23 is empty
 (vanished, during the teleport).
-The air-slash clip cropped his head, so the slash row comes from the combo clip.
+The blade combo reuses the bracer stab (the flurry clip drew a hand-held knife) plus
+its last frame, a rising bracer stab (row 9). Frames with painted props (the sack in
+`toss`, the impact streaks in `hurt`, the rope in `ropethrow`) are skipped. The
+rope throw no longer uses Deep's swish (`data%.wav`) but the plain weapon swing.
 
 ```
-python tools/autosprite_to_lf2.py out s0.351931 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,2,9     throw.png,throw.json,@4/6/9/11 throw2.png,throw2.json,@6/8/11/13 jump.png,jump.json,@3/5/9,ground     combo.png,combo.json,@4/13/9 thrust.png,thrust.json,@7/9/11 thrust.png,thrust.json,@7/9/11,trail combo.png,combo.json,@5/8/11/13     hurt.png,hurt.json,@4/5/6 fall.png,fall.json,@6/7/9/12,ground block.png,block.json,@5/6/8 roll.png,roll.json,@5/6/8/10,ground     grab.png,grab.json,@6/8/10/12 toss.png,toss.json,@4/6/8 hurt.png,hurt.json,@4/5,ice fall.png,fall.json,@6/7/9,ground,burn     fanthrow.png,fanthrow.json,@10/11/13 backflip.png,backflip.json,@9/11/12/14,ground handseal.png,handseal.json,@5/7/10     ropethrow.png,ropethrow.json,@3/12 dive.png,dive.json,@4/6/8/12,ground
+python tools/autosprite_to_lf2.py out s0.350427 idle.png,idle.json,4 walk.png,walk.json,4,1,14 run.png,run.json,4,2,9     throw.png,throw.json,@4/6/8/11 throw2.png,throw2.json,@5/7/9/11 jump.png,jump.json,@4/8/12,ground     slash.png,slash.json,@3/10/12 thrust.png,thrust.json,@4/9/12 thrust.png,thrust.json,@4/9/12,trail combo.png,combo.json,@15     hurt.png,hurt.json,@8/9/10 fall.png,fall.json,@7/9/11/13,ground block.png,block.json,@4/6/9 roll.png,roll.json,@5/7/9/11,ground     grab.png,grab.json,@6/9/13/15 toss.png,toss.json,@2/8/9 hurt.png,hurt.json,@8/9,ice fall.png,fall.json,@7/9/11,ground,burn     fanthrow.png,fanthrow.json,@7/9/11 backflip.png,backflip.json,@3/5/7/10,ground handseal.png,handseal.json,@3/6/10     ropethrow.png,ropethrow.json,@3/7/9 dive.png,dive.json,@3/6/9/13,ground
 python tools/make_cod1eh_fx.py out    # kunai.bmp, smoke.bmp, rope.bmp -> assets/c_*.bmp
-python tools/autosprite_portrait.py base.png out 320,60,760,500 370,90,730,495
+python tools/autosprite_portrait.py base.png out 300,40,760,500 330,70,700,486
 python tools/cod1eh_moves.py mods/darthnox/assets
 ```
 

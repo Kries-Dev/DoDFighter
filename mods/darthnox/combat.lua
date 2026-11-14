@@ -26,7 +26,7 @@ return function(base)
     local objects = require("base/game/objects")
     local kinds = require("base/game/constants").attack_kinds
     local parryable = {[kinds.plain] = true, [kinds.thrown_body] = true, [kinds.held_item] = true}
-    local COD1EH, ROPE_FIRST, ROPE_LAST, ROPE_PULL_TICKS = 68, 271, 274, 8
+    local COD1EH, ROPE_FIRST, ROPE_LAST, REEL_FRAME = 68, 271, 274, 277
     local TOUGH = {[62] = 1, [64] = 1}   -- projectile id -> opponents it shrugs off
     local states = require("base/game/constants").frame_states
     local FLYING, STRONG = states.flying_ball, {[states.vanishing_ball] = true, [states.flying_missile] = true}
@@ -124,8 +124,10 @@ return function(base)
         if rope then
             for victim, hp in pairs(hp_before) do
                 local s = state_of(victim)
-                if victim.hp < hp and s ~= states.defending and s ~= states.broken_defend then
-                    victim.dod_pull = {by = attacker, ticks = ROPE_PULL_TICKS}
+                if victim.hp < hp and s ~= states.defending and s ~= states.broken_defend and not attacker.dod_reel then
+                    victim.dod_pull = {by = attacker}
+                    attacker.dod_reel = victim
+                    attacker.frame, attacker.wait_counter = REEL_FRAME, 0   -- he holds the pull
                 end
             end
         end

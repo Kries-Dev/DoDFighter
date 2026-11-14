@@ -26,26 +26,27 @@ import os, sys
 
 ABSOLUTE = 550                    # dvy above 500 sets the speed: dvy - 550 (see darthnox_moves.py)
 
-CX, CY = 64, 86                   # sheet registration (autosprite_to_lf2.py output)
-CELL = (118, 87, 23)              # w, h, rows of cod1eh.bmp
+CX, CY = 72, 86                   # sheet registration (autosprite_to_lf2.py output)
+CELL = (117, 90, 23)              # w, h, rows of cod1eh.bmp
 BODY = (CX - 15, CY - 72, 30, 72)
 
 # Sheet pictures (row * 4 + column); rebuild command in mods/darthnox/README.md
 IDLE, WALK, RUN = (0, 1, 2, 3), (4, 5, 6, 7), (8, 9, 10, 11)
 THROW, THROW2, JUMP = (12, 13, 14, 15), (16, 17, 18, 19), (20, 21, 22)
 SLASH, THRUST, DASH = (24, 25, 26), (28, 29, 30), (32, 33, 34)   # DASH: the thrust with afterimages
-COMBO_PICS, HURT, FALL = (36, 37, 38, 39), (40, 41, 42), (44, 45, 46, 47)
+RISE, HURT, FALL = 36, (40, 41, 42), (44, 45, 46, 47)                 # RISE: rising bracer stab
+COMBO_PICS = (THRUST[0], THRUST[1], THRUST[2], RISE)   # blade combo: the bracer stab twice, then the rise
 BLOCK, ROLL, GRAB, TOSS = (48, 49, 50), (52, 53, 54, 55), (56, 57, 58, 59), (60, 61, 62)
 ICE, BURN = (64, 65), (68, 69, 70)
 FAN, FLIP, SEAL = (72, 73, 74), (76, 77, 78, 79), (80, 81, 82)   # kunai fan, back flip, hand seal
-ROPE, DIVE = (84, 85), (88, 89, 90, 91)            # rope throw (arm back, yank), Izuna head-first dive
+ROPE, DIVE = (84, 85, 86), (88, 89, 90, 91)        # rope throw (arm back, punch out, hold), Izuna head-first dive
 BLANK = 23                                         # an empty cell: vanished (teleport)
 
 KUNAI, SMOKE, ROPE_OBJ = 69, 70, 71               # his objects (catalog.lua)
 PUFF = 30                                         # smoke object action: a short puff that doesn't slow
 KUNAI_SND = 'data\\008.wav'
 SMOKE_SND = 'data\\061.wav'     # Rudolf's vanish puff
-ROPE_SND = 'data\\045.wav'      # a long swish as the rope shoots out
+ROPE_SND = 'data\\008.wav'      # a swish as the rope shoots out (045 sounded like Deep)
 SLAM_SND = 'data\\030.wav'      # a heavy landing thud
 
 SWISH = 'data\\008.wav'           # weapon swing (object_data.lua also swaps Rudolf's punch sounds for it)
@@ -63,7 +64,8 @@ MOVEMENT = [                      # agile: Rudolf's speed, a little more jump an
 # Inputs on standing (0-3), walking (5-8) and defend (110):
 #   D>A kunai fan, D^J smoke bomb, DvA rope blade, DvJ teleport stab, DJA Izuna drop.
 HITS = dict(Fa=235, Ua=0, Da=270, Fj=0, Uj=250, Dj=260, ja=280)
-FAN_MP, SMOKE_MP, ROPE_MP, TELEPORT_MP, IZUNA_MP = 75, 100, 60, 120, 150
+FAN_MP, SMOKE_MP, ROPE_MP, TELEPORT_MP, IZUNA_MP = 45, 100, 60, 150, 150
+KUNAI_COUNT, KUNAI_DVY = 3, -3    # three kunai tossed slightly up; physics.lua drops them in an arc
 FLIP_BACK, FLIP_UP = 10, 11       # smoke bomb: ~19 ticks in the air, ~190 px back
 ROPE_REACH = (70, 140, 200, 210)  # DvA hitbox length per frame (the rope sprite matches)
 
@@ -100,8 +102,8 @@ def cpoint(x, y, vaction, injury=0, throwvx=0, throwvy=0, throwinjury=0, cover=1
             f'  decrease: 0  dircontrol: 0  cover: {cover}\n   cpoint_end:\n')
 
 
-def opoint(oid, x, y, action=0, dvx=0, facing=0):
-    return f'   opoint:\n      kind: 1  x: {x}  y: {y}  action: {action}  dvx: {dvx}  dvy: 0  oid: {oid}  facing: {facing}\n   opoint_end:\n'
+def opoint(oid, x, y, action=0, dvx=0, facing=0, dvy=0):
+    return f'   opoint:\n      kind: 1  x: {x}  y: {y}  action: {action}  dvx: {dvx}  dvy: {dvy}  oid: {oid}  facing: {facing}\n   opoint_end:\n'
 
 
 def catch(x, y, w, h, catching, caught):
@@ -203,11 +205,12 @@ FRAMES = [
     pic(213, 'dash', JUMP[2]), pic(214, 'dash', JUMP[2]), pic(216, 'dash', JUMP[2]), pic(217, 'dash', JUMP[2]),
     pic(215, 'crouch', JUMP[0]), pic(218, 'stop_running', JUMP[0]), pic(219, 'crouch2', JUMP[0]),
 
-    '# D>A  Kunai fan: arms crossed, then flung wide; five kunai (c_kunai.txt) fanned\n'
-    '# out in depth (opoint facing 50 = five objects spread from -5 to +5 in z).',
+    '# D>A  Kunai fan: arms crossed, then flung wide; three kunai (c_kunai.txt) fanned\n'
+    '# out in depth (opoint facing 30 = three objects spread -5, 0, +5 in z), tossed\n'
+    '# slightly up and falling in an arc like Rudolf\'s stars (gravity in physics.lua).',
     frame(235, 'kunai_fan', FAN[0], 3, 2, 236, mp=FAN_MP),
     frame(236, 'kunai_fan', FAN[1], 3, 1, 237),
-    frame(237, 'kunai_fan', FAN[2], 3, 1, 238, sound=KUNAI_SND, extra=opoint(KUNAI, CX + 24, CY - 50, facing=50)),
+    frame(237, 'kunai_fan', FAN[2], 3, 1, 238, sound=KUNAI_SND, extra=opoint(KUNAI, CX + 24, CY - 50, facing=KUNAI_COUNT * 10, dvy=KUNAI_DVY)),
     frame(238, 'kunai_fan', FAN[2], 3, 6, 999),
 
     '# D^J  Smoke bomb: he slams a smoke bomb at his feet (c_smoke.txt: a cloud that\n'
@@ -238,13 +241,18 @@ FRAMES = [
     '# target and combat.lua/physics.lua reel them in to his feet, ready for his\n'
     '# blade combo (A on a dizzy target).',
     frame(270, 'rope_blade', ROPE[0], 3, 2, 271, mp=ROPE_MP),
-    frame(271, 'rope_blade', THRUST[2], 3, 1, 272, sound=ROPE_SND,
+    frame(271, 'rope_blade', ROPE[1], 3, 1, 272, sound=ROPE_SND,
           extra=opoint(ROPE_OBJ, CX + 26, CY - 50) + blade(ROPE_REACH[0], fall=50, vrest=30, bdefend=16, injury=20)),
-    frame(272, 'rope_blade', THRUST[2], 3, 1, 273, extra=blade(ROPE_REACH[1], fall=50, vrest=30, bdefend=16, injury=20)),
-    frame(273, 'rope_blade', THRUST[2], 3, 1, 274, extra=blade(ROPE_REACH[2], fall=50, vrest=30, bdefend=16, injury=20)),
-    frame(274, 'rope_blade', THRUST[2], 3, 3, 275, extra=blade(ROPE_REACH[3], fall=50, vrest=30, bdefend=16, injury=20)),
-    frame(275, 'rope_blade', ROPE[1], 3, 3, 276),
-    frame(276, 'rope_blade', ROPE[1], 3, 2, 999),   # short: he can blade-combo the dizzy target
+    frame(272, 'rope_blade', ROPE[1], 3, 1, 273, extra=blade(ROPE_REACH[1], fall=50, vrest=30, bdefend=16, injury=20)),
+    frame(273, 'rope_blade', ROPE[1], 3, 1, 274, extra=blade(ROPE_REACH[2], fall=50, vrest=30, bdefend=16, injury=20)),
+    frame(274, 'rope_blade', ROPE[1], 3, 3, 275, extra=blade(ROPE_REACH[3], fall=50, vrest=30, bdefend=16, injury=20)),
+    frame(275, 'rope_blade', ROPE[2], 3, 3, 276),
+    frame(276, 'rope_blade', ROPE[0], 3, 2, 999),   # a miss: the rope comes back
+    # A hit (combat.lua) puts him in 277 and reels the target in at REEL_SPEED
+    # (physics.lua, Scorpion-style, ~1 s over full range) while the rope shortens
+    # with them; when they arrive he goes to 278, and they are still dizzy.
+    frame(277, 'rope_reel', ROPE[2], 3, 60, 278),
+    frame(278, 'rope_reel', ROPE[0], 3, 3, 999),
 
     '# DJA  Izuna drop: a command grab (itr kind 3 catches anyone, even blocking).\n'
     '# He leaps up with them, flips upside down and drives them head-first into the\n'
@@ -271,15 +279,15 @@ def header():
              f'file(0-{rows * 4 - 1}): mods/darthnox/cod1eh.bmp', f'w: {w}  h: {h}  row: 4  col: {rows}']
     lines += [f'{k} {v:.6f}' if isinstance(v, float) else f'{k} {v}' for k, v in MOVEMENT]
     lines += ['<bmp_end>', '',
-              '# Art: AutoSprite character "Cod1eh" (cmwghibin0036mf37uswhkfd3), every clip',
-              '# from his "Idle Lock" pose, converted with tools/autosprite_to_lf2.py at s0.351931.',
+              '# Art: AutoSprite character "Cod1eh v2" (cmwgkkt7e00gdbhdkkqq4u1p5, bracer only), every clip',
+              '# from his "Idle Lock" pose, converted with tools/autosprite_to_lf2.py at s0.350427.',
               '# Generated by tools/cod1eh_moves.py: edit that, not this file.', '']
     return '\n'.join(lines)
 
 
-def obj_header(name, pic_file, cell):
+def obj_header(name, pic_file, cell, pictures=8):
     w, h = cell
-    return '\n'.join(['<bmp_begin>', f'file(0-7): {pic_file}  w: {w}  h: {h}  row: 4  col: 2',
+    return '\n'.join(['<bmp_begin>', f'file(0-{pictures - 1}): {pic_file}  w: {w}  h: {h}  row: 4  col: {pictures // 4}',
                       'weapon_hit_sound: data\\020.wav', 'weapon_drop_sound: data\\020.wav',
                       'weapon_broken_sound: data\\020.wav', '<bmp_end>', '', f'# {name}',
                       '# Generated by tools/cod1eh_moves.py; art from tools/make_cod1eh_fx.py.', ''])
@@ -325,8 +333,11 @@ def rope_object():
     c = (2, 7)
     waits = (1, 1, 1, 2, 2, 1, 1, 1)
     frames = [obj_frame(n, 'rope', n, 3000, w, n + 1 if n < 7 else 1000, c) for n, w in enumerate(waits)]
+    # 20-35: one length each (15, 28, ... 210 px); physics.lua holds the one that
+    # reaches the target being reeled in, so the rope shortens as they come.
+    frames += [obj_frame(20 + k, 'rope_reel', 8 + k, 3000, 99, 1000, c) for k in range(16)]
     return obj_header("Cod1eh's DvA rope blade, visual only (his frames carry the hitboxes).",
-                      'mods/darthnox/c_rope.bmp', (230, 14)) + '\n'.join(frames)
+                      'mods/darthnox/c_rope.bmp', (230, 14), pictures=24) + '\n'.join(frames)
 
 
 def main(assets):

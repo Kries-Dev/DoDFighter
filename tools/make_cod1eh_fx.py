@@ -7,8 +7,9 @@ kunai.bmp    4 x 2 cells of 40x14: 0-3 a flying kunai (steel blade, crimson-wrap
              grip, ring) with a glint moving along it, 4-7 a spark as it hits.
 smoke.bmp    4 x 2 cells of 150x96: 0-3 a churning smoke cloud (see-through
              dither so fighters inside stay visible), 4-7 the same thinning out.
-rope.bmp     4 x 2 cells of 230x14: the DvA rope blade shooting out and being
-             yanked back (a twisted rope with his blade on the end).
+rope.bmp     4 x 6 cells of 230x14: 0-7 the DvA rope blade shooting out and being
+             yanked back (a twisted rope with his blade on the end); 8-23 one
+             length each (15-210 px) for reeling a target in.
 Palette and look match the fighters: bold dark outline, flat shading.
 """
 import math, os, sys
@@ -22,14 +23,15 @@ OUTLINE, STEEL_D, STEEL, STEEL_HI, GRIP_D, GRIP, ROPE_D, ROPE, SMOKE_D, SMOKE, S
 
 
 def sheet(cells, w, h, path):
-    SW, SH = 4 * (w + 1), 2 * (h + 1)
+    rows = (len(cells) + 3) // 4
+    SW, SH = 4 * (w + 1), rows * (h + 1)
     out = [[0] * SW for _ in range(SH)]
     for i, cell in enumerate(cells):
         ox, oy = (i % 4) * (w + 1), (i // 4) * (h + 1)
         for y in range(h):
             out[oy + y][ox:ox + w] = cell[y]
     write_bmp(path, SW, SH, PAL, out)
-    print(f'{path}: {SW}x{SH}, cells {w}x{h}, row: 4  col: 2')
+    print(f'{path}: {SW}x{SH}, cells {w}x{h}, row: 4  col: {rows}')
 
 
 def outline(px):
@@ -109,6 +111,7 @@ def smoke_frame(phase, keep=1.0, W=150, H=96):
 
 
 ROPE_LENGTHS = (70, 140, 200, 210, 210, 140, 80, 30)   # out over 3 frames, holds, yanked back
+REEL_LENGTHS = tuple(15 + 13 * k for k in range(16))   # 8-23 (15-210 px): held while a target is reeled in
 
 
 def rope_frame(length, W=230, H=14):
@@ -127,7 +130,7 @@ def main(out_dir):
     sheet([kunai_frame(i) for i in range(4)] + [spark_frame(k) for k in range(4)], 40, 14, os.path.join(out_dir, 'kunai.bmp'))
     sheet([smoke_frame(i) for i in range(4)] + [smoke_frame(i, k) for i, k in zip(range(4), (0.7, 0.45, 0.25, 0.1))],
           150, 96, os.path.join(out_dir, 'smoke.bmp'))
-    sheet([rope_frame(n) for n in ROPE_LENGTHS], 230, 14, os.path.join(out_dir, 'rope.bmp'))
+    sheet([rope_frame(n) for n in ROPE_LENGTHS + REEL_LENGTHS], 230, 14, os.path.join(out_dir, 'rope.bmp'))
 
 
 if __name__ == '__main__':
