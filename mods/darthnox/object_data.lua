@@ -45,6 +45,9 @@ local RESTYLED = {
     -- the user's black-and-white Bandit, both sheets drawn by the user (art/bandit_0_edit.webp,
     -- art/bandit_1_edit.webp: hurt, run/dash attacks, weapon moves, fire/ice), via tools/import_sheet.py
     ["data/bandit.dat"] = {[1] = "mods/darthnox/bandit_0.bmp", [2] = "mods/darthnox/bandit_1.bmp"},
+    -- the user's Mark: white tank top with the DoD emblem, red trousers (art/mark_0_edit.webp,
+    -- art/mark_1_edit.webp: the stage 1 boss), via tools/import_sheet.py with the stock sheets
+    ["data/mark.dat"] = {[1] = "mods/darthnox/mark_0.bmp", [2] = "mods/darthnox/mark_1.bmp"},
 }
 
 local function restyle(data, sheets)

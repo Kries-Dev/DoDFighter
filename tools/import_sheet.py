@@ -103,6 +103,73 @@ def bands(fg, count):
     return cuts + [H]
 
 
+NEIGHBOUR_SHARE = 0.3     # a piece touching a cell's side, smaller than this share of the main sprite, is the next frame's
+
+
+def drop_neighbours(alpha):
+    """Remove the slivers of the neighbouring frames that a column cut picks up: pieces
+    that touch the cell's left or right edge and are much smaller than the biggest piece."""
+    mask = alpha > 0
+    H, W = mask.shape
+    label = np.zeros((H, W), np.int32)
+    sizes, edge = [0], [False]
+    for y0, x0 in zip(*np.nonzero(mask)):
+        if label[y0, x0]:
+            continue
+        n = len(sizes)
+        label[y0, x0] = n
+        q, size, touches = deque([(y0, x0)]), 0, False
+        while q:
+            y, x = q.popleft()
+            size += 1
+            touches |= x == 0 or x == W - 1
+            for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                ny, nx = y + dy, x + dx
+                if 0 <= ny < H and 0 <= nx < W and mask[ny, nx] and not label[ny, nx]:
+                    label[ny, nx] = n
+                    q.append((ny, nx))
+        sizes.append(size)
+        edge.append(touches)
+    biggest = max(sizes)
+    out = alpha.copy()
+    for n in range(1, len(sizes)):
+        if edge[n] and sizes[n] < NEIGHBOUR_SHARE * biggest:
+            out[label == n] = 0
+    return out
+
+
+GAP_MERGE = 10            # empty columns narrower than this inside one sprite (ice shards, flames) don't split it
+
+
+def column_spans(fg, cols, colw):
+    """Where each column's sprite sits in a band: split at empty columns rather than at
+    an even grid, since an edited sheet's columns drift. Returns {column: (x0, x1)};
+    a sprite goes to the column its centre falls in. Sprites that touch (no gap) and
+    so span over 1.6 columns are cut at the even grid instead."""
+    filled = fg.any(axis=0)
+    runs, x, W = [], 0, len(filled)
+    while x < W:
+        if filled[x]:
+            start = x
+            while x < W and filled[x]:
+                x += 1
+            if runs and start - runs[-1][1] < GAP_MERGE:
+                runs[-1][1] = x
+            else:
+                runs.append([start, x])
+        else:
+            x += 1
+    spans = {}
+    for x0, x1 in runs:
+        if x1 - x0 > 1.6 * colw:
+            continue                                   # touching sprites: leave them to the grid
+        c = min(cols - 1, int((x0 + x1) / 2 / colw))
+        if c in spans:
+            x0, x1 = min(x0, spans[c][0]), max(x1, spans[c][1])
+        spans[c] = (x0, x1)
+    return spans
+
+
 def fit_to_stock(img, alpha, stock_path, cols, rows, cell):
     """Place each edited frame in its cell, lined up on the stock frame: the edited
     picture may not keep the sheet's exact proportions, so rows drift if it is
@@ -119,13 +186,14 @@ def fit_to_stock(img, alpha, stock_path, cols, rows, cell):
     colw = W / cols
     cells = []
     for r in range(rows):
+        spans = column_spans(alpha[ys[r]:ys[r + 1]] > 0, cols, colw)
         for c in range(cols):
             sm = stock_fg[r * pitch:r * pitch + cell, c * pitch:c * pitch + cell]
-            x0, x1 = int(round(c * colw)), int(round((c + 1) * colw))
+            x0, x1 = spans.get(c, (int(round(c * colw)), int(round((c + 1) * colw))))
             sub_a = alpha[ys[r]:ys[r + 1], x0:x1]
             if not sm.any() or not sub_a.any():
                 continue
-            cells.append((r, c, sm, img[ys[r]:ys[r + 1], x0:x1], sub_a))
+            cells.append((r, c, sm, img[ys[r]:ys[r + 1], x0:x1], drop_neighbours(sub_a)))
 
     def place(sm, sub_img, sub_a, k):
         h, w = sub_a.shape
