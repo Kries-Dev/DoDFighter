@@ -2075,7 +2075,6 @@
         <phase_end>
 
         <phase> bound: 1749
-                music: mods/darthnox/bg/boss_appears.wma
                 id: 122  x: 874  ratio: 0.7 #milk
                 id: 123  x: 874  ratio: 0.3 #beer
                 id: 30  hp: 50  ratio: 1

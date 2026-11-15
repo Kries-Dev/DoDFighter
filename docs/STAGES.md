@@ -20,8 +20,7 @@ is in the painting's own pixels.) A stage needs one line in `catalog.lua`
 the **Rooftop at Night** (bg 63, `art/stages/rooftop_night.webp`, its own boss
 arena, 913 px). Waves, order and HP are LF2's own; only the scroll bounds and
 item x positions are scaled to our stages. Music: "Urban Jungle" from 1-1,
-"Urban Jungle end" from 1-5, "Boss appears 1" when a boss phase starts (1-4 and
-1-5). How it's wired:
+"Urban Jungle end" from 1-5, "Boss appears 1" when 1-5's boss wave starts (1-4's boss wave keeps Urban Jungle). How it's wired:
 
 - `mods/darthnox/stage.txt` is our stage-mode file (LF2's stage.dat, decrypted,
   stage 1 edited; look for "# DoD"). After editing:
