@@ -188,6 +188,10 @@ use 63 for Mathilde.
 - **2026-11-14 tweaks:** Izuna slam = stone thud `010` + crunch `021`, victim bounces
   ~70 px (throwvy -12). DarthNox: lunge speed 14 (+15%), flurry repeats once only
   (290-294 has no hit_a; it was an infinite), parry restores 50 HP (`combat.lua`).
+- **Next big phase (2026-11-15): stages, stage mode, screenpack.** Plan and art
+  template in `docs/STAGES.md`; waiting for the user to pick a concept (A: one
+  city across one day, recommended; B: each fighter's world; C: neon night city)
+  and send a pilot panorama. The user is composing the stage and menu music.
 - The user plans **3–4 fighters** to start.
 - **Ideas offered but not done:**
   - per-fighter HP (LF2 gives everyone 500)
