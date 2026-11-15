@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build a scrolling OpenLF2 stage from one painted panorama, with light animations.
 
-    python tools/build_stage.py PICTURE OUT_DIR KEY "Stage Name" FLOOR_TOP FLOOR_BOTTOM [FLOOR_ROW] [neon=X0,Y0,X1,Y1 ...]
+    python tools/build_stage.py PICTURE OUT_DIR KEY "Stage Name" FLOOR_TOP FLOOR_BOTTOM [FLOOR_ROW] [neon=X0,Y0,X1,Y1 ...] [dim]
 
 PICTURE       the painting (png/webp/jpg), side view, floor across the bottom
 OUT_DIR       where KEY.bmp, KEY_*.bmp and KEY.txt go (mods/darthnox/assets/bg)
@@ -13,6 +13,7 @@ FLOOR_ROW     screen row the back edge should land on (default 413): this sets
 neon=...      a box in the picture's own pixels holding a neon tube or sign; its
               bright pixels buzz. (Neon is boxed by hand: its colour is often the
               same as the sky's.)
+dim           a night painting: lamps are found at a lower brightness
 
 The picture is scaled (never stretched) so FLOOR_TOP lands on FLOOR_ROW and the
 bottom edge on the screen's bottom (550); the stage is as wide as the scaled
@@ -116,7 +117,7 @@ def darker(amount):
     return f
 
 
-def build(picture, out_dir, key, name, floor_top, floor_bottom, floor_row=413, neon_boxes=()):
+def build(picture, out_dir, key, name, floor_top, floor_bottom, floor_row=413, neon_boxes=(), dim=False):
     src = Image.open(picture).convert('RGB')
     W, H = src.size
     scale = (SCREEN_H - floor_row) / (H - floor_top)
@@ -134,7 +135,10 @@ def build(picture, out_dir, key, name, floor_top, floor_bottom, floor_row=413, n
     f = rgb.astype(int)
     r, g, b = f[..., 0], f[..., 1], f[..., 2]
     lum = 0.299 * r + 0.587 * g + 0.114 * b
-    warm = (lum > 200) & (r > 235) & (g > 170) & (b < 175) & (r - b > 90)
+    if dim:                                               # night: lamps are less bright
+        warm = (lum > 170) & (r > 220) & (g > 140) & (b < 190) & (r - b > 70)
+    else:
+        warm = (lum > 200) & (r > 235) & (g > 170) & (b < 175) & (r - b > 90)
     crop = height - rgb.shape[0]                          # rows cut off above the screen
     neon = np.zeros(warm.shape, bool)
     for X0, Y0, X1, Y1 in neon_boxes:
@@ -196,9 +200,10 @@ def build(picture, out_dir, key, name, floor_top, floor_bottom, floor_row=413, n
 
 
 if __name__ == '__main__':
-    args = [a for a in sys.argv[1:] if not a.startswith('neon=')]
+    dim = 'dim' in sys.argv[1:]
+    args = [a for a in sys.argv[1:] if not a.startswith('neon=') and a != 'dim']
     boxes = [tuple(int(v) for v in a[5:].split(',')) for a in sys.argv[1:] if a.startswith('neon=')]
     if len(args) not in (6, 7):
         sys.exit(__doc__)
     build(args[0], args[1], args[2], args[3], int(args[4]), int(args[5]),
-          *(int(v) for v in args[6:]), neon_boxes=boxes)
+          *(int(v) for v in args[6:]), neon_boxes=boxes, dim=dim)

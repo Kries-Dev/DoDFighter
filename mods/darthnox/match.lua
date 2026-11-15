@@ -3,7 +3,8 @@
 -- engine divides every hit by armor/100, and battle mode's defence setting
 -- is scaled the same way). Also: our stages play their own track (MUSIC) instead
 -- of the Versus music pick. Music set to OFF stays off, and the title-screen demo
--- keeps its own music.
+-- keeps its own music. In stage mode the run starts on our stage for that
+-- sub-stage (stage.lua) and stage.lua's phase music plays instead.
 
 -- armor multipliers: damage taken is x 100/armor, so 0.91 = +10%, 0.80 = +25%
 local DEFENCE = {[61] = 0.91, [63] = 0.80, [68] = 0.87}   -- DarthNox, Mathilde, Cod1eh
@@ -17,9 +18,23 @@ local MUSIC = {
 return function(base)
     local background = require("base/game/background")
     local music = require("base/game/music")
+    local stage = require("base/game/stage")
+    local constants = require("base/game/constants")
     local create = base.create
 
     function base.create(options)
+        local stage_mode = options.mode == constants.modes.stage
+        local ours = stage_mode and stage.dod_background and stage.dod_background(options.stage_level)
+        if ours then
+            -- the engine fights stage group g on background row g + 1: point that row at our stage
+            local row = math.floor(options.stage_level / 10) + 1
+            local copy, list = {}, {}
+            for key, value in pairs(options) do copy[key] = value end
+            for index, entry in ipairs(options.backgrounds) do list[index] = entry end
+            list[row + 1] = {id = list[row + 1] and list[row + 1].id, path = ours}
+            copy.backgrounds = list
+            options = copy
+        end
         local state = create(options)
         if state and state.items then
             for index = 0, 19 do
@@ -30,7 +45,7 @@ return function(base)
                 end
             end
         end
-        if state and state.stage and not options.demo then
+        if state and state.stage and not options.demo and not stage_mode then
             for path, track in pairs(MUSIC) do
                 if state.stage == background.load(path) then music.play(track) break end
             end

@@ -16,6 +16,28 @@ is in the painting's own pixels.) A stage needs one line in `catalog.lua`
 (`stages_added`), its walls in `camera.lua` (`WALLS`) and its files in
 `package.manifest`, and its music in `match.lua` (`MUSIC`).
 
+**Stage mode, stage 1** (2026-11-16): 1-1 to 1-4 on the Sunset Rooftop, 1-5 on
+the **Rooftop at Night** (bg 63, `art/stages/rooftop_night.webp`, its own boss
+arena, 913 px). Waves, order and HP are LF2's own; only the scroll bounds and
+item x positions are scaled to our stages. Music: "Urban Jungle" from 1-1,
+"Urban Jungle end" from 1-5, "Boss appears 1" when a boss phase starts (1-4 and
+1-5). How it's wired:
+
+- `mods/darthnox/stage.txt` is our stage-mode file (LF2's stage.dat, decrypted,
+  stage 1 edited; look for "# DoD"). After editing:
+  `python tools/stage_dat.py mods/darthnox/stage.txt mods/darthnox/assets/stage.dat`.
+- `stage_mode.lua` replaces base/game/stage (manifest `replace=`) only to read
+  that file; `stage.lua` picks each sub-stage's background (`STAGES`) and swaps
+  it between sub-stages; `match.lua` starts the run on it.
+- Rules for the file: a sub-stage's last bound = its stage's right wall
+  (`camera.lua`), since players must walk there to go on; **no two phases in a
+  row may share a bound** (an engine quirk: the last phase then never ends).
+
+Rebuild the night stage:
+```
+python tools/build_stage.py art/stages/rooftop_night.webp mods/darthnox/assets/bg roofn "Rooftop at Night" 690 895 dim
+```
+
 **Stage length**: the game width comes from the painting's proportions, not its pixel
 count (the floor depth sets the scale): a 3:1 picture gives ~1800 px (~2.3 screens).
 Image tools only output up to ~3:2, so longer stages are made by outpainting the

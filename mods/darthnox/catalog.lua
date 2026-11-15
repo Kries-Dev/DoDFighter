@@ -24,6 +24,7 @@ return function(base)
     local stages_added = {
         {id = 61, path = "mods/darthnox/bg/bridge.txt"},   -- Urban Bridge (midday)
         {id = 62, path = "mods/darthnox/bg/roof.txt"},     -- Sunset Rooftop (old town, sunset)
+        {id = 63, path = "mods/darthnox/bg/roofn.txt"},    -- Rooftop at Night (stage 1-5's boss arena)
     }
     local load, objects, backgrounds = base.load, base.objects, base.backgrounds
     local added_fighter, added_object, added_stage = false, false, false

@@ -7,6 +7,7 @@
 local WALLS = {
     ["mods/darthnox/bg/bridge.txt"] = {60, 734},    -- Urban Bridge: the concrete barriers
     ["mods/darthnox/bg/roof.txt"] = {90, 1749},     -- Sunset Rooftop: the side buildings and plants
+    ["mods/darthnox/bg/roofn.txt"] = {50, 863},     -- Rooftop at Night (stage 1-5): the rubble at both ends
 }
 
 return function(base)
