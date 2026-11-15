@@ -1,17 +1,30 @@
 -- SPDX-License-Identifier: MIT
--- DarthNox — Urban Bridge's side walls. The engine stops fighters only at x 0
--- and the stage width (794), where half the sprite is off-screen and standing
--- on the concrete barriers; on this stage they stop 60 px in from each side.
+-- DoD Fighter — side walls of our stages. The engine stops fighters only at x 0
+-- and the stage width, where half the sprite is off-screen (and, on our
+-- painted stages, standing in the scenery); these stop them further in.
+
+local WALLS = {
+    ["mods/darthnox/bg/bridge.txt"] = {60, 734},    -- Urban Bridge: the concrete barriers
+    ["mods/darthnox/bg/roof.txt"] = {90, 1737},     -- Sunset Rooftop: the side buildings and plants
+}
 
 return function(base)
-    local stage_path = "mods/darthnox/bg/bridge.txt"
-    local left, right = 60, 734
     local background = require("base/game/background")
     local record_kinds = require("base/game/constants").record_kinds
     local step = base.step
+    local loaded = {}
+
+    local function walls(stage)
+        for path, pair in pairs(WALLS) do
+            loaded[path] = loaded[path] or background.load(path)
+            if stage == loaded[path] then return pair end
+        end
+    end
 
     function base.step(state)
-        if state.stage == background.load(stage_path) then
+        local pair = state.stage and walls(state.stage)
+        if pair then
+            local left, right = pair[1], pair[2]
             for index = 0, 19 do
                 local value = state.items[index]
                 if value and value.record.kind == record_kinds.character then

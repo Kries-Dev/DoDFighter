@@ -1,8 +1,20 @@
 # DoD Fighter: stages, stage mode and screenpack (plan)
 
-Status: **planning** (2026-11-15). Nothing here is built yet except Urban
-Bridge. Pick a concept (section 3), then we build one pilot stage end to end
-before making the rest.
+Status (2026-11-15): Urban Bridge, and the pilot **Sunset Rooftop** (bg 62,
+`art/stages/rooftop_sunset.webp`, built with `tools/build_stage.py`): one
+painting scrolled 1827 px wide, closed ends (side buildings = walls, set in
+`camera.lua`), 21 light layers (lanterns, railing lights and reflections
+flickering, string bulbs, windows twinkling, the pink neon tube buzzing). No
+parallax yet: that needs the layers painted separately (section 4).
+
+Rebuild:
+```
+python tools/build_stage.py art/stages/rooftop_sunset.webp mods/darthnox/assets/bg roof "Sunset Rooftop" 612 755 neon=1815,325,1965,350
+```
+(612/755 = the floor's back and front edge rows in the painting; the neon box
+is in the painting's own pixels.) A stage needs one line in `catalog.lua`
+(`stages_added`), its walls in `camera.lua` (`WALLS`) and its files in
+`package.manifest`.
 
 ## 1. What the engine can do (read from OpenLF2's scripts, not guessed)
 

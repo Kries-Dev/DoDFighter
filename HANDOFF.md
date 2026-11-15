@@ -50,7 +50,7 @@ the whole cast are in `docs/roster.md`.
 | `objects.lua` | Mathilde's clone gets 15 HP |
 | `ai.lua` | computer control for DarthNox's and Mathilde's specials |
 | `physics.lua` | Mathilde's combo (270–281) keeps going through a landing |
-| `camera.lua` | Urban Bridge side walls |
+| `camera.lua` | side walls per stage (`WALLS`) |
 | `music.lua` | no menu music (`MENU_MUSIC = false`) |
 
 **Adding a fighter:** add it to `fighters_added`, the `FIGHTERS` base table and
@@ -192,6 +192,7 @@ use 63 for Mathilde.
   template in `docs/STAGES.md`; waiting for the user to pick a concept (A: one
   city across one day, recommended; B: each fighter's world; C: neon night city)
   and send a pilot panorama. The user is composing the stage and menu music.
+  Pilot built: **Sunset Rooftop** (bg 62) from the user's painting, see STAGES.md.
 - The user plans **3–4 fighters** to start.
 - **Ideas offered but not done:**
   - per-fighter HP (LF2 gives everyone 500)

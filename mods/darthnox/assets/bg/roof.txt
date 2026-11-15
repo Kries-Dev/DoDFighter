@@ -1,0 +1,117 @@
+name: Sunset_Rooftop
+width: 1827   zboundary: 413 544
+shadow: bg\sys\hkc\s.bmp  shadowsize: 37 9
+
+# Built by tools/build_stage.py from one painted panorama (2000x762, scale 0.913):
+# the painting scrolls with the floor; the small layers are its lights,
+# animated with LF2 layer timers (visible on ticks c1..c2 of every cc).
+# the painting
+layer:
+  mods/darthnox/bg/roof.bmp
+  transparency: 0  width: 1827  x: 0  y: 0
+layer_end
+# lamp 1
+layer:
+  mods/darthnox/bg/roof_1.bmp
+  transparency: 1  width: 1827  x: 171  y: 123  cc: 41  c1: 0  c2: 36
+layer_end
+# lamp 2
+layer:
+  mods/darthnox/bg/roof_2.bmp
+  transparency: 1  width: 1827  x: 375  y: 380  cc: 47  c1: 0  c2: 40
+layer_end
+# lamp 3
+layer:
+  mods/darthnox/bg/roof_3.bmp
+  transparency: 1  width: 1827  x: 375  y: 421  cc: 53  c1: 0  c2: 44
+layer_end
+# lamp 4
+layer:
+  mods/darthnox/bg/roof_4.bmp
+  transparency: 1  width: 1827  x: 815  y: 380  cc: 59  c1: 0  c2: 54
+layer_end
+# lamp 5
+layer:
+  mods/darthnox/bg/roof_5.bmp
+  transparency: 1  width: 1827  x: 816  y: 420  cc: 67  c1: 0  c2: 60
+layer_end
+# lamp 6
+layer:
+  mods/darthnox/bg/roof_6.bmp
+  transparency: 1  width: 1827  x: 1322  y: 211  cc: 71  c1: 0  c2: 62
+layer_end
+# lamp 7
+layer:
+  mods/darthnox/bg/roof_7.bmp
+  transparency: 1  width: 1827  x: 1348  y: 219  cc: 79  c1: 0  c2: 74
+layer_end
+# lamp 8
+layer:
+  mods/darthnox/bg/roof_8.bmp
+  transparency: 1  width: 1827  x: 1374  y: 224  cc: 83  c1: 0  c2: 76
+layer_end
+# lamp 9
+layer:
+  mods/darthnox/bg/roof_9.bmp
+  transparency: 1  width: 1827  x: 1416  y: 226  cc: 89  c1: 0  c2: 80
+layer_end
+# lamp 10
+layer:
+  mods/darthnox/bg/roof_10.bmp
+  transparency: 1  width: 1827  x: 1435  y: 380  cc: 97  c1: 0  c2: 92
+layer_end
+# lamp 11
+layer:
+  mods/darthnox/bg/roof_11.bmp
+  transparency: 1  width: 1827  x: 1437  y: 421  cc: 41  c1: 0  c2: 34
+layer_end
+# lamp 12
+layer:
+  mods/darthnox/bg/roof_12.bmp
+  transparency: 1  width: 1827  x: 1441  y: 223  cc: 47  c1: 0  c2: 38
+layer_end
+# lamp 13
+layer:
+  mods/darthnox/bg/roof_13.bmp
+  transparency: 1  width: 1827  x: 1465  y: 218  cc: 53  c1: 0  c2: 48
+layer_end
+# lamp 14
+layer:
+  mods/darthnox/bg/roof_14.bmp
+  transparency: 1  width: 1827  x: 1480  y: 214  cc: 59  c1: 0  c2: 52
+layer_end
+# lamp 15
+layer:
+  mods/darthnox/bg/roof_15.bmp
+  transparency: 1  width: 1827  x: 1500  y: 205  cc: 67  c1: 0  c2: 58
+layer_end
+# lamp 16
+layer:
+  mods/darthnox/bg/roof_16.bmp
+  transparency: 1  width: 1827  x: 1557  y: 203  cc: 71  c1: 0  c2: 66
+layer_end
+# lamp 17
+layer:
+  mods/darthnox/bg/roof_17.bmp
+  transparency: 1  width: 1827  x: 1609  y: 202  cc: 79  c1: 0  c2: 72
+layer_end
+# small lights A
+layer:
+  mods/darthnox/bg/roof_18.bmp
+  transparency: 1  width: 1827  x: 260  y: 130  cc: 90  c1: 0  c2: 44
+layer_end
+# small lights B
+layer:
+  mods/darthnox/bg/roof_19.bmp
+  transparency: 1  width: 1827  x: 323  y: 136  cc: 90  c1: 45  c2: 89
+layer_end
+# neon 1 off
+layer:
+  mods/darthnox/bg/roof_20.bmp
+  transparency: 1  width: 1827  x: 1666  y: 146  cc: 97  c1: 0  c2: 2
+layer_end
+# neon 1 off again
+layer:
+  mods/darthnox/bg/roof_21.bmp
+  transparency: 1  width: 1827  x: 1666  y: 146  cc: 97  c1: 6  c2: 7
+layer_end

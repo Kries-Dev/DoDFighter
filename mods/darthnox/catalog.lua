@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: MIT
 -- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63, Cod1eh 68), the objects their
--- moves spawn (62, 64-67, 69-71) and the Urban Bridge stage without editing base scripts.
+-- moves spawn (62, 64-67, 69-71) and our stages without editing base scripts.
 
 return function(base)
     -- Our fighters (object type 0) and the objects their frames spawn (opoint
@@ -20,7 +20,11 @@ return function(base)
         {id = 70, kind = 3, path = "mods/darthnox/c_smoke.txt"},    -- Cod1eh's smoke (D^J cloud, DvJ puff)
         {id = 71, kind = 3, path = "mods/darthnox/c_rope.txt"},     -- Cod1eh's rope blade (DvA, visual)
     }
-    local stage_path = "mods/darthnox/bg/bridge.txt"
+    -- Our stages (bg ids must not clash with the stock list; see docs/STAGES.md).
+    local stages_added = {
+        {id = 61, path = "mods/darthnox/bg/bridge.txt"},   -- Urban Bridge (midday)
+        {id = 62, path = "mods/darthnox/bg/roof.txt"},     -- Sunset Rooftop (old town, sunset)
+    }
     local load, objects, backgrounds = base.load, base.objects, base.backgrounds
     local added_fighter, added_object, added_stage = false, false, false
 
@@ -64,7 +68,7 @@ return function(base)
 
     -- The stock list ends with three unused templates, and a random pick skips the
     -- last two and turns the third-last into Lee On Road. Inserting before the
-    -- templates keeps that rule intact and lets Random pick Urban Bridge too.
+    -- templates keeps that rule intact and lets Random pick our stages too.
     function base.backgrounds()
         local list = backgrounds()
         if not added_stage then
@@ -72,7 +76,9 @@ return function(base)
             for index, entry in ipairs(list) do
                 if entry.path:find("/template/", 1, true) then at = index; break end
             end
-            table.insert(list, at, {id = 61, path = stage_path})
+            for offset, stage in ipairs(stages_added) do
+                table.insert(list, at + offset - 1, {id = stage.id, path = stage.path})
+            end
             added_stage = true
         end
         return list
