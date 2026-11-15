@@ -2,15 +2,17 @@
 -- DoD Fighter — side walls of our stages. The engine stops fighters only at x 0
 -- and the stage width, where half the sprite is off-screen (and, on our
 -- painted stages, standing in the scenery); these stop them further in.
+-- Stage-mode enemies are left alone: they spawn off-screen and walk in.
 
 local WALLS = {
     ["mods/darthnox/bg/bridge.txt"] = {60, 734},    -- Urban Bridge: the concrete barriers
-    ["mods/darthnox/bg/roof.txt"] = {90, 1737},     -- Sunset Rooftop: the side buildings and plants
+    ["mods/darthnox/bg/roof.txt"] = {90, 1749},     -- Sunset Rooftop: the side buildings and plants
 }
 
 return function(base)
     local background = require("base/game/background")
-    local record_kinds = require("base/game/constants").record_kinds
+    local constants = require("base/game/constants")
+    local record_kinds, enemies = constants.record_kinds, constants.teams.enemies
     local step = base.step
     local loaded = {}
 
@@ -27,7 +29,7 @@ return function(base)
             local left, right = pair[1], pair[2]
             for index = 0, 19 do
                 local value = state.items[index]
-                if value and value.record.kind == record_kinds.character then
+                if value and value.record.kind == record_kinds.character and value.team ~= enemies then
                     if value.x < left then value.x = left end
                     if value.x > right then value.x = right end
                 end

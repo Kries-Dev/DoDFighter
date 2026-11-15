@@ -2,19 +2,25 @@
 
 Status (2026-11-15): Urban Bridge, and the pilot **Sunset Rooftop** (bg 62,
 `art/stages/rooftop_sunset.webp`, built with `tools/build_stage.py`): one
-painting scrolled 1827 px wide, closed ends (side buildings = walls, set in
+painting (the user's second, wider version) scrolled 1839 px wide, music "Urban Jungle" (`match.lua` `MUSIC`), closed ends (side buildings = walls, set in
 `camera.lua`), 21 light layers (lanterns, railing lights and reflections
 flickering, string bulbs, windows twinkling, the pink neon tube buzzing). No
 parallax yet: that needs the layers painted separately (section 4).
 
 Rebuild:
 ```
-python tools/build_stage.py art/stages/rooftop_sunset.webp mods/darthnox/assets/bg roof "Sunset Rooftop" 612 755 neon=1815,325,1965,350
+python tools/build_stage.py art/stages/rooftop_sunset.webp mods/darthnox/assets/bg roof "Sunset Rooftop" 518 657 neon=1462,350,1532,374
 ```
-(612/755 = the floor's back and front edge rows in the painting; the neon box
+(518/657 = the floor's back and front edge rows in the painting; the neon box
 is in the painting's own pixels.) A stage needs one line in `catalog.lua`
 (`stages_added`), its walls in `camera.lua` (`WALLS`) and its files in
-`package.manifest`.
+`package.manifest`, and its music in `match.lua` (`MUSIC`).
+
+**Stage length**: the game width comes from the painting's proportions, not its pixel
+count (the floor depth sets the scale): a 3:1 picture gives ~1800 px (~2.3 screens).
+Image tools only output up to ~3:2, so longer stages are made by outpainting the
+picture in pieces (continue it to the right, same horizon and floor) and stitching.
+Stage-mode enemies ignore the side walls (`camera.lua`), so they can walk in.
 
 ## 1. What the engine can do (read from OpenLF2's scripts, not guessed)
 

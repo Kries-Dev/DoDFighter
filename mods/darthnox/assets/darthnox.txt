@@ -295,6 +295,31 @@ rowing_distance 4.000000
    bdy_end:
 <frame_end>
 
+# Dash attack (A during a running jump): the same overhead slash as the jump attack
+<frame> 90 dash_attack
+   pic: 12  state: 3  wait: 1  next: 91  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89  sound: data\008.wav
+   bdy:
+      kind: 0  x: 54  y: 17  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 91 dash_attack
+   pic: 13  state: 3  wait: 1  next: 92  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+   itr:
+      kind: 0  x: 63  y: 13  w: 72  h: 74  dvx: 7  dvy: 7  fall: 70  vrest: 0  arest: 15  bdefend: 60  injury: 45  effect: 1
+   itr_end:
+   bdy:
+      kind: 0  x: 54  y: 17  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
+<frame> 92 dash_attack
+   pic: 14  state: 3  wait: 11  next: 999  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+   bdy:
+      kind: 0  x: 54  y: 17  w: 34  h: 72
+   bdy_end:
+<frame_end>
+
 # Run attack: a running thrust; its pictures (80-82) have a blue glow on the blade
 <frame> 85 run_attack
    pic: 80  state: 3  wait: 4  next: 86  dvx: 6  dvy: 0  dvz: 0  centerx: 71  centery: 89
