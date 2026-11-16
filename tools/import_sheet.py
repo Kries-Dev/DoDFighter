@@ -95,6 +95,18 @@ def bands(fg, count):
     """Split the picture into `count` horizontal bands at the emptiest rows between sprite rows."""
     profile = fg.sum(axis=1).astype(float)
     H = len(profile)
+    # the empty gaps between sprite rows (not the margins above and below): when there
+    # is exactly one per row boundary, cut in their middles
+    gaps, start = [], None
+    for y in range(H):
+        if profile[y] == 0 and start is None:
+            start = y
+        elif profile[y] != 0 and start is not None:
+            if start > 0:
+                gaps.append((start + y) // 2)
+            start = None
+    if len(gaps) == count - 1:
+        return [0] + gaps + [H]
     cuts = [0]
     for k in range(1, count):
         guess = k * H // count
@@ -138,7 +150,8 @@ def drop_neighbours(alpha):
     return out
 
 
-GAP_MERGE = 10            # empty columns narrower than this inside one sprite (ice shards, flames) don't split it
+GAP_MERGE = 2             # empty columns narrower than this inside one sprite don't split it (pieces further
+                          # apart, like ice shards, still join their sprite: each piece goes to the column its centre is in)
 
 
 def column_spans(fg, cols, colw):

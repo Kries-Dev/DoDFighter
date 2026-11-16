@@ -79,3 +79,10 @@ direct hit here.
 | Monk | D>A ball 100 MP, 35 |
 | Bat | D>A ball 125 · D>J 50 MP, 60 · D^J bats 200 |
 | Justin | D>A ball 75 · DvA 75 MP, 55 |
+
+## EVS Fanboy (id 72)
+
+A second Bandit: LF2's Bandit data, unchanged, with the user's sprites (purple bandana,
+black EVS shirt, white trousers; `art/evsfan_*_edit.webp` -> `assets/evsfan_0/1.bmp` via
+`tools/import_sheet.py` against the stock Bandit sheets). Data: `assets/evsfan.txt`.
+Selectable in versus; not in stage mode yet. Portraits are crops of his idle frame (stand-ins).
