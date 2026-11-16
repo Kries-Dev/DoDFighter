@@ -2,11 +2,14 @@
 -- Copyright (c) 2026 OpenLF2 contributors
 -- DoD Fighter: OpenLF2's base/game/stage.lua, unchanged except that stage mode
 -- reads our own stage file (STAGE_FILE: built from mods/darthnox/stage.txt with
--- tools/stage_dat.py) instead of LF2's data/stage.dat. A mod asset can't take
+-- tools/stage_dat.py) instead of LF2's data/stage.dat, and SWAPS below. A mod asset can't take
 -- data/stage.dat's place and the base module reads it from a local, so the
 -- module is replaced whole (manifest "replace="). When OpenLF2 updates
--- stage.lua, copy it again and change that one line.
+-- stage.lua, copy it again and redo the lines marked DoD (STAGE_FILE, SWAPS).
 local STAGE_FILE = "mods/darthnox/stage.dat"
+-- Second change: fighters replaced by our own per stage group (0 = stage 1-1..1-5),
+-- applied to every spawn, the random Bandit/Hunter picks (id 3000/3001) included.
+local SWAPS = {[0] = {[30] = 72}}   -- stage 1: every Bandit is EVS Fanboy
 
 local constants = require("base/game/constants")
 local character_frames = constants.character_frames
@@ -104,6 +107,9 @@ local function spawn(state, run, entry, runtime, slot)
             id = random(2) + constants.fighter_ids.bandit
         end
     end
+    -- DoD: stand-ins per stage group (SWAPS), after random picks are made
+    local swap = SWAPS[cdiv(run.id, 10)]
+    if swap and swap[id] then id = swap[id] end
     if not objects.record(state, id) then
         runtime.ids[slot] = -1
         return

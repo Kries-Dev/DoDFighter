@@ -85,4 +85,5 @@ direct hit here.
 A second Bandit: LF2's Bandit data, unchanged, with the user's sprites (purple bandana,
 black EVS shirt, white trousers; `art/evsfan_*_edit.webp` -> `assets/evsfan_0/1.bmp` via
 `tools/import_sheet.py` against the stock Bandit sheets). Data: `assets/evsfan.txt`.
-Selectable in versus; not in stage mode yet. Portraits are crops of his idle frame (stand-ins).
+Selectable in versus. In stage 1 he replaces every Bandit, random picks included
+(`SWAPS` in `mods/darthnox/stage_mode.lua`). Portraits are crops of his idle frame (stand-ins).
