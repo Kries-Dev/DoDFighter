@@ -1,4 +1,4 @@
-# DoD Fighter: handover (2026-11-13)
+# DoD Fighter: handover (updated 2026-11-17)
 
 Start a new chat with: *"Continue DoD Fighter. Read HANDOFF.md in
 github.com/Kries-Dev/DoDFighter first."* Then clone the repo and read this file,
@@ -35,6 +35,10 @@ itself**: copy files, install, push and relaunch, never give manual steps.
 | Homing staff / tornado / extending pole / diagonal pole | 64 / 65 / 66 / 67 | `m_staff.txt`, `m_tornado.txt`, `m_pole.txt`, `m_pole_d.txt` (all generated) | art from `tools/make_mathilde_fx.py` |
 | Bandit restyle (stock fighter 30) | — | `assets/bandit_0.bmp` (pictures 0-69) from the user's edit `art/bandit_0_edit.webp` via `tools/import_sheet.py` | `object_data.lua` `RESTYLED` swaps the sheets; data stays stock. `assets/bandit_1.bmp` (70-139: hurt, run/dash attack, weapon moves, ice/fire) from the user's `art/bandit_1_edit.webp`, fitted frame by frame onto the stock sheet (`import_sheet.py ... STOCK.bmp`: that edit's proportions drifted). `import_sheet.py` also peels the white fringe off upscaled edits; **ask for edits on a black background** (2026-11-15 re-upload: no outline, both sheets fitted to the stock frames). (`tools/recolor_bandit.py` was a stop-gap before the user's sheet arrived; the first upload had the same sheet twice) |
 | Urban Bridge stage | bg id 61 | `assets/bg/bridge.txt` + `.bmp` | side walls x 60–734 (`camera.lua`); music Gravity Stars (WMA 8) |
+| Mark restyle (stock fighter 32) | — | `assets/mark_0/1.bmp` from `art/mark_0/1_edit.webp` | `RESTYLED` like Bandit; DoD tank top, red trousers |
+| EVS Fanboy (Bandit copy) | 72 | `assets/evsfan.txt` (Bandit's data, our header) + `evsfan_0/1.bmp` | selectable in versus; replaces every Bandit in stage 1 (`SWAPS` in `stage_mode.lua`); portraits are idle-frame crops (stand-ins) |
+| Sunset Rooftop / Rooftop at Night | bg 62 / 63 | `assets/bg/roof*.txt` | stage 2-1..2-4 / 2-5; walls 90–1749 / 50–863 |
+| Cell Block / Barracks / Throne Hall | bg 64 / 65 / 66 | `assets/bg/cells*`, `barr*`, `hall*` | stage 1-3 / 1-4 / 1-5; lamp flicker via `build_stage.py lamps=` boxes (commands in `docs/STAGES.md`) |
 
 Moves, frames and damage are in `mods/darthnox/README.md`; balance numbers for
 the whole cast are in `docs/roster.md`.
@@ -51,6 +55,8 @@ the whole cast are in `docs/roster.md`.
 | `ai.lua` | computer control for DarthNox's and Mathilde's specials |
 | `physics.lua` | Mathilde's combo (270–281) keeps going through a landing |
 | `camera.lua` | side walls per stage (`WALLS`) |
+| `stage_mode.lua` | **replaces** base/game/stage (copy + 2 changes marked DoD): reads `mods/darthnox/stage.dat`; `SWAPS` fighters per stage group |
+| `stage.lua` | which background each stage-mode sub-stage uses (`STAGES`), swapped between sub-stages |
 | `music.lua` | no menu music (`MENU_MUSIC = false`) |
 
 **Adding a fighter:** add it to `fighters_added`, the `FIGHTERS` base table and
@@ -141,6 +147,24 @@ use 63 for Mathilde.
 - **Credits:** never use AutoSprite `withSound` without asking.
 
 ## Where it stands / next
+
+- **2026-11-17, stage mode:** stage 1 is being rebuilt as a fortress: 1-1 and 1-2 wait
+  for new paintings (LF2's forest until then; the first two ChatGPT paintings showed
+  the Auschwitz-Birkenau gate and camp, which Claude declined to build: ask for a
+  fortress courtyard / base without camp features), 1-3 Cell Block, 1-4 Barracks, 1-5
+  Throne Hall. The city moved to stage 2 with LF2's stage 2 waves. Layout + music per
+  sub-stage: `tools/stage_layout.py` (LAYOUT) -> `stage.txt` -> `tools/stage_dat.py` ->
+  `assets/stage.dat`; backgrounds in `stage.lua` STAGES. Verified headless: stage 1
+  and 2 clear end to end.
+- **Stage 1 music:** the user wants 5 Suno tracks (SFA3-style, 1-5 the epic boss
+  variation, max mode, their custom "SFA3" model). The Suno connector can't use
+  custom models (`unknown model`; allowed: v6-mini, v6, v6-wild). LAYOUT has a
+  `STAGE1` list (`fort_1..5.wma`) ready for them.
+- **Mark** and **EVS Fanboy** (see the table); `tools/import_sheet.py` now finds frames
+  by the gaps between them and cuts rows at real gaps (the user's sheets drift).
+- Outside the repo (session folder, not in git): `stock-sprites/` (extracted LF2
+  bandit/hunter/mark sheets, decrypted .dat) and `character-art/` (base art, avatars).
+  Re-extract with a headless probe (`engine.read_resource` hex dump) if lost.
 
 - **Mathilde's current kit (2026-11-13, second pass; the user found the air carry unfair):**
   - D>A stab → J vault (240-244, 20 MP) → A launcher strike (300-303: grounded

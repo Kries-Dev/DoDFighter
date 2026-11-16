@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build a scrolling OpenLF2 stage from one painted panorama, with light animations.
 
-    python tools/build_stage.py PICTURE OUT_DIR KEY "Stage Name" FLOOR_TOP FLOOR_BOTTOM [FLOOR_ROW] [neon=X0,Y0,X1,Y1 ...] [dim]
+    python tools/build_stage.py PICTURE OUT_DIR KEY "Stage Name" FLOOR_TOP FLOOR_BOTTOM [FLOOR_ROW] [neon=X0,Y0,X1,Y1 ...] [lamps=X0,Y0,X1,Y1 ...] [dim]
 
 PICTURE       the painting (png/webp/jpg), side view, floor across the bottom
 OUT_DIR       where KEY.bmp, KEY_*.bmp and KEY.txt go (mods/darthnox/assets/bg)
@@ -13,6 +13,9 @@ FLOOR_ROW     screen row the back edge should land on (default 413): this sets
 neon=...      a box in the picture's own pixels holding a neon tube or sign; its
               bright pixels buzz. (Neon is boxed by hand: its colour is often the
               same as the sky's.)
+lamps=...     boxes (picture pixels) that hold the lamps; when given, only lights inside
+              them flicker (for warm interiors, where sunlit floor patches and walls
+              would otherwise be taken for lamps)
 dim           a night painting: lamps are found at a lower brightness
 
 The picture is scaled (never stretched) so FLOOR_TOP lands on FLOOR_ROW and the
@@ -117,7 +120,7 @@ def darker(amount):
     return f
 
 
-def build(picture, out_dir, key, name, floor_top, floor_bottom, floor_row=413, neon_boxes=(), dim=False):
+def build(picture, out_dir, key, name, floor_top, floor_bottom, floor_row=413, neon_boxes=(), dim=False, lamp_boxes=()):
     src = Image.open(picture).convert('RGB')
     W, H = src.size
     scale = (SCREEN_H - floor_row) / (H - floor_top)
@@ -140,6 +143,11 @@ def build(picture, out_dir, key, name, floor_top, floor_bottom, floor_row=413, n
     else:
         warm = (lum > 200) & (r > 235) & (g > 170) & (b < 175) & (r - b > 90)
     crop = height - rgb.shape[0]                          # rows cut off above the screen
+    if lamp_boxes:                                        # only the marked lamps
+        allowed = np.zeros(warm.shape, bool)
+        for X0, Y0, X1, Y1 in lamp_boxes:
+            allowed[max(0, round(Y0 * scale) - crop):max(0, round(Y1 * scale) - crop), round(X0 * scale):round(X1 * scale)] = True
+        warm &= allowed
     neon = np.zeros(warm.shape, bool)
     for X0, Y0, X1, Y1 in neon_boxes:
         x0, x1 = round(X0 * scale), round(X1 * scale)
@@ -201,9 +209,10 @@ def build(picture, out_dir, key, name, floor_top, floor_bottom, floor_row=413, n
 
 if __name__ == '__main__':
     dim = 'dim' in sys.argv[1:]
-    args = [a for a in sys.argv[1:] if not a.startswith('neon=') and a != 'dim']
+    args = [a for a in sys.argv[1:] if not a.startswith(('neon=', 'lamps=')) and a != 'dim']
+    lamp_boxes = [tuple(int(v) for v in a[6:].split(',')) for a in sys.argv[1:] if a.startswith('lamps=')]
     boxes = [tuple(int(v) for v in a[5:].split(',')) for a in sys.argv[1:] if a.startswith('neon=')]
     if len(args) not in (6, 7):
         sys.exit(__doc__)
     build(args[0], args[1], args[2], args[3], int(args[4]), int(args[5]),
-          *(int(v) for v in args[6:]), neon_boxes=boxes, dim=dim)
+          *(int(v) for v in args[6:]), neon_boxes=boxes, dim=dim, lamp_boxes=lamp_boxes)

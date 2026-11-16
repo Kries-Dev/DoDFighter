@@ -8,8 +8,19 @@
 -- Stage file bounds must fit the stage: a sub-stage's last bound is its right
 -- wall (camera.lua), since players have to reach it to go on.
 
-local ROOF, ROOF_NIGHT = "mods/darthnox/bg/roof.txt", "mods/darthnox/bg/roofn.txt"
-local STAGES = {[0] = ROOF, [1] = ROOF, [2] = ROOF, [3] = ROOF, [4] = ROOF_NIGHT}
+local BG = "mods/darthnox/bg/"
+local ROOF, ROOF_NIGHT = BG .. "roof.txt", BG .. "roofn.txt"
+local STAGES = {
+    -- stage 1 (1-1 and 1-2 keep LF2's background until their paintings come)
+    [2] = BG .. "cells.txt",    -- 1-3: Cell Block
+    [3] = BG .. "barr.txt",     -- 1-4: Barracks
+    [4] = BG .. "hall.txt",     -- 1-5: Throne Hall
+    -- stage 2: the city
+    [10] = ROOF, [11] = ROOF, [12] = ROOF, [13] = ROOF,   -- 2-1 .. 2-4: Sunset Rooftop
+    [14] = ROOF_NIGHT,                                    -- 2-5: Rooftop at Night
+}
+-- Keep in step with tools/stage_layout.py (LAYOUT), which scales each sub-stage's
+-- bounds to the stage named here.
 
 return function(base)
     local background = require("base/game/background")

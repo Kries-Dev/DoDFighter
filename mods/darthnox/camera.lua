@@ -7,7 +7,10 @@
 local WALLS = {
     ["mods/darthnox/bg/bridge.txt"] = {60, 734},    -- Urban Bridge: the concrete barriers
     ["mods/darthnox/bg/roof.txt"] = {90, 1749},     -- Sunset Rooftop: the side buildings and plants
-    ["mods/darthnox/bg/roofn.txt"] = {50, 863},     -- Rooftop at Night (stage 1-5): the rubble at both ends
+    ["mods/darthnox/bg/roofn.txt"] = {50, 863},     -- Rooftop at Night (stage 2-5): the rubble at both ends
+    ["mods/darthnox/bg/cells.txt"] = {60, 1506},    -- Cell Block (stage 1-3): the end walls
+    ["mods/darthnox/bg/barr.txt"] = {60, 1471},     -- Barracks (stage 1-4): the end bunks
+    ["mods/darthnox/bg/hall.txt"] = {60, 1471},     -- Throne Hall (stage 1-5): the end windows
 }
 
 return function(base)
