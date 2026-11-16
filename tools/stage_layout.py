@@ -24,14 +24,14 @@ import sys
 
 SCREEN_W = 794
 BG = 'mods/darthnox/bg/'
-WALL = {'roof': 1749, 'roofn': 863, 'cells': 1506, 'barr': 1471, 'hall': 1471}   # = camera.lua WALLS
+WALL = {'roof': 1749, 'roofn': 863, 'gate': 1523, 'yard': 1365, 'cells': 1506, 'barr': 1471, 'hall': 1471}   # = camera.lua WALLS
 JUNGLE, JUNGLE_END, BOSS = BG + 'urban_jungle.wma', BG + 'jungle_end.wma', BG + 'boss_appears.wma'
 STAGE1 = [BG + f'fort_{n}.wma' for n in range(1, 6)]        # stage 1's five tracks (fort_1 ... fort_5)
 
 # run id -> (stage key or None for LF2's own background, music from phase 0, boss music)
 LAYOUT = {
-    0: (None, None, None),                 # 1-1: painting to come (LF2's background for now)
-    1: (None, None, None),                 # 1-2: painting to come
+    0: ('gate', None, None),               # 1-1: Fortress Gate
+    1: ('yard', None, None),               # 1-2: Barracks Yard
     2: ('cells', None, None),              # 1-3: Cell Block
     3: ('barr', None, None),               # 1-4: Barracks
     4: ('hall', None, None),               # 1-5: Throne Hall

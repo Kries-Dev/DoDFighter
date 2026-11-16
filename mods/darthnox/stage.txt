@@ -1968,26 +1968,26 @@
         <phase_end>
 <stage_end>
 
-<stage> id: 0  #stage 1-1   # DoD: LF2's background
-        <phase> bound: 900
+<stage> id: 0  #stage 1-1   # DoD: gate; bounds and x scaled x0.692 (last bound = its right wall)
+        <phase> bound: 794
                 music: bgm\stage1.wma
                 id: 30  hp: 50  times: 2  ratio: 1.0
         <phase_end>
 
-        <phase> bound: 1300
+        <phase> bound: 900
                 id: 30  hp: 50  times: 2  ratio: 1.0
                 id: 31  hp: 50  times: 1
                 id: 31  hp: 50  times: 1  ratio: .4
         <phase_end>
 
-        <phase> bound: 1700
+        <phase> bound: 1177
                 id: 3000  hp: 50  times: 2
                 id: 3000  hp: 50  times: 2  ratio: 1.0
         <phase_end>
 
-        <phase> bound: 2200
-                id: 122  x: 1100  #milk
-                id: 123  x: 1100  #beer
+        <phase> bound: 1523
+                id: 122  x: 762  #milk
+                id: 123  x: 762  #beer
                 id: 30  hp: 50  ratio: 1
                 id: 30  hp: 50
                 id: 31  hp: 50
@@ -1996,26 +1996,26 @@
         <phase_end>
 <stage_end>
 
-<stage> id: 1  #stage 1-2   # DoD: LF2's background
-        <phase> bound: 900
+<stage> id: 1  #stage 1-2   # DoD: yard; bounds and x scaled x0.620 (last bound = its right wall)
+        <phase> bound: 794
                 id: 3000 hp: 50  times: 2  ratio: 2
         <phase_end>
 
-        <phase> bound: 1100
-                id: 122  x: 400  #milk
-                id: 123  x: 400  #beer
+        <phase> bound: 811
+                id: 122  x: 248  #milk
+                id: 123  x: 248  #beer
                 id: 3000  hp: 50  times: 1
                 id: 3000  hp: 50  times: 1  ratio: 1.5
         <phase_end>
 
-        <phase> bound: 1700
+        <phase> bound: 1055
                 id: 3000  hp: 50  times: 2
                 id: 3000  hp: 50  times: 2  ratio: 1.0
         <phase_end>
 
-        <phase> bound: 2200
-                id: 122  x: 1100  #milk
-                id: 123  x: 1100  #beer
+        <phase> bound: 1365
+                id: 122  x: 682  #milk
+                id: 123  x: 682  #beer
                 id: 30  hp: 50  ratio: 1
                 id: 3000 hp: 50  times: 1  ratio: 1
                 id: 3000 hp: 50  times: 1  ratio: .8

@@ -177,6 +177,8 @@ def build(picture, out_dir, key, name, floor_top, floor_bottom, floor_row=413, n
             region = np.zeros(warm.shape, bool)
             for ys, xs in small[parity::2]:
                 region[ys, xs] = True
+            if not region.any():
+                continue                                  # only one bulb: no second set
             img, x0, y0 = overlay(rgb, grow(region, 1), brighter(0.35), pad=2)
             found.append((img, x0, y0, 90, parity * 45, parity * 45 + 44, f'small lights {"AB"[parity]}'))
     # neon: dark for a few ticks, twice in a row (a buzzing tube)

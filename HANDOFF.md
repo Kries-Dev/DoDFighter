@@ -148,14 +148,12 @@ use 63 for Mathilde.
 
 ## Where it stands / next
 
-- **2026-11-17, stage mode:** stage 1 is being rebuilt as a fortress: 1-1 and 1-2 wait
-  for new paintings (LF2's forest until then; the first two ChatGPT paintings showed
-  the Auschwitz-Birkenau gate and camp, which Claude declined to build: ask for a
-  fortress courtyard / base without camp features), 1-3 Cell Block, 1-4 Barracks, 1-5
-  Throne Hall. The city moved to stage 2 with LF2's stage 2 waves. Layout + music per
-  sub-stage: `tools/stage_layout.py` (LAYOUT) -> `stage.txt` -> `tools/stage_dat.py` ->
+- **2026-11-17, stage mode:** stage 1 is the fortress, all from the user's paintings:
+  1-1 Fortress Gate, 1-2 Barracks Yard, 1-3 Cell Block, 1-4 Barracks, 1-5 Throne Hall.
+  The city moved to stage 2 with LF2's stage 2 waves. Layout + music per sub-stage:
+  `tools/stage_layout.py` (LAYOUT) -> `stage.txt` -> `tools/stage_dat.py` ->
   `assets/stage.dat`; backgrounds in `stage.lua` STAGES. Verified headless: stage 1
-  and 2 clear end to end.
+  and 2 clear end to end. **Build the user's paintings as given; don't edit their art.**
 - **Stage 1 music:** the user wants 5 Suno tracks (SFA3-style, 1-5 the epic boss
   variation, max mode, their custom "SFA3" model). The Suno connector can't use
   custom models (`unknown model`; allowed: v6-mini, v6, v6-wild). LAYOUT has a

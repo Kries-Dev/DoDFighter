@@ -11,7 +11,9 @@
 local BG = "mods/darthnox/bg/"
 local ROOF, ROOF_NIGHT = BG .. "roof.txt", BG .. "roofn.txt"
 local STAGES = {
-    -- stage 1 (1-1 and 1-2 keep LF2's background until their paintings come)
+    -- stage 1: the fortress
+    [0] = BG .. "gate.txt",     -- 1-1: Fortress Gate
+    [1] = BG .. "yard.txt",     -- 1-2: Barracks Yard
     [2] = BG .. "cells.txt",    -- 1-3: Cell Block
     [3] = BG .. "barr.txt",     -- 1-4: Barracks
     [4] = BG .. "hall.txt",     -- 1-5: Throne Hall

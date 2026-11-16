@@ -16,10 +16,12 @@ is in the painting's own pixels.) A stage needs one line in `catalog.lua`
 (`stages_added`), its walls in `camera.lua` (`WALLS`) and its files in
 `package.manifest`, and its music in `match.lua` (`MUSIC`).
 
-**Stage mode** (2026-11-17): stage 1 = 1-1/1-2 (paintings to come), 1-3 Cell Block,
+**Stage mode** (2026-11-17): stage 1 = 1-1 Fortress Gate, 1-2 Barracks Yard, 1-3 Cell Block,
 1-4 Barracks, 1-5 Throne Hall; stage 2 = the city below (was stage 1 on 2026-11-16).
-Layout and music: `tools/stage_layout.py`. Interiors rebuilt with:
+Layout and music: `tools/stage_layout.py`. Rebuild commands:
 ```
+python tools/build_stage.py art/stages/fort_gate.webp mods/darthnox/assets/bg gate "Fortress Gate" 495 655 lamps=1745,110,1850,185 lamps=380,530,560,625 lamps=880,520,960,560
+python tools/build_stage.py art/stages/fort_yard.webp mods/darthnox/assets/bg yard "Barracks Yard" 472 655 lamps=1000,470,1080,560 lamps=150,540,320,580 lamps=480,560,760,610 dim
 python tools/build_stage.py art/stages/cells.webp mods/darthnox/assets/bg cells "Cell Block" 492 655 lamps=250,180,370,280 lamps=940,180,1060,280 lamps=1640,180,1760,280 dim
 python tools/build_stage.py art/stages/barracks.webp mods/darthnox/assets/bg barr "Barracks" 488 655 lamps=180,160,300,230 lamps=590,160,710,230 lamps=1060,160,1180,230 lamps=1740,160,1860,230 lamps=1075,360,1115,410 dim
 python tools/build_stage.py art/stages/throne.webp mods/darthnox/assets/bg hall "Throne Hall" 488 655 lamps=310,80,460,210 lamps=890,0,1110,190 lamps=1540,80,1690,210 lamps=330,360,390,420 lamps=810,310,870,440 lamps=1130,310,1190,440 lamps=1610,360,1670,420 lamps=620,330,680,370 lamps=1320,330,1380,370 dim
