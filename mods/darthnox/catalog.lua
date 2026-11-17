@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: MIT
--- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63, Cod1eh 68; grunts EVS Fanboy 72, EVS Hunter 73), the objects their
--- moves spawn (62, 64-67, 69-71) and our stages without editing base scripts.
+-- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63, Cod1eh 68; grunts EVS Fanboy 72, EVS Hunter 73; computer-only Ironhide 74), the objects their
+-- moves spawn (62, 64-67, 69-71, 75) and our stages without editing base scripts.
 
 return function(base)
     -- Our fighters (object type 0) and the objects their frames spawn (opoint
@@ -13,6 +13,8 @@ return function(base)
         -- Bandit (30) and Hunter (31) themselves (stage_mode.lua SWAPS), so they stay grunts there
         {id = 72, path = "mods/darthnox/evsfan.txt", hidden = true},    -- EVS Fanboy: Bandit with the user's sprites
         {id = 73, path = "mods/darthnox/evshunt.txt", hidden = true},   -- EVS Hunter: Hunter with the user's sprites
+        -- computer-only: hidden from select (stage boss / com opponent)
+        {id = 74, path = "mods/darthnox/ironhide.txt", hidden = true},  -- Ironhide: Deep's data, the user's sprites, 3 specials
     }
     local spawned = {
         {id = 62, kind = 3, path = "mods/darthnox/crescent.txt"},   -- DarthNox's crescent
@@ -23,6 +25,7 @@ return function(base)
         {id = 69, kind = 3, path = "mods/darthnox/c_kunai.txt"},    -- Cod1eh's kunai (D>A fan)
         {id = 70, kind = 3, path = "mods/darthnox/c_smoke.txt"},    -- Cod1eh's smoke (D^J cloud, DvJ puff)
         {id = 71, kind = 3, path = "mods/darthnox/c_rope.txt"},     -- Cod1eh's rope blade (DvA, visual)
+        {id = 75, kind = 3, path = "mods/darthnox/ih_wave.txt"},    -- Ironhide's wave (D>A, two per blast)
     }
     -- Our stages (bg ids must not clash with the stock list; see docs/STAGES.md).
     local stages_added = {

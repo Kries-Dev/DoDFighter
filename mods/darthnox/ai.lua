@@ -18,7 +18,7 @@ local complete = constants.combo_states.complete
 local kinds = constants.record_kinds
 local states = constants.frame_states
 
-local DARTHNOX, MATHILDE, COD1EH = 61, 63, 68
+local DARTHNOX, MATHILDE, COD1EH, IRONHIDE = 61, 63, 68, 74
 local FACING_RIGHT = 0
 
 local function random(range) return engine.random(range) end
@@ -159,6 +159,24 @@ local function cod1eh(state, S, T, dx, dz, skill)
     end
 end
 
+-- Ironhide (computer-only, Deep's data): D>A two waves at range, DvA uppercut up
+-- close, D>J dash at mid range; A again during a blast throws the next pair.
+local function ironhide(state, S, T, dx, dz, skill)
+    local mp, f = S.mp, S.frame
+    if f == 239 or f == 244 then
+        if dx > 100 and dz < 40 and mp >= 75 and chance(3, skill) then tap(S, "attack") end
+        return
+    end
+    if f >= 260 and f <= 289 then
+        if T.y_int < -10 and dx < 100 and chance(4, skill) then tap(S, "attack") end
+        return
+    end
+    if not ready(S) then return end
+    if dx > 110 and dx < 420 and dz < 60 and mp >= 75 and chance(15, skill) then forward(S, T, true)
+    elseif dx < 75 and dz < 10 and mp >= 75 and facing_target(S, T) and chance(12, skill) then start(S, combo.down_attack)
+    elseif dx > 60 and dx < 180 and dz < 10 and mp >= 100 and (hurt(T) or chance(25, skill)) then forward(S, T, false) end
+end
+
 return function(base)
     local control = base.control
 
@@ -166,13 +184,14 @@ return function(base)
         local result = control(state, index, mode, context)
         local S = state.items[index]
         local id = S and S.record.id
-        if (id == DARTHNOX or id == MATHILDE or id == COD1EH) and S.hp > 0 and not S.human then
+        if (id == DARTHNOX or id == MATHILDE or id == COD1EH or id == IRONHIDE) and S.hp > 0 and not S.human then
             local T = nearest_enemy(state, S)
             if T then
                 local dx, dz = math.abs(T.x_int - S.x_int), math.abs(T.z_int - S.z_int)
                 local skill = math.max(0, state.ai_skill or 0)
                 if id == DARTHNOX then darthnox(state, S, T, dx, dz, skill)
                 elseif id == MATHILDE then mathilde(state, S, T, dx, dz, skill)
+                elseif id == IRONHIDE then ironhide(state, S, T, dx, dz, skill)
                 else cod1eh(state, S, T, dx, dz, skill) end
             end
         end

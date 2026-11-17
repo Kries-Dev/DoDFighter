@@ -89,3 +89,16 @@ In stage 1 every Bandit/Hunter spawn keeps id 30/31 and uses this data (`SWAPS` 
 `mods/darthnox/stage_mode.lua`), so the engine still treats them as grunts (no invincible
 blink after getting up, no purple "Com" label, Hunter's bow AI). Catalog ids 72/73 exist
 but are hidden from character select, like Bandit and Hunter. Portraits are stand-ins.
+
+## Ironhide (computer-only, id 74)
+
+LF2's Deep with the user's sprites (purple "V" shirt, beard; `art/ironhide/`), hidden from
+character select like the grunts; the computer plays him (`ai.lua`). Everything is Deep's
+except the specials (`tools/make_ironhide.py`):
+
+| Input | Move | Change from Deep |
+|---|---|---|
+| D>A | blast | two waves per blast, +-15 degrees in depth (object 75, `ih_wave.txt`); A again chains the next blast as Deep's |
+| DvA | uppercut | launches straight up; the sword spins twice and both spins hit (launch hit 54 -> 36, rest 4 ticks) |
+| D>J | dash strafe | 100 MP (Deep 150), ~221 px (Deep ~360), 2 hits instead of ~6 |
+| D^J, grab D>J | — | removed |

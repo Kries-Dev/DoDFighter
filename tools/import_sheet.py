@@ -285,7 +285,14 @@ def main(src, out, width, height, stock=None):
     img = np.asarray(Image.open(src).convert('RGB')).astype(np.float32)
     alpha = (~background(img.astype(np.int32))).astype(np.float32)
     if stock:
-        rgb, opaque = fit_to_stock(img, alpha, stock, cols=10, rows=7, cell=79)
+        # rows: the stock sheet's rows that hold any picture (Deep's deep_2 is 350 px:
+        # 4 rows and a 30 px strip; most sheets are 7 rows)
+        st = np.asarray(Image.open(stock).convert('RGB')).sum(axis=2) > 0
+        rows = sum(1 for r in range(st.shape[0] // 80) if st[r * 80:r * 80 + 79].any())   # whole rows only
+        rgb, opaque = fit_to_stock(img, alpha, stock, cols=10, rows=rows, cell=79)
+        if rgb.shape[0] < height:
+            rgb = np.pad(rgb, ((0, height - rgb.shape[0]), (0, 0), (0, 0)))
+            opaque = np.pad(opaque, ((0, height - opaque.shape[0]), (0, 0)))
         rgb, opaque = rgb[:height, :width], opaque[:height, :width]
     else:
         rgb, opaque = shrink(img, alpha, (width, height))
