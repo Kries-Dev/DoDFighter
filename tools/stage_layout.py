@@ -48,6 +48,7 @@ LAYOUT = {
 # id 3000 = a random Bandit or Hunter each spawn; in stage 1 those are EVS Fanboy / EVS
 # Hunter (stage_mode.lua SWAPS). times = how many in all, ratio 1 = scales with players.
 HP = 60                                    # LF2's grunts have 50: +20%
+FANBOY = f'id: 30  hp: {HP}'                # one extra EVS Fanboy (Bandit 30 in stage 1) in every 1-1 wave
 CUSTOM = {
     # 1-1 (2026-11-18, the user): about twice LF2's enemies (~28 instead of ~12 for one
     # player) in six waves across the Fortress Gate (wall 1523), Ironhide (74) as the
@@ -56,12 +57,12 @@ CUSTOM = {
     # the last phase needs a bound of its own): two lines in the whole stage, not six
     # (six rising bounds felt like invisible walls every few steps)
     0: [
-        (1100, [f'id: 3000  hp: {HP}  times: 2  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
-        (1100, [f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
-        (1100, ['id: 122  x: 1000  #milk', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
-        (1500, [f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 3']),
-        (1500, ['id: 123  x: 1300  #beer', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
-        (1523, ['id: 122  x: 1450  #milk', 'id: 74  hp: 300 <boss>',
+        (1100, [FANBOY, f'id: 3000  hp: {HP}  times: 2  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (1100, [FANBOY, f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (1100, [FANBOY, 'id: 122  x: 1000  #milk', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (1500, [FANBOY, f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 3']),
+        (1500, [FANBOY, 'id: 123  x: 1300  #beer', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (1523, [FANBOY, 'id: 122  x: 1450  #milk', 'id: 74  hp: 300 <boss>',
                 f'id: 3000  hp: {HP}  times: 2  ratio: 1.0     <soldier>', f'id: 3000  hp: {HP}  times: 2  <soldier>']),
     ],
 }
