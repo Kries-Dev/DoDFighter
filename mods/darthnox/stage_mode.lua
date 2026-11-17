@@ -136,6 +136,13 @@ local function spawn(state, run, entry, runtime, slot)
     else
         value.x_int = -constants.stage_spawn.outside_margin - random(constants.stage_spawn.x_random_range)
     end
+    -- DoD: an enemy placed past the current line (an entry without x: the stage reader puts
+    -- those there) walks in from just past the right edge of the view instead, never
+    -- farther than LF2's spot. With a line far ahead (stage 1-1 shares lines) LF2's spot
+    -- is a long walk off-screen. Explicit spots before the line (x: -900 ...) are kept.
+    if value.x_int >= state.stage_bound then
+        value.x_int = math.min(value.x_int, (state.camera or 0) + constants.screen.width + 40 + random(150))
+    end
     value.lives, value.join_hp, value.join_lives = entry.reserve, entry.join, entry.join_reserve
     value.x, value.z = value.x_int, value.z_int
     value.mp = constants.points.full
