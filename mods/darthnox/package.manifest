@@ -152,6 +152,7 @@ asset=mods/darthnox/darthnox_it.bmp|assets/darthnox_it.bmp
 asset=mods/darthnox/mathilde_it.bmp|assets/mathilde_it.bmp
 asset=mods/darthnox/cod1eh_it.bmp|assets/cod1eh_it.bmp
 extend=base/ui/flow|screenpack.lua
+extend=base/ui/launch|launch.lua
 asset=mods/darthnox/bg/menu.wma|assets/bg/menu.wma
 asset=mods/darthnox/ui/back99_1.bmp|assets/ui/back99_1.bmp
 asset=mods/darthnox/ui/back99_2.bmp|assets/ui/back99_2.bmp

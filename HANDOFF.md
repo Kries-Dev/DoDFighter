@@ -59,6 +59,7 @@ the whole cast are in `docs/roster.md`.
 | `stage.lua` | which background each stage-mode sub-stage uses (`STAGES`), swapped between sub-stages |
 | `music.lua` | menu music: LF2's `bgm/main.wma` becomes ours (`assets/bg/menu.wma`, the user's "SFA MAX"), kept playing between menus |
 | `weapons.lua` | sky drops: only bat (100), baseball (121), boomerang (124), crate (151), milk (122), beer (123); hoe, knife and stone are swapped out |
+| `launch.lua` | launch screen without credits, version label or website entry/links |
 | `screenpack.lua` | extends `base/ui/flow`: every screen draws through a wrapped context that swaps LF2's `pe/*` menu sheets for ours (`assets/ui/`), draws the storm/rain/lightning backdrop for `pe/menu_backN`, our logo for LF2's logo strip, and recolours menu fills/text blue -> black/white/red |
 
 **Adding a fighter:** add it to `fighters_added`, the `FIGHTERS` base table and
@@ -154,7 +155,7 @@ use 63 for Mathilde.
   - **Item poses** for DarthNox, Mathilde and Cod1eh: drink (55-58), pick up (115-117), carry overhead (12-19), from new AutoSprite clips (Mathilde's carry walk starts from her saved "Arms Up" pose `cmwl1grfg003v2yqa4vu2uip1`; prompts that name a box make AutoSprite paint one). Each fighter has a second sheet `<key>_it.bmp` (`file(...)` line 2) with its own registration; `object_data.lua` lets a picture-only frame keep its own centre and an authored `wpoint` x/y (the base fighter's weaponact/attacking/cover stay). DarthNox's bat swings use his slash/thrust pictures. Verified headless: pickup, drink loop, crate lift and carry all use the new pictures.
   - **Items:** only bat, baseball, boomerang, crate, milk and beer drop (`weapons.lua`, verified over 20,000 drops).
   - **Stage mode ends after stage 1** (`stage_mode.lua` LAST_GROUP = 0: back to character select ready for 1-1, no LF2 ending); picking stage 2-5 or survival starts 1-1 (`match.lua`). Verified headless.
-  - **Screenpack** (`screenpack.lua`, `tools/make_screenpack.py`, art in `art/ui/`: the user's reaper and circle logo). LF2's menu sheets were dumped from the installer to `lf2-ui/` (outside the repo; probe: `engine.read_resource("pe/<name>")` hex through `error()`), recoloured and committed under `assets/ui/`. Loading screen = `menu_wait.bmp`. Seen in the real game: launch menu, title, character select. Left as is: the bottom-right credit lines (LF2 authors + OpenLF2 team, now grey), the "official website" entry, the match HUD, the ending screen (no longer reached from stage mode).
+  - **Screenpack** (`screenpack.lua`, `tools/make_screenpack.py`, art in `art/ui/`: the user's reaper and circle logo). LF2's menu sheets were dumped from the installer to `lf2-ui/` (outside the repo; probe: `engine.read_resource("pe/<name>")` hex through `error()`), recoloured and committed under `assets/ui/`. Loading screen = `menu_wait.bmp`. Seen in the real game: launch menu, title, character select. `launch.lua` (extends `base/ui/launch`) drops the credit lines, the version label and the "official website" entry and blocks website links (user's call, 2026-11-18). Left as is: the match HUD, the ending screen (no longer reached from stage mode).
 
 
 - **2026-11-17, stage mode:** stage 1 is the fortress, all from the user's paintings:
