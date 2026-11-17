@@ -1,19 +1,25 @@
 -- SPDX-License-Identifier: MIT
--- DarthNox — no menu music by default. Every menu (title, character select,
--- options) plays bgm/main.wma; it is skipped and whatever was playing stops.
--- Match and stage music are unchanged. Set MENU_MUSIC = true to bring it back.
+-- DoD Fighter — menu music. Every menu (launch, title, character select,
+-- options) asks for LF2's bgm/main.wma; ours plays instead: "SFA MAX", the
+-- user's menu track (assets/bg/menu.wma). Going from one menu to the next keeps
+-- it playing instead of starting it over. Match and stage music are unchanged.
 
-local MENU_MUSIC = false
-local MENU_TRACK = "bgm/main.wma"
+local LF2_MENU = "bgm/main.wma"
+local MENU_TRACK = "mods/darthnox/bg/menu.wma"
 
 return function(base)
-    local play = base.play
+    local play, stop = base.play, base.stop
+    local current
     function base.play(path)
-        if not MENU_MUSIC and (path:gsub("\\", "/"):lower()) == MENU_TRACK then
-            base.stop()
-            return
-        end
-        return play(path)
+        local wanted = (path:gsub("\\", "/"):lower())
+        if wanted == LF2_MENU then wanted = MENU_TRACK end
+        if wanted == MENU_TRACK and current == MENU_TRACK and not base.stopped then return end
+        current = wanted
+        return play(wanted)
+    end
+    function base.stop()
+        current = nil
+        return stop()
     end
     return base
 end
