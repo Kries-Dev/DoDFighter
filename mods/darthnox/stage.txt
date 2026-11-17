@@ -1969,29 +1969,29 @@
 <stage_end>
 
 <stage> id: 0  #stage 1-1   # DoD: gate; waves from tools/stage_layout.py CUSTOM
-        <phase> bound: 794
+        <phase> bound: 1100
                 music: mods/darthnox/bg/fort_1.wma
                 id: 3000  hp: 60  times: 2  ratio: 1.0
                 id: 3000  hp: 60  times: 2
         <phase_end>
 
-        <phase> bound: 940
+        <phase> bound: 1100
                 id: 3000  hp: 60  times: 3  ratio: 1.0
                 id: 3000  hp: 60  times: 2
         <phase_end>
 
-        <phase> bound: 1080
+        <phase> bound: 1100
                 id: 122  x: 1000  #milk
                 id: 3000  hp: 60  times: 3  ratio: 1.0
                 id: 3000  hp: 60  times: 2
         <phase_end>
 
-        <phase> bound: 1220
+        <phase> bound: 1500
                 id: 3000  hp: 60  times: 3  ratio: 1.0
                 id: 3000  hp: 60  times: 3
         <phase_end>
 
-        <phase> bound: 1360
+        <phase> bound: 1500
                 id: 123  x: 1300  #beer
                 id: 3000  hp: 60  times: 3  ratio: 1.0
                 id: 3000  hp: 60  times: 2

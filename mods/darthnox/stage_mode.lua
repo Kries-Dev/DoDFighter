@@ -385,6 +385,9 @@ function stage.update(state, run)
             display[#display + 1] = {"sprite", menu_sheet, frames[24], 660, 299}
         end
         run.go = run.go - 1
+        -- DoD: waves sharing a bound set go to 0 above and this took it to -1, so the last
+        -- phase (which waits for go == 0) never ended; stage 1-1 shares bounds on purpose
+        if run.go < 0 then run.go = 0 end
         if run.go == 101 or run.go == 201 then
             if run.last_phase ~= 1 then run.go = 0
             else

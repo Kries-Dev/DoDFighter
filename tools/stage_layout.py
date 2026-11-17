@@ -50,14 +50,17 @@ LAYOUT = {
 HP = 60                                    # LF2's grunts have 50: +20%
 CUSTOM = {
     # 1-1 (2026-11-18, the user): about twice LF2's enemies (~28 instead of ~12 for one
-    # player) over six closer steps across the Fortress Gate (wall 1523), Ironhide (74)
-    # as the boss with EVS grunts streaming in while he stands
+    # player) in six waves across the Fortress Gate (wall 1523), Ironhide (74) as the
+    # boss with EVS grunts streaming in while he stands. A wave's bound is a wall until
+    # it is cleared, so waves share bounds (the next starts at once, no GO arrow; only
+    # the last phase needs a bound of its own): two lines in the whole stage, not six
+    # (six rising bounds felt like invisible walls every few steps)
     0: [
-        (794, [f'id: 3000  hp: {HP}  times: 2  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
-        (940, [f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
-        (1080, ['id: 122  x: 1000  #milk', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
-        (1220, [f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 3']),
-        (1360, ['id: 123  x: 1300  #beer', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (1100, [f'id: 3000  hp: {HP}  times: 2  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (1100, [f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (1100, ['id: 122  x: 1000  #milk', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (1500, [f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 3']),
+        (1500, ['id: 123  x: 1300  #beer', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
         (1523, ['id: 122  x: 1450  #milk', 'id: 74  hp: 300 <boss>',
                 f'id: 3000  hp: {HP}  times: 2  ratio: 1.0     <soldier>', f'id: 3000  hp: {HP}  times: 2  <soldier>']),
     ],
