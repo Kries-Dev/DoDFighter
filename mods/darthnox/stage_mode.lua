@@ -7,6 +7,7 @@
 -- module is replaced whole (manifest "replace="). When OpenLF2 updates
 -- stage.lua, copy it again and redo the lines marked DoD (STAGE_FILE, SWAPS).
 local STAGE_FILE = "mods/darthnox/stage.dat"
+local LAST_GROUP = 0   -- DoD: the last stage group played (0 = stage 1); see stage.update
 -- Second change: per stage group (0 = stage 1-1..1-5), a stock grunt takes our data file
 -- (sprites, name) but keeps its own id, so the engine still treats it as that grunt: no
 -- invincible blink after getting up, no "Com" label, the stock AI (Hunter's bow).
@@ -270,7 +271,11 @@ function stage.update(state, run)
                 else display[#display + 1] = {"fill", 0, 109, constants.screen.width, 440} end
                 run.shutter = run.shutter + 1
                 if run.shutter == 21 then
-                    if group == constants.stage_groups.final_story then
+                    if group >= LAST_GROUP then
+                        -- DoD: stage mode ends after stage 1 (LAST_GROUP) and goes back to
+                        -- character select ready for 1-1; no LF2 ending.
+                        run.id = 0
+                    elseif group == constants.stage_groups.final_story then
                         -- After the last group the original shows the ending (state 300).
                         run.ending = true
                     else

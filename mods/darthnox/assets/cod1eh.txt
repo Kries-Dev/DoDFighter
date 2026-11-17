@@ -4,6 +4,7 @@ head: mods/darthnox/cod1eh_f.bmp
 small: mods/darthnox/cod1eh_s.bmp
 file(0-91): mods/darthnox/cod1eh.bmp
 w: 117  h: 90  row: 4  col: 23
+file(92-107): mods/darthnox/cod1eh_it.bmp  w: 65  h: 85  row: 4  col: 4
 walking_frame_rate 3
 walking_speed 6.000000
 walking_speedz 2.800000
@@ -74,35 +75,59 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 12 heavy_obj_walk
-   pic: 4  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 100  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 33  y: 3  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 13 heavy_obj_walk
-   pic: 5  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 101  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 33  y: 3  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 14 heavy_obj_walk
-   pic: 6  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 102  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 33  y: 3  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 15 heavy_obj_walk
-   pic: 7  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 103  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 33  y: 3  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 16 heavy_obj_run
-   pic: 8  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 104  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 33  y: 3  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 17 heavy_obj_run
-   pic: 9  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 105  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 33  y: 3  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 18 heavy_obj_run
-   pic: 10  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 106  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 33  y: 3  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 19 heavy_stop_run
-   pic: 20  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 107  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 33  y: 3  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 # Holding an item: his blade poses
@@ -215,19 +240,31 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 55 weapon_drink
-   pic: 0  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 92  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 37  y: 46  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 56 weapon_drink
-   pic: 1  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 93  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 35  y: 32  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 57 weapon_drink
-   pic: 2  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 94  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 32  y: 32  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 58 weapon_drink
-   pic: 3  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 95  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 37  y: 47  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 # A: shurikens. Rudolf's throw (15 MP each, object 202 spawned on 62 / 66 / 69),
@@ -516,15 +553,21 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 115 picking_light
-   pic: 20  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 96  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
 <frame_end>
 
 <frame> 116 picking_heavy
-   pic: 20  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 97  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 32  y: 78  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 117 picking_heavy
-   pic: 20  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 72  centery: 86
+   pic: 98  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 84
+   wpoint:
+      kind: 1  x: 33  y: 4  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 # Grab and jab (A while holding), throws, being held

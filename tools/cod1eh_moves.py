@@ -81,8 +81,9 @@ def bdy(x, y, w, h):
     return f'   bdy:\n      kind: 0  x: {x}  y: {y}  w: {w}  h: {h}\n   bdy_end:\n'
 
 
-def frame(n, name, pic, state, wait, nxt, dvx=0, dvy=0, mp=0, body=True, extra='', hits=None, sound=None):
-    head = f'   pic: {pic}  state: {state}  wait: {wait}  next: {nxt}  dvx: {dvx}  dvy: {dvy}  dvz: 0  centerx: {CX}  centery: {CY}'
+def frame(n, name, pic, state, wait, nxt, dvx=0, dvy=0, mp=0, body=True, extra='', hits=None, sound=None, cx=None, cy=None):
+    head = (f'   pic: {pic}  state: {state}  wait: {wait}  next: {nxt}  dvx: {dvx}  dvy: {dvy}  dvz: 0'
+            f'  centerx: {CX if cx is None else cx}  centery: {CY if cy is None else cy}')
     if mp:
         head += f'  mp: {mp}'
     if sound:
@@ -95,6 +96,22 @@ def frame(n, name, pic, state, wait, nxt, dvx=0, dvy=0, mp=0, body=True, extra='
 def pic(n, name, picture, hits=None):
     """Picture-only frame: Rudolf's mechanics, our picture (name must be Rudolf's)."""
     return frame(n, name, picture, 0, 0, 0, body=False, hits=hits)
+
+
+# Item poses (2026-11-18): drink, pick up, carry overhead, on a second sheet
+# (cod1eh_it.bmp, pictures 92-107) with its own registration ITEM_C (object_data.lua
+# keeps a picture-only frame's own centre and moves the held item to its wpoint).
+ITEM_FIRST, ITEM_C, ITEM_CELL = 92, (34, 84), (65, 85, 4)
+
+
+def wpoint(x, y):
+    return (f'   wpoint:\n      kind: 1  x: {x}  y: {y}  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0\n'
+            '   wpoint_end:\n')
+
+
+def item_pic(n, name, picture, hand=None):
+    return frame(n, name, ITEM_FIRST + picture, 0, 0, 0, body=False, cx=ITEM_C[0], cy=ITEM_C[1],
+                 extra=wpoint(*hand) if hand else '')
 
 
 def cpoint(x, y, vaction, injury=0, throwvx=0, throwvy=0, throwinjury=0, cover=10):
@@ -125,9 +142,9 @@ FRAMES = [
     *[pic(n, 'standing', IDLE[n], HITS) for n in range(4)],
     *[pic(5 + i, 'walking', WALK[i], HITS) for i in range(4)],
     pic(9, 'running', RUN[0]), pic(10, 'running', RUN[1]), pic(11, 'running', RUN[2]),
-    *[pic(12 + i, 'heavy_obj_walk', WALK[i]) for i in range(4)],
-    pic(16, 'heavy_obj_run', RUN[0]), pic(17, 'heavy_obj_run', RUN[1]), pic(18, 'heavy_obj_run', RUN[2]),
-    pic(19, 'heavy_stop_run', JUMP[0]),
+    *[item_pic(n, 'heavy_obj_walk', p, (33, 3)) for n, p in zip((12, 13, 14, 15), (8, 9, 10, 11))],
+    *[item_pic(n, 'heavy_obj_run', p, (33, 3)) for n, p in zip((16, 17, 18), (12, 13, 14))],
+    item_pic(19, 'heavy_stop_run', 15, (33, 3)),
 
     '# Holding an item: his blade poses',
     *[pic(n, 'normal_weapon_atck', p) for n, p in zip((20, 21, 22, 23, 25, 26, 27, 28), SLASH + (SLASH[2],) + THRUST + (THRUST[2],))],
@@ -138,7 +155,8 @@ FRAMES = [
                                          (47, 'light_weapon_thw', THROW2[2]), (50, 'heavy_weapon_thw', TOSS[0]),
                                          (51, 'heavy_weapon_thw', TOSS[1]), (52, 'sky_lgt_wp_thw', THROW2[0]),
                                          (53, 'sky_lgt_wp_thw', THROW2[1]), (54, 'sky_lgt_wp_thw', THROW2[2]))],
-    *[pic(n, 'weapon_drink', p) for n, p in zip((55, 56, 57, 58), IDLE)],
+    item_pic(55, 'weapon_drink', 0, (37, 46)), item_pic(56, 'weapon_drink', 1, (35, 32)),
+    item_pic(57, 'weapon_drink', 2, (32, 32)), item_pic(58, 'weapon_drink', 3, (37, 47)),
 
     '# A: shurikens. Rudolf\'s throw (15 MP each, object 202 spawned on 62 / 66 / 69),\n'
     '# drawn as a sidearm throw, then an overhand one.',
@@ -190,7 +208,8 @@ FRAMES = [
     '# Block, broken block, picking up',
     pic(110, 'defend', BLOCK[1], HITS), pic(111, 'defend', BLOCK[2], HITS), pic(95, 'dash_defend', BLOCK[1]),
     pic(112, 'broken_defend', BLOCK[0]), pic(113, 'broken_defend', HURT[1]), pic(114, 'broken_defend', BLOCK[0]),
-    pic(115, 'picking_light', JUMP[0]), pic(116, 'picking_heavy', JUMP[0]), pic(117, 'picking_heavy', JUMP[0]),
+    item_pic(115, 'picking_light', 4), item_pic(116, 'picking_heavy', 5, (32, 78)),
+    item_pic(117, 'picking_heavy', 6, (33, 4)),
 
     '# Grab and jab (A while holding), throws, being held',
     *[pic(120 + i, 'catching', GRAB[i]) for i in range(4)],
@@ -281,7 +300,8 @@ FRAMES = [
 def header():
     w, h, rows = CELL
     lines = ['<bmp_begin>', 'name: Cod1eh', 'head: mods/darthnox/cod1eh_f.bmp', 'small: mods/darthnox/cod1eh_s.bmp',
-             f'file(0-{rows * 4 - 1}): mods/darthnox/cod1eh.bmp', f'w: {w}  h: {h}  row: 4  col: {rows}']
+             f'file(0-{rows * 4 - 1}): mods/darthnox/cod1eh.bmp', f'w: {w}  h: {h}  row: 4  col: {rows}',
+             f'file({ITEM_FIRST}-{ITEM_FIRST + 15}): mods/darthnox/cod1eh_it.bmp  w: {ITEM_CELL[0]}  h: {ITEM_CELL[1]}  row: 4  col: 4']
     lines += [f'{k} {v:.6f}' if isinstance(v, float) else f'{k} {v}' for k, v in MOVEMENT]
     lines += ['<bmp_end>', '',
               '# Art: AutoSprite character "Cod1eh v2" (cmwgkkt7e00gdbhdkkqq4u1p5, bracer only), every clip',

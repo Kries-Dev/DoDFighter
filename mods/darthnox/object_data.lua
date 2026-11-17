@@ -104,8 +104,8 @@ return function(base)
             moved.x, moved.y = (area.x or 0) + dx, (area.y or 0) + dy
             return moved
         end
-        local function rebase(own, frame)
-            local dx, dy = center_x - frame.center_x, center_y - frame.center_y
+        local function rebase(own, frame, cx, cy)
+            local dx, dy = (cx or center_x) - frame.center_x, (cy or center_y) - frame.center_y
             if dx == 0 and dy == 0 then return end
             local interactions, bodies = {}, {}
             for i, area in ipairs(frame.interactions) do interactions[i] = shifted(area, dx, dy) end
@@ -137,7 +137,21 @@ return function(base)
                 for key, value in pairs(mine) do own[key] = value end
             else
                 for key, value in pairs(frame) do own[key] = value end
-                rebase(own, frame)
+                -- A picture on the second sheet (the item poses: drink, pick up, carry)
+                -- has its own registration: that frame keeps its own centre.
+                local own_centre = mine and mine.center_x > 0
+                    and (mine.center_x ~= center_x or mine.center_y ~= center_y)
+                rebase(own, frame, own_centre and mine.center_x, own_centre and mine.center_y)
+                if own_centre then own.dod_center = {mine.center_x, mine.center_y} end
+                -- An authored wpoint moves the held item to our hand; the base frame's
+                -- weaponact, attacking and cover stay.
+                if mine and mine.wpoint and mine.wpoint.kind ~= 0 then
+                    local point = {}
+                    for key, value in pairs(own.wpoint or mine.wpoint) do point[key] = value end
+                    if (own.wpoint and own.wpoint.kind or 0) == 0 then point = mine.wpoint end
+                    point.x, point.y = mine.wpoint.x, mine.wpoint.y
+                    own.wpoint = point
+                end
                 local swap = fighter.sounds
                 if swap and own.sound and swap[own.sound:lower()] then own.sound = swap[own.sound:lower()] end
                 own.picture = (mine and mine.picture) or IDLE_PICTURE
@@ -145,7 +159,8 @@ return function(base)
                     own.hits = mine.hits
                 end
             end
-            if center_x then own.center_x, own.center_y = center_x, center_y end
+            if own.dod_center then own.center_x, own.center_y = own.dod_center[1], own.dod_center[2]
+            elseif center_x then own.center_x, own.center_y = center_x, center_y end
             copy.frames[index] = own
         end
         -- Frames Deep doesn't have at all come straight from darthnox.txt.

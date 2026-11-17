@@ -4,6 +4,7 @@ head: mods/darthnox/portrait_f.bmp
 small: mods/darthnox/portrait_s.bmp
 file(0-83): mods/darthnox/darthnox.bmp
 w: 120  h: 90  row: 4  col: 21
+file(84-99): mods/darthnox/darthnox_it.bmp  w: 78  h: 85  row: 4  col: 4
 walking_frame_rate 3
 walking_speed 6.000000
 walking_speedz 2.800000
@@ -854,4 +855,186 @@ rowing_distance 4.000000
    bdy:
       kind: 0  x: 54  y: 17  w: 34  h: 72
    bdy_end:
+<frame_end>
+
+# Drinking (milk, beer): fist to the mouth
+<frame> 55 weapon_drink
+   pic: 84  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 59  y: 45  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 56 weapon_drink
+   pic: 85  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 45  y: 36  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 57 weapon_drink
+   pic: 86  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 45  y: 36  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 58 weapon_drink
+   pic: 87  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 52  y: 58  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+# Picking up: squat; a heavy item (crate) is lifted overhead
+<frame> 115 picking_light
+   pic: 88  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+<frame_end>
+
+<frame> 116 picking_heavy
+   pic: 89  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 52  y: 72  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 117 picking_heavy
+   pic: 90  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 36  y: 4  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+# Carrying a heavy item overhead: walk, run, stop
+<frame> 12 heavy_obj_walk
+   pic: 92  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 13 heavy_obj_walk
+   pic: 93  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 14 heavy_obj_walk
+   pic: 94  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 15 heavy_obj_walk
+   pic: 95  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 16 heavy_obj_run
+   pic: 96  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 17 heavy_obj_run
+   pic: 97  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 18 heavy_obj_run
+   pic: 98  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 19 heavy_stop_run
+   pic: 99  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
+   wpoint:
+      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+# Swinging a bat or other light item: his slash (12-14) and thrust (16-18) pictures
+<frame> 20 normal_weapon_atck
+   pic: 12  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 21 normal_weapon_atck
+   pic: 13  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 22 normal_weapon_atck
+   pic: 14  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 23 normal_weapon_atck
+   pic: 14  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 25 normal_weapon_atck
+   pic: 16  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 26 normal_weapon_atck
+   pic: 17  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 27 normal_weapon_atck
+   pic: 18  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 28 normal_weapon_atck
+   pic: 18  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 30 jump_weapon_atck
+   pic: 12  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 31 jump_weapon_atck
+   pic: 13  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 32 jump_weapon_atck
+   pic: 14  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 33 jump_weapon_atck
+   pic: 14  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 35 run_weapon_atck
+   pic: 16  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 36 run_weapon_atck
+   pic: 17  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 37 run_weapon_atck
+   pic: 18  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 40 dash_weapon_atck
+   pic: 12  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 41 dash_weapon_atck
+   pic: 13  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 42 dash_weapon_atck
+   pic: 14  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
+<frame_end>
+
+<frame> 43 dash_weapon_atck
+   pic: 14  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89
 <frame_end>

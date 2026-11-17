@@ -90,8 +90,9 @@ def opoint(oid, x, y, action=0, facing=0):
     return f'   opoint:\n      kind: 1  x: {x}  y: {y}  action: {action}  dvx: 0  dvy: 0  oid: {oid}  facing: {facing}\n   opoint_end:\n'
 
 
-def frame(n, name, pic, state, wait, nxt, dvx=0, dvy=0, mp=0, body=True, extra='', hits=None, sound=None):
-    head = f'   pic: {pic}  state: {state}  wait: {wait}  next: {nxt}  dvx: {dvx}  dvy: {dvy}  dvz: 0  centerx: {CX}  centery: {CY}'
+def frame(n, name, pic, state, wait, nxt, dvx=0, dvy=0, mp=0, body=True, extra='', hits=None, sound=None, cx=None, cy=None):
+    head = (f'   pic: {pic}  state: {state}  wait: {wait}  next: {nxt}  dvx: {dvx}  dvy: {dvy}  dvz: 0'
+            f'  centerx: {CX if cx is None else cx}  centery: {CY if cy is None else cy}')
     if mp:
         head += f'  mp: {mp}'
     if sound:
@@ -104,6 +105,22 @@ def frame(n, name, pic, state, wait, nxt, dvx=0, dvy=0, mp=0, body=True, extra='
 def pic(n, name, picture, hits=None):
     """Picture-only frame: Davis's mechanics, our picture (name must be Davis's)."""
     return frame(n, name, picture, 0, 0, 0, body=False, hits=hits)
+
+
+# Item poses (2026-11-18): drink, pick up, carry overhead, on a second sheet
+# (mathilde_it.bmp, pictures 108-123) with its own registration ITEM_C (object_data.lua
+# keeps a picture-only frame's own centre and moves the held item to its wpoint).
+ITEM_FIRST, ITEM_C, ITEM_CELL = 108, (34, 82), (68, 83, 4)
+
+
+def wpoint(x, y):
+    return (f'   wpoint:\n      kind: 1  x: {x}  y: {y}  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0\n'
+            '   wpoint_end:\n')
+
+
+def item_pic(n, name, picture, hand=None):
+    return frame(n, name, ITEM_FIRST + picture, 0, 0, 0, body=False, cx=ITEM_C[0], cy=ITEM_C[1],
+                 extra=wpoint(*hand) if hand else '')
 
 
 def staff(reach=54, **kw):        # staff hitbox in front of the chest
@@ -168,9 +185,9 @@ FRAMES = [
     *[pic(n, 'standing', IDLE[n], HITS) for n in range(4)],
     *[pic(5 + i, 'walking', WALK[i], HITS) for i in range(4)],
     pic(9, 'running', RUN[0]), pic(10, 'running', RUN[1]), pic(11, 'running', RUN[2]),
-    pic(12, 'heavy_obj_walk', WALK[0]), pic(13, 'heavy_obj_walk', WALK[1]), pic(14, 'heavy_obj_walk', WALK[2]),
-    pic(15, 'heavy_obj_walk', WALK[3]), pic(16, 'heavy_obj_run', RUN[0]), pic(17, 'heavy_obj_run', RUN[1]),
-    pic(18, 'heavy_obj_run', RUN[2]), pic(19, 'heavy_stop_run', JUMP[0]),
+    *[item_pic(n, 'heavy_obj_walk', p, (34, 4)) for n, p in zip((12, 13, 14, 15), (8, 9, 10, 11))],
+    *[item_pic(n, 'heavy_obj_run', p, (34, 4)) for n, p in zip((16, 17, 18), (12, 13, 14))],
+    item_pic(19, 'heavy_stop_run', 15, (34, 4)),
 
     '# Holding an item: the staff swing / poke / smash / extension poses',
     *[pic(n, 'normal_weapon_atck', p) for n, p in zip((20, 21, 22, 23, 25, 26, 27, 28), SWING + (14,) + POKE + (18,))],
@@ -181,6 +198,8 @@ FRAMES = [
                                          (47, 'light_weapon_thw', THROW[2]), (50, 'heavy_weapon_thw', THROW[0]),
                                          (51, 'heavy_weapon_thw', THROW[1]), (52, 'sky_lgt_wp_thw', THROW[0]),
                                          (53, 'sky_lgt_wp_thw', THROW[1]), (54, 'sky_lgt_wp_thw', THROW[2]))],
+    item_pic(55, 'weapon_drink', 0, (40, 45)), item_pic(56, 'weapon_drink', 1, (28, 36)),
+    item_pic(57, 'weapon_drink', 2, (28, 36)), item_pic(58, 'weapon_drink', 3, (40, 48)),
 
     '# A, A, A: swing -> poke -> overhead smash. Short frames, and hit_a chains each\n'
     '# into the next for combos; 22 per hit, the smash 40 and a knockdown.',
@@ -218,7 +237,8 @@ FRAMES = [
     '# Block, broken block, picking up',
     pic(110, 'defend', BLOCK[1], HITS), pic(111, 'defend', BLOCK[1]), pic(95, 'dash_defend', BLOCK[1]),
     pic(112, 'broken_defend', BLOCK[0]), pic(113, 'broken_defend', BLOCK[2]), pic(114, 'broken_defend', BLOCK[0]),
-    pic(115, 'picking_light', JUMP[0]), pic(116, 'picking_heavy', JUMP[0]), pic(117, 'picking_heavy', JUMP[0]),
+    item_pic(115, 'picking_light', 4), item_pic(116, 'picking_heavy', 5, (34, 70)),
+    item_pic(117, 'picking_heavy', 6, (34, 5)),
 
     '# Grab and staff jab (A while holding), throws, being held',
     *[pic(120 + i, 'catching', GRAB[i]) for i in range(4)],   # Davis's punch-impact sounds stay (object_data.lua swaps only for DarthNox)
@@ -317,7 +337,8 @@ FRAMES = [
 def header():
     w, h, rows = CELL
     lines = ['<bmp_begin>', 'name: Mathilde', 'head: mods/darthnox/mathilde_f.bmp', 'small: mods/darthnox/mathilde_s.bmp',
-             f'file(0-{rows * 4 - 1}): mods/darthnox/mathilde.bmp', f'w: {w}  h: {h}  row: 4  col: {rows}']
+             f'file(0-{rows * 4 - 1}): mods/darthnox/mathilde.bmp', f'w: {w}  h: {h}  row: 4  col: {rows}',
+             f'file({ITEM_FIRST}-{ITEM_FIRST + 15}): mods/darthnox/mathilde_it.bmp  w: {ITEM_CELL[0]}  h: {ITEM_CELL[1]}  row: 4  col: 4']
     lines += [f'{k} {v:.6f}' if isinstance(v, float) else f'{k} {v}' for k, v in MOVEMENT]
     lines += ['<bmp_end>', '',
               '# Art: AutoSprite character "Mathilde LF2" (cmweo6j3b0098no9evut0e4hc), every clip',

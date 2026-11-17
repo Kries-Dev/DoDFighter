@@ -4,6 +4,7 @@ head: mods/darthnox/mathilde_f.bmp
 small: mods/darthnox/mathilde_s.bmp
 file(0-107): mods/darthnox/mathilde.bmp
 w: 93  h: 93  row: 4  col: 27
+file(108-123): mods/darthnox/mathilde_it.bmp  w: 68  h: 83  row: 4  col: 4
 walking_frame_rate 3
 walking_speed 7.000000
 walking_speedz 3.200000
@@ -74,35 +75,59 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 12 heavy_obj_walk
-   pic: 4  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 116  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 34  y: 4  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 13 heavy_obj_walk
-   pic: 5  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 117  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 34  y: 4  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 14 heavy_obj_walk
-   pic: 6  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 118  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 34  y: 4  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 15 heavy_obj_walk
-   pic: 7  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 119  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 34  y: 4  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 16 heavy_obj_run
-   pic: 8  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 120  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 34  y: 4  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 17 heavy_obj_run
-   pic: 9  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 121  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 34  y: 4  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 18 heavy_obj_run
-   pic: 10  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 122  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 34  y: 4  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 19 heavy_stop_run
-   pic: 20  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 123  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 34  y: 4  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 # Holding an item: the staff swing / poke / smash / extension poses
@@ -212,6 +237,34 @@ rowing_distance 5.000000
 
 <frame> 54 sky_lgt_wp_thw
    pic: 70  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+<frame_end>
+
+<frame> 55 weapon_drink
+   pic: 108  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 40  y: 45  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 56 weapon_drink
+   pic: 109  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 28  y: 36  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 57 weapon_drink
+   pic: 110  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 28  y: 36  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
+<frame_end>
+
+<frame> 58 weapon_drink
+   pic: 111  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 40  y: 48  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 # A, A, A: swing -> poke -> overhead smash. Short frames, and hit_a chains each
@@ -462,15 +515,21 @@ rowing_distance 5.000000
 <frame_end>
 
 <frame> 115 picking_light
-   pic: 20  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 112  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
 <frame_end>
 
 <frame> 116 picking_heavy
-   pic: 20  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 113  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 34  y: 70  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 <frame> 117 picking_heavy
-   pic: 20  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89
+   pic: 114  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 34  centery: 82
+   wpoint:
+      kind: 1  x: 34  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+   wpoint_end:
 <frame_end>
 
 # Grab and staff jab (A while holding), throws, being held

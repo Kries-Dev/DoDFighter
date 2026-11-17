@@ -227,6 +227,42 @@ BASICS = [
 ] + [frame(n, 'picked_caught', pic, 10, 3, 0, body=False)
      for n, pic in zip(range(130, 145), (24, 25, 26, 28, 29, 30, 30, 31, 29, 28, 29, 30, 30, 31, 29))]
 
+# Item poses (2026-11-18): drink, pick up, carry overhead, on a second sheet
+# (darthnox_it.bmp, pictures 84-99) with its own registration ITEM_C. Picture-only
+# frames over Deep's; wpoint moves the held item into his hand (object_data.lua keeps
+# Deep's weaponact/attacking/cover). Sheet: tools/autosprite_to_lf2.py (README.md).
+ITEM_FIRST, ITEM_C = 84, (39, 85)
+ITEM_CELL = (78, 85, 4)            # w, h, rows of darthnox_it.bmp
+
+
+def wpoint(x, y):
+    return (f'   wpoint:\n      kind: 1  x: {x}  y: {y}  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0\n'
+            '   wpoint_end:\n')
+
+
+def item_pic(n, name, picture, hand=None):
+    return frame(n, name, ITEM_FIRST + picture, 0, 0, 0, body=False, cx=ITEM_C[0], cy=ITEM_C[1],
+                 extra=wpoint(*hand) if hand else '')
+
+
+ITEMS = [
+    '# Drinking (milk, beer): fist to the mouth',
+    item_pic(55, 'weapon_drink', 0, (59, 45)), item_pic(56, 'weapon_drink', 1, (45, 36)),
+    item_pic(57, 'weapon_drink', 2, (45, 36)), item_pic(58, 'weapon_drink', 3, (52, 58)),
+    '# Picking up: squat; a heavy item (crate) is lifted overhead',
+    item_pic(115, 'picking_light', 4), item_pic(116, 'picking_heavy', 5, (52, 72)),
+    item_pic(117, 'picking_heavy', 6, (36, 4)),
+    '# Carrying a heavy item overhead: walk, run, stop',
+    *[item_pic(n, 'heavy_obj_walk', p, (37, 5)) for n, p in zip((12, 13, 14, 15), (8, 9, 10, 11))],
+    *[item_pic(n, 'heavy_obj_run', p, (37, 5)) for n, p in zip((16, 17, 18), (12, 13, 14))],
+    item_pic(19, 'heavy_stop_run', 15, (37, 5)),
+    '# Swinging a bat or other light item: his slash (12-14) and thrust (16-18) pictures',
+    *[frame(n, 'normal_weapon_atck', p, 0, 0, 0, body=False) for n, p in zip((20, 21, 22, 23, 25, 26, 27, 28), (12, 13, 14, 14, 16, 17, 18, 18))],
+    *[frame(n, 'jump_weapon_atck', p, 0, 0, 0, body=False) for n, p in zip((30, 31, 32, 33), (12, 13, 14, 14))],
+    *[frame(n, 'run_weapon_atck', p, 0, 0, 0, body=False) for n, p in zip((35, 36, 37), (16, 17, 18))],
+    *[frame(n, 'dash_weapon_atck', p, 0, 0, 0, body=False) for n, p in zip((40, 41, 42, 43), (12, 13, 14, 14))],
+]
+
 BALL_CX, BALL_CY = 17, 32
 BALL_BOX = (3, 4, 28, 56)
 
@@ -261,6 +297,11 @@ def main(assets):
         text = re.sub(rf'^{key} [\d.-]+$', f'{key} {value:.6f}', text, flags=re.M)
     # every frame shares one registration
     text = re.sub(r'centerx: \d+  centery: \d+', f'centerx: {CX}  centery: {CY}', text)
+    # the item-pose sheet (pictures from ITEM_FIRST on)
+    text = re.sub(r'\nfile\(\d+-\d+\): mods/darthnox/darthnox_it\.bmp[^\n]*', '', text)
+    w, h, rows = ITEM_CELL
+    text = re.sub(r'(file\(0-83\): mods/darthnox/darthnox\.bmp\n[^\n]*)', lambda m: m.group(1) +
+                  f'\nfile({ITEM_FIRST}-{ITEM_FIRST + rows * 4 - 1}): mods/darthnox/darthnox_it.bmp  w: {w}  h: {h}  row: 4  col: {rows}', text)
     # inputs on standing/walking frames (drop any old hit_* first)
     def add_hits(m):
         n, body = int(m.group(1)), m.group(2)
@@ -271,7 +312,7 @@ def main(assets):
     text = re.sub(r'<frame> (\d+) (.*?<frame_end>)', add_hits, text, flags=re.S)
     gen = [MARK, '# Defend: the parry pose; specials start from here (hit_* as on standing)',
            frame(110, 'defend', 37, 7, 12, 999, body=False, hits=HITS),
-           frame(111, 'defend', 37, 7, 0, 110, body=False)] + BASICS + MOVES
+           frame(111, 'defend', 37, 7, 0, 110, body=False)] + BASICS + MOVES + ITEMS
     # The LF2 parser keeps the FIRST definition of a frame, so drop any hand-written
     # copy of a frame this script writes.
     generated = {int(n) for block in gen for n in re.findall(r'^<frame> (\d+) ', block, flags=re.M)}

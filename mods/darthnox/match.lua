@@ -24,6 +24,14 @@ return function(base)
 
     function base.create(options)
         local stage_mode = options.mode == constants.modes.stage
+        -- Stage mode is stage 1 only for now (stage_mode.lua LAST_GROUP): picking
+        -- stage 2-5 or survival in the menu starts 1-1.
+        if stage_mode and options.stage_level >= 10 then
+            local copy = {}
+            for key, value in pairs(options) do copy[key] = value end
+            copy.stage_level = 0
+            options = copy
+        end
         local ours = stage_mode and stage.dod_background and stage.dod_background(options.stage_level)
         if ours then
             -- the engine fights stage group g on background row g + 1: point that row at our stage
