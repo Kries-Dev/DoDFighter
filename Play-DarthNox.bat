@@ -33,6 +33,17 @@ if not exist "mods\darthnox\package.manifest" (
     exit /b 1
 )
 
+REM --- Magpie upscaler (optional) ------------------------------
+REM If Magpie is installed (%LOCALAPPDATA%\Programs\Magpie), start it in the
+REM tray. In game, press Alt+Shift+A to upscale the window full-screen
+REM (again to stop). Keep the game window un-maximized: Magpie skips those.
+set "MAGPIE=%LOCALAPPDATA%\Programs\Magpie\Magpie.exe"
+if exist "%MAGPIE%" (
+    tasklist /FI "IMAGENAME eq Magpie.exe" | find /I "Magpie.exe" >nul || start "" "%MAGPIE%" -t
+    echo Magpie upscaler is running: press Alt+Shift+A in the game to upscale.
+    echo.
+)
+
 REM --- first run needs the original LF2 installer --------------
 REM OpenLF2 remembers it, so this only happens once.
 if exist ".darthnox-installed" goto :launch
@@ -65,7 +76,7 @@ if not exist "!LF2!" (
 
 echo Using installer: !LF2!
 echo.
-"%EXE%" --installer "!LF2!" --mod "mods\darthnox"
+"%~dp0%EXE%" --installer "!LF2!" --mod "mods\darthnox"
 if errorlevel 1 goto :failed
 echo done> ".darthnox-installed"
 goto :done
@@ -73,7 +84,7 @@ goto :done
 :launch
 echo Launching OpenLF2 with the DarthNox mod...
 echo.
-"%EXE%" --mod "mods\darthnox"
+"%~dp0%EXE%" --mod "mods\darthnox"
 if errorlevel 1 goto :failed
 
 :done
