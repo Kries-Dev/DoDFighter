@@ -6,7 +6,8 @@
 STOCK_DIR holds LF2's Deep decrypted (deep.txt, deep_ball.txt; dumped with a
 headless probe, see HANDOFF.md). The sheets come from the user's art
 (art/ironhide/ironhide_{0,1,2}_edit.webp -> assets/ironhide_{0,1,2}.bmp via
-tools/import_sheet.py ... deep_N.bmp). Writes ironhide.txt, ih_wave.txt and the
+tools/import_sheet.py ... deep_N.bmp SCALE, SCALE 0.61 / 0.59 / 0.44: the three
+sheets were drawn at different sizes; these make him ~74 px standing like Deep). Writes ironhide.txt, ih_wave.txt and the
 stand-in portraits ironhide_f.bmp / ironhide_s.bmp (idle-frame crops).
 
 Changes from Deep (the user's spec, 2026-11-18):
@@ -19,8 +20,8 @@ Changes from Deep (the user's spec, 2026-11-18):
     hits rest 4 ticks so the second spin hits too, its launch hits 54 -> 36
   * D>J: MP 150 -> STRAFE_MP, the middle of the dash (298-303, three of its hits)
     cut and one fast frame slowed, so it travels ~40% less far
-  * his voice-like whoosh (data\\045.wav, which the user hears as Deep's voice)
-    is the plain weapon swish
+  * he keeps Deep's voice (data\\045.wav on D>J): the user asked for it (2026-11-18);
+    the rule against 045 is for the user's own fighters
 """
 import os
 import re
@@ -133,8 +134,6 @@ def ironhide(stock):
     put(295, set_field(fr[295], 'dvx', 9))
     for n in STRAFE_CUT:
         body = body.replace(fr[n], '')
-    # no Deep voice
-    body = body.replace('data' + BS + '045.wav', 'data' + BS + '008.wav')
     note = ("# Ironhide: LF2's Deep (decrypted) with the user's sprites and changed specials,\n"
             "# made by tools/make_ironhide.py (see its docstring). Computer-only: hidden from select.\n")
     return note + head + body

@@ -3,7 +3,11 @@
 game-ready 8-bit sheet. The background may be white or black (found from the
 corners); black is best, since edge blending into black reads as outline in game.
 
-    python tools/import_sheet.py EDITED.png|webp OUT.bmp WIDTH HEIGHT [STOCK.bmp]
+    python tools/import_sheet.py EDITED.png|webp OUT.bmp WIDTH HEIGHT [STOCK.bmp [SCALE]]
+
+SCALE fixes the stock fit's scale instead of searching for it: when one fighter's
+sheets were drawn at different sizes, give each the scale that makes the body the
+same height (Ironhide: 0.61 / 0.57 / 0.46, standing ~74 px like Deep).
 
 Used for the user's restyled Bandit (`art/bandit_0_edit.webp` -> bandit_0.bmp,
 800 x 560). The edited picture keeps the stock layout (10 x 7 cells of 79 px
@@ -191,7 +195,7 @@ def column_spans(fg, cols, colw):
     return spans
 
 
-def fit_to_stock(img, alpha, stock_path, cols, rows, cell):
+def fit_to_stock(img, alpha, stock_path, cols, rows, cell, scale=None):
     """Place each edited frame in its cell, lined up on the stock frame: the edited
     picture may not keep the sheet's exact proportions, so rows drift if it is
     simply stretched. Each band x column is scaled uniformly (one scale for the
@@ -242,7 +246,7 @@ def fit_to_stock(img, alpha, stock_path, cols, rows, cell):
     # one scale for the whole sheet: the one whose frames overlap the stock ones best
     sample = cells[::max(1, len(cells) // 12)]
     best_k, best_iou = None, -1
-    for k in np.arange(0.46, 0.62, 0.01):
+    for k in ([scale] if scale else np.arange(0.46, 0.62, 0.01)):
         iou = np.mean([place(sm, si, sa, k)[0] for _, _, sm, si, sa in sample])
         if iou > best_iou:
             best_k, best_iou = k, iou
@@ -281,7 +285,7 @@ def save_sheet(rgb, opaque, out):
     print(f'{out}: {rgb.shape[1]}x{rgb.shape[0]}, {len(set(idx[opaque].tolist()))} colours + transparent')
 
 
-def main(src, out, width, height, stock=None):
+def main(src, out, width, height, stock=None, scale=None):
     img = np.asarray(Image.open(src).convert('RGB')).astype(np.float32)
     alpha = (~background(img.astype(np.int32))).astype(np.float32)
     if stock:
@@ -289,7 +293,7 @@ def main(src, out, width, height, stock=None):
         # 4 rows and a 30 px strip; most sheets are 7 rows)
         st = np.asarray(Image.open(stock).convert('RGB')).sum(axis=2) > 0
         rows = sum(1 for r in range(st.shape[0] // 80) if st[r * 80:r * 80 + 79].any())   # whole rows only
-        rgb, opaque = fit_to_stock(img, alpha, stock, cols=10, rows=rows, cell=79)
+        rgb, opaque = fit_to_stock(img, alpha, stock, cols=10, rows=rows, cell=79, scale=scale)
         if rgb.shape[0] < height:
             rgb = np.pad(rgb, ((0, height - rgb.shape[0]), (0, 0), (0, 0)))
             opaque = np.pad(opaque, ((0, height - opaque.shape[0]), (0, 0)))
@@ -300,6 +304,7 @@ def main(src, out, width, height, stock=None):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) not in (5, 6):
+    if len(sys.argv) not in (5, 6, 7):
         sys.exit(__doc__)
-    main(sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), sys.argv[5] if len(sys.argv) == 6 else None)
+    main(sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), sys.argv[5] if len(sys.argv) >= 6 else None,
+         float(sys.argv[6]) if len(sys.argv) == 7 else None)
