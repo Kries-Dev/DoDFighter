@@ -154,10 +154,14 @@ use 63 for Mathilde.
   `tools/stage_layout.py` (LAYOUT) -> `stage.txt` -> `tools/stage_dat.py` ->
   `assets/stage.dat`; backgrounds in `stage.lua` STAGES. Verified headless: stage 1
   and 2 clear end to end. **Build the user's paintings as given; don't edit their art.**
-- **Stage 1 music:** the user wants 5 Suno tracks (SFA3-style, 1-5 the epic boss
-  variation, max mode, their custom "SFA3" model). The Suno connector can't use
-  custom models (`unknown model`; allowed: v6-mini, v6, v6-wild). LAYOUT has a
-  `STAGE1` list (`fort_1..5.wma`) ready for them.
+- **Stage 1 music (2026-11-17):** the user's own Suno tracks, `assets/bg/fort_1..5.wma`
+  ("Fortress Gate 1-1", "Barrack gates 1-2", "Cell Blocks 1-3", "Barrack inner 1-4",
+  "Grand Hall 1-5") from each sub-stage's first wave, and `boss_1.wma` ("Boss 1") at
+  1-5's boss wave (none at 1-4's: the user didn't want a switch there). Wired in
+  `tools/stage_layout.py` LAYOUT. Suno notes: the connector can't use custom models
+  (SFA3) and Suno's human check loops in Claude's browser, so the user generates;
+  Suno output is mono (left = right). `tools/master_track.py` (match EQ to a reference
+  + stereo widening) exists but the user wasn't convinced; tracks are used as given.
 - **Mark** and **EVS Fanboy** (see the table); `tools/import_sheet.py` now finds frames
   by the gaps between them and cuts rows at real gaps (the user's sheets drift).
 - Outside the repo (session folder, not in git): `stock-sprites/` (extracted LF2
