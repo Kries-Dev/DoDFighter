@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Write our stage-mode file from LF2's: which of our stages each sub-stage is fought
-on, and its music. The waves themselves (who, how many, order, HP) stay LF2's.
+on, and its music. The waves themselves (who, how many, order, HP) stay LF2's, except
+for the sub-stages in CUSTOM (1-1), whose waves are written here.
 
     python tools/stage_layout.py tools/lf2_stage.txt mods/darthnox/stage.txt
     python tools/stage_dat.py mods/darthnox/stage.txt mods/darthnox/assets/stage.dat
@@ -43,6 +44,25 @@ LAYOUT = {
     14: ('roofn', JUNGLE_END, BOSS),       # 2-5: Rooftop at Night, "Urban Jungle end", "Boss appears 1"
 }
 
+# Sub-stages whose waves are ours instead of LF2's (bounds already in our stage's pixels).
+# id 3000 = a random Bandit or Hunter each spawn; in stage 1 those are EVS Fanboy / EVS
+# Hunter (stage_mode.lua SWAPS). times = how many in all, ratio 1 = scales with players.
+HP = 60                                    # LF2's grunts have 50: +20%
+CUSTOM = {
+    # 1-1 (2026-11-18, the user): about twice LF2's enemies (~28 instead of ~12 for one
+    # player) over six closer steps across the Fortress Gate (wall 1523), Ironhide (74)
+    # as the boss with EVS grunts streaming in while he stands
+    0: [
+        (794, [f'id: 3000  hp: {HP}  times: 2  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (940, [f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (1080, ['id: 122  x: 1000  #milk', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (1220, [f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 3']),
+        (1360, ['id: 123  x: 1300  #beer', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
+        (1523, ['id: 122  x: 1450  #milk', 'id: 74  hp: 300 <boss>',
+                f'id: 3000  hp: {HP}  times: 2  ratio: 1.0     <soldier>', f'id: 3000  hp: {HP}  times: 2  <soldier>']),
+    ],
+}
+
 
 def layout(text, music_override=None):
     for sid, (key, music, boss) in sorted(LAYOUT.items()):
@@ -50,6 +70,15 @@ def layout(text, music_override=None):
         i = text.index(f'<stage> id: {sid} ')
         j = text.index('<stage_end>', i)
         block = text[i:j]
+        if sid in CUSTOM:
+            head = block.split('<phase>')[0].rstrip() + f'   # DoD: {key}; waves from tools/stage_layout.py CUSTOM'
+            NL = '\n'
+            phases = [f' bound: {b}{NL}' + ''.join(f'                {e}{NL}' for e in entries) + f'        <phase_end>{NL}{NL}        '
+                      for b, entries in CUSTOM[sid]]
+            if music:
+                phases[0] = phases[0].replace(NL, f'{NL}                music: {music}{NL}', 1)
+            text = text[:i] + head + NL + '        <phase>' + '<phase>'.join(phases).rstrip() + NL + text[j:]
+            continue
         phases = block.split('<phase>')
         head = phases[0].rstrip()
         if key:

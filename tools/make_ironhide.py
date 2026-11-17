@@ -17,7 +17,8 @@ Changes from Deep (the user's spec, 2026-11-18):
     WAVE_DZ px a tick nearer / further while they fly 15 px a tick forward
   * DvA: launches straight up (no forward push) and the sword spins twice
     (frames 261-264 played again as 286-289 before landing in 265); the spin's
-    hits rest 4 ticks so the second spin hits too, its launch hits 54 -> 36
+    hits rest 4 ticks so the second spin hits too, its launch hits 54 -> 36; then
+    every DvA hit (260-289, follow-ups included) does half damage (launch hit 18)
   * D>J: MP 150 -> STRAFE_MP, the middle of the dash (298-303, three of its hits)
     cut and one fast frame slowed, so it travels ~40% less far
   * he keeps Deep's voice (data\\045.wav on D>J): the user asked for it (2026-11-18);
@@ -121,6 +122,9 @@ def ironhide(stock):
         b = re.sub(r'vrest: \d+', 'vrest: 4', fr[n])
         b = re.sub(r'injury: 54', 'injury: 36', b)
         put(n, b)
+    # the whole DvA (uppercut, spins, its A and J follow-ups) does half damage (user, 2026-11-18)
+    for n in [k for k in fr if 260 <= k <= 285]:
+        put(n, re.sub(r'injury: (\d+)', lambda m: f'injury: {int(m.group(1)) // 2}', fr[n]))
     for src, dst in DVA_SPIN.items():
         copy = fr[src].replace(f'<frame> {src} ', f'<frame> {dst} ', 1)
         nxt = DVA_SPIN.get(src + 1, 265) if src < 264 else 265

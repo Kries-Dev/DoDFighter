@@ -1968,31 +1968,40 @@
         <phase_end>
 <stage_end>
 
-<stage> id: 0  #stage 1-1   # DoD: gate; bounds and x scaled x0.692 (last bound = its right wall)
+<stage> id: 0  #stage 1-1   # DoD: gate; waves from tools/stage_layout.py CUSTOM
         <phase> bound: 794
                 music: mods/darthnox/bg/fort_1.wma
-                id: 30  hp: 50  times: 2  ratio: 1.0
+                id: 3000  hp: 60  times: 2  ratio: 1.0
+                id: 3000  hp: 60  times: 2
         <phase_end>
 
-        <phase> bound: 900
-                id: 30  hp: 50  times: 2  ratio: 1.0
-                id: 31  hp: 50  times: 1
-                id: 31  hp: 50  times: 1  ratio: .4
+        <phase> bound: 940
+                id: 3000  hp: 60  times: 3  ratio: 1.0
+                id: 3000  hp: 60  times: 2
         <phase_end>
 
-        <phase> bound: 1177
-                id: 3000  hp: 50  times: 2
-                id: 3000  hp: 50  times: 2  ratio: 1.0
+        <phase> bound: 1080
+                id: 122  x: 1000  #milk
+                id: 3000  hp: 60  times: 3  ratio: 1.0
+                id: 3000  hp: 60  times: 2
+        <phase_end>
+
+        <phase> bound: 1220
+                id: 3000  hp: 60  times: 3  ratio: 1.0
+                id: 3000  hp: 60  times: 3
+        <phase_end>
+
+        <phase> bound: 1360
+                id: 123  x: 1300  #beer
+                id: 3000  hp: 60  times: 3  ratio: 1.0
+                id: 3000  hp: 60  times: 2
         <phase_end>
 
         <phase> bound: 1523
-                id: 122  x: 762  #milk
-                id: 123  x: 762  #beer
-                id: 30  hp: 50  ratio: 1
-                id: 30  hp: 50
-                id: 31  hp: 50
-                id: 31  hp: 50  ratio: .4
-                id: 31  hp: 50  ratio: .2
+                id: 122  x: 1450  #milk
+                id: 74  hp: 300 <boss>
+                id: 3000  hp: 60  times: 2  ratio: 1.0     <soldier>
+                id: 3000  hp: 60  times: 2  <soldier>
         <phase_end>
 <stage_end>
 

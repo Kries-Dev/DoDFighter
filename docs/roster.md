@@ -99,9 +99,11 @@ except the specials (`tools/make_ironhide.py`):
 | Input | Move | Change from Deep |
 |---|---|---|
 | D>A | blast | two waves per blast, +-15 degrees in depth (object 75, `ih_wave.txt`); A again chains the next blast as Deep's |
-| DvA | uppercut | launches straight up; the sword spins twice and both spins hit (launch hit 54 -> 36, rest 4 ticks) |
+| DvA | uppercut | launches straight up; the sword spins twice and both spins hit (rest 4 ticks); half damage (launch hit 18, Deep 54) |
 | D>J | dash strafe | 100 MP (Deep 150), ~221 px (Deep ~360), 2 hits instead of ~6 |
 | D^J, grab D>J | — | removed |
 
 He keeps Deep's voice. His three sheets were drawn at different sizes; they are imported at
 fixed scales (0.61 / 0.59 / 0.44) so he stays one size (~74 px standing, like Deep).
+
+He is the boss of stage 1-1 (300 HP).
