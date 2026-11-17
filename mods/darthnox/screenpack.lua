@@ -19,6 +19,10 @@ for name in ([[menu_clip menu_clip2 menu_clip3 menu_clip4 menu_clip5 menu_clip6 
     score_board4 rface pause demo words0 words5 back99_1 back99_2 back99_3 lf2_cursor menu_wait]]):gmatch("%S+") do
     SWAPPED["pe/" .. name] = UI .. name .. ".bmp"
 end
+-- swapped on menu screens (and the quit box) only: in a fight the blue font still marks player 1
+local MENU_ONLY = {["pe/words1"] = UI .. "words1.bmp"}
+-- texts with LF2's name in them
+local RETITLED = {["Exit OpenLF2?"] = "Exit the game?"}
 local RAIN_FRAMES = 11
 local LOGO_W = 440
 -- lightning: frame counter positions (of a 300-frame cycle) that show the flash
@@ -92,7 +96,7 @@ return function(base)
             end
             -- bitmap-font text (font.gdi) is words0 glyphs with a colour tint
             if menus and tint then tint = recolour_hex(tint) end
-            return sprite(SWAPPED[name] or name, rect, x, y, keyed, mirrored, flipped, tint, ...)
+            return sprite(SWAPPED[name] or (menus and MENU_ONLY[name]) or name, rect, x, y, keyed, mirrored, flipped, tint, ...)
         end
         if menus then
             function proxy.viewport(w, h, r, g, b, ...)
@@ -110,9 +114,21 @@ return function(base)
         return proxy
     end
 
+    -- The "Leave the fight?" box is drawn over a match too: it always gets the menu colours.
+    local quit_dialog = require("base/ui/quit_dialog")
+    local i18n = require("base/i18n/i18n")
+    local quit_draw, tr = quit_dialog.draw, i18n.tr
+    local function retitled(text, ...)
+        return tr(RETITLED[text] or text, ...)
+    end
     function base.draw(state, context)
         frame = frame + 1
-        return draw(state, wrap(context, state.active ~= "match"))
+        quit_dialog.draw = function(dialog) return quit_draw(dialog, wrap(context, true)) end
+        i18n.tr = retitled
+        local ok, result = pcall(draw, state, wrap(context, state.active ~= "match"))
+        quit_dialog.draw, i18n.tr = quit_draw, tr
+        if not ok then error(result, 0) end
+        return result
     end
 
     return base

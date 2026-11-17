@@ -142,9 +142,9 @@ FRAMES = [
     *[pic(n, 'standing', IDLE[n], HITS) for n in range(4)],
     *[pic(5 + i, 'walking', WALK[i], HITS) for i in range(4)],
     pic(9, 'running', RUN[0]), pic(10, 'running', RUN[1]), pic(11, 'running', RUN[2]),
-    *[item_pic(n, 'heavy_obj_walk', p, (33, 3)) for n, p in zip((12, 13, 14, 15), (8, 9, 10, 11))],
-    *[item_pic(n, 'heavy_obj_run', p, (33, 3)) for n, p in zip((16, 17, 18), (12, 13, 14))],
-    item_pic(19, 'heavy_stop_run', 15, (33, 3)),
+    *[item_pic(n, 'heavy_obj_walk', p, (33, 7)) for n, p in zip((12, 13, 14, 15), (8, 9, 10, 11))],
+    *[item_pic(n, 'heavy_obj_run', p, (33, 7)) for n, p in zip((16, 17, 18), (12, 13, 14))],
+    item_pic(19, 'heavy_stop_run', 15, (33, 7)),
 
     '# Holding an item: his blade poses',
     *[pic(n, 'normal_weapon_atck', p) for n, p in zip((20, 21, 22, 23, 25, 26, 27, 28), SLASH + (SLASH[2],) + THRUST + (THRUST[2],))],
@@ -155,8 +155,8 @@ FRAMES = [
                                          (47, 'light_weapon_thw', THROW2[2]), (50, 'heavy_weapon_thw', TOSS[0]),
                                          (51, 'heavy_weapon_thw', TOSS[1]), (52, 'sky_lgt_wp_thw', THROW2[0]),
                                          (53, 'sky_lgt_wp_thw', THROW2[1]), (54, 'sky_lgt_wp_thw', THROW2[2]))],
-    item_pic(55, 'weapon_drink', 0, (37, 46)), item_pic(56, 'weapon_drink', 1, (35, 32)),
-    item_pic(57, 'weapon_drink', 2, (32, 32)), item_pic(58, 'weapon_drink', 3, (37, 47)),
+    item_pic(55, 'weapon_drink', 0, (49, 39)), item_pic(56, 'weapon_drink', 1, (52, 22)),
+    item_pic(57, 'weapon_drink', 2, (51, 23)), item_pic(58, 'weapon_drink', 3, (44, 37)),
 
     '# A: shurikens. Rudolf\'s throw (15 MP each, object 202 spawned on 62 / 66 / 69),\n'
     '# drawn as a sidearm throw, then an overhand one.',
@@ -209,7 +209,7 @@ FRAMES = [
     pic(110, 'defend', BLOCK[1], HITS), pic(111, 'defend', BLOCK[2], HITS), pic(95, 'dash_defend', BLOCK[1]),
     pic(112, 'broken_defend', BLOCK[0]), pic(113, 'broken_defend', HURT[1]), pic(114, 'broken_defend', BLOCK[0]),
     item_pic(115, 'picking_light', 4), item_pic(116, 'picking_heavy', 5, (32, 78)),
-    item_pic(117, 'picking_heavy', 6, (33, 4)),
+    item_pic(117, 'picking_heavy', 6, (33, 7)),
 
     '# Grab and jab (A while holding), throws, being held',
     *[pic(120 + i, 'catching', GRAB[i]) for i in range(4)],

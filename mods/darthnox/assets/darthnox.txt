@@ -861,28 +861,28 @@ rowing_distance 4.000000
 <frame> 55 weapon_drink
    pic: 84  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 59  y: 45  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 70  y: 36  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
 <frame> 56 weapon_drink
    pic: 85  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 45  y: 36  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 61  y: 27  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
 <frame> 57 weapon_drink
    pic: 86  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 45  y: 36  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 62  y: 26  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
 <frame> 58 weapon_drink
    pic: 87  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 52  y: 58  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 67  y: 52  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
@@ -901,7 +901,7 @@ rowing_distance 4.000000
 <frame> 117 picking_heavy
    pic: 90  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 36  y: 4  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 36  y: 15  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
@@ -909,56 +909,56 @@ rowing_distance 4.000000
 <frame> 12 heavy_obj_walk
    pic: 92  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 37  y: 17  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
 <frame> 13 heavy_obj_walk
    pic: 93  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 37  y: 17  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
 <frame> 14 heavy_obj_walk
    pic: 94  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 37  y: 17  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
 <frame> 15 heavy_obj_walk
    pic: 95  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 37  y: 17  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
 <frame> 16 heavy_obj_run
    pic: 96  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 37  y: 17  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
 <frame> 17 heavy_obj_run
    pic: 97  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 37  y: 17  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
 <frame> 18 heavy_obj_run
    pic: 98  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 37  y: 17  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 
 <frame> 19 heavy_stop_run
    pic: 99  state: 0  wait: 0  next: 0  dvx: 0  dvy: 0  dvz: 0  centerx: 39  centery: 85
    wpoint:
-      kind: 1  x: 37  y: 5  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
+      kind: 1  x: 37  y: 17  weaponact: 0  attacking: 0  cover: 0  dvx: 0  dvy: 0  dvz: 0
    wpoint_end:
 <frame_end>
 

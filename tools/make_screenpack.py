@@ -36,7 +36,7 @@ FONT_TEXT = 'C:/Windows/Fonts/segoeuib.ttf'
 RECOLOURED = ['menu_clip', 'menu_clip2', 'menu_clip3', 'menu_clip4', 'menu_clip5', 'menu_clip6',
               'charmenu', 'battlemode', 'battletroops', 'cma', 'cma2', 'cmc', 'cs2', 'cs3', 'cs4', 'cs5', 'cs6',
               'frame', 'bars', 'score_board1', 'score_board2', 'score_board3', 'score_board4', 'rface',
-              'pause', 'demo', 'words0', 'words5', 'back99_1', 'back99_2', 'back99_3', 'lf2_cursor']
+              'pause', 'demo', 'words0', 'words1', 'words5', 'back99_1', 'back99_2', 'back99_3', 'lf2_cursor']
 
 
 def recolour(r, g, b):

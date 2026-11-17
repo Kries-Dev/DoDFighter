@@ -185,9 +185,9 @@ FRAMES = [
     *[pic(n, 'standing', IDLE[n], HITS) for n in range(4)],
     *[pic(5 + i, 'walking', WALK[i], HITS) for i in range(4)],
     pic(9, 'running', RUN[0]), pic(10, 'running', RUN[1]), pic(11, 'running', RUN[2]),
-    *[item_pic(n, 'heavy_obj_walk', p, (34, 4)) for n, p in zip((12, 13, 14, 15), (8, 9, 10, 11))],
-    *[item_pic(n, 'heavy_obj_run', p, (34, 4)) for n, p in zip((16, 17, 18), (12, 13, 14))],
-    item_pic(19, 'heavy_stop_run', 15, (34, 4)),
+    *[item_pic(n, 'heavy_obj_walk', p, (34, 18)) for n, p in zip((12, 13, 14, 15), (8, 9, 10, 11))],
+    *[item_pic(n, 'heavy_obj_run', p, (34, 18)) for n, p in zip((16, 17, 18), (12, 13, 14))],
+    item_pic(19, 'heavy_stop_run', 15, (34, 18)),
 
     '# Holding an item: the staff swing / poke / smash / extension poses',
     *[pic(n, 'normal_weapon_atck', p) for n, p in zip((20, 21, 22, 23, 25, 26, 27, 28), SWING + (14,) + POKE + (18,))],
@@ -198,8 +198,8 @@ FRAMES = [
                                          (47, 'light_weapon_thw', THROW[2]), (50, 'heavy_weapon_thw', THROW[0]),
                                          (51, 'heavy_weapon_thw', THROW[1]), (52, 'sky_lgt_wp_thw', THROW[0]),
                                          (53, 'sky_lgt_wp_thw', THROW[1]), (54, 'sky_lgt_wp_thw', THROW[2]))],
-    item_pic(55, 'weapon_drink', 0, (40, 45)), item_pic(56, 'weapon_drink', 1, (28, 36)),
-    item_pic(57, 'weapon_drink', 2, (28, 36)), item_pic(58, 'weapon_drink', 3, (40, 48)),
+    item_pic(55, 'weapon_drink', 0, (50, 33)), item_pic(56, 'weapon_drink', 1, (56, 22)),
+    item_pic(57, 'weapon_drink', 2, (58, 18)), item_pic(58, 'weapon_drink', 3, (63, 45)),
 
     '# A, A, A: swing -> poke -> overhead smash. Short frames, and hit_a chains each\n'
     '# into the next for combos; 22 per hit, the smash 40 and a knockdown.',
@@ -238,7 +238,7 @@ FRAMES = [
     pic(110, 'defend', BLOCK[1], HITS), pic(111, 'defend', BLOCK[1]), pic(95, 'dash_defend', BLOCK[1]),
     pic(112, 'broken_defend', BLOCK[0]), pic(113, 'broken_defend', BLOCK[2]), pic(114, 'broken_defend', BLOCK[0]),
     item_pic(115, 'picking_light', 4), item_pic(116, 'picking_heavy', 5, (34, 70)),
-    item_pic(117, 'picking_heavy', 6, (34, 5)),
+    item_pic(117, 'picking_heavy', 6, (34, 17)),
 
     '# Grab and staff jab (A while holding), throws, being held',
     *[pic(120 + i, 'catching', GRAB[i]) for i in range(4)],   # Davis's punch-impact sounds stay (object_data.lua swaps only for DarthNox)
