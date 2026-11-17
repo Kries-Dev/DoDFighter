@@ -80,10 +80,12 @@ direct hit here.
 | Bat | D>A ball 125 · D>J 50 MP, 60 · D^J bats 200 |
 | Justin | D>A ball 75 · DvA 75 MP, 55 |
 
-## EVS Fanboy (id 72)
+## EVS Fanboy and EVS Hunter (grunts)
 
-A second Bandit: LF2's Bandit data, unchanged, with the user's sprites (purple bandana,
-black EVS shirt, white trousers; `art/evsfan_*_edit.webp` -> `assets/evsfan_0/1.bmp` via
-`tools/import_sheet.py` against the stock Bandit sheets). Data: `assets/evsfan.txt`.
-Selectable in versus. In stage 1 he replaces every Bandit, random picks included
-(`SWAPS` in `mods/darthnox/stage_mode.lua`). Portraits are crops of his idle frame (stand-ins).
+Stage 1's Bandit and Hunter: LF2's Bandit and Hunter data, unchanged, with the user's
+sprites (purple bandana, black EVS shirt, white trousers; `art/evsfan_*`, `art/evshunt_*`
+-> `assets/evsfan*`, `evshunt*` via `tools/import_sheet.py` and `tools/make_grunt.py`).
+In stage 1 every Bandit/Hunter spawn keeps id 30/31 and uses this data (`SWAPS` in
+`mods/darthnox/stage_mode.lua`), so the engine still treats them as grunts (no invincible
+blink after getting up, no purple "Com" label, Hunter's bow AI). Catalog ids 72/73 exist
+but are hidden from character select, like Bandit and Hunter. Portraits are stand-ins.

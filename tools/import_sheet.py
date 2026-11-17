@@ -95,23 +95,31 @@ def bands(fg, count):
     """Split the picture into `count` horizontal bands at the emptiest rows between sprite rows."""
     profile = fg.sum(axis=1).astype(float)
     H = len(profile)
-    # the empty gaps between sprite rows (not the margins above and below): when there
-    # is exactly one per row boundary, cut in their middles
+    # the empty gaps between sprite rows (not the margins above and below), merging gaps
+    # split by a stray pixel row; each row boundary goes to the nearest gap in its window,
+    # or, where rows overlap (no gap), to the emptiest row there
     gaps, start = [], None
     for y in range(H):
         if profile[y] == 0 and start is None:
             start = y
         elif profile[y] != 0 and start is not None:
             if start > 0:
-                gaps.append((start + y) // 2)
+                if gaps and start - gaps[-1][1] < 30:
+                    gaps[-1] = (gaps[-1][0], y)
+                else:
+                    gaps.append((start, y))
             start = None
-    if len(gaps) == count - 1:
-        return [0] + gaps + [H]
+    mids = [(g0 + g1) // 2 for g0, g1 in gaps]
+    if len(mids) == count - 1:
+        return [0] + mids + [H]
+    bottom = int(np.nonzero(profile)[0].max()) + 1           # rows may end well above the picture's bottom
+    pitch = bottom / count
     cuts = [0]
     for k in range(1, count):
-        guess = k * H // count
-        lo, hi = max(cuts[-1] + 1, guess - H // (2 * count)), min(H - 1, guess + H // (2 * count))
-        cuts.append(lo + int(np.argmin(profile[lo:hi])))
+        guess = k * pitch
+        lo, hi = max(cuts[-1] + 1, int(guess - pitch / 2)), min(H - 1, int(guess + pitch / 2))
+        near = [m for m in mids if lo <= m < hi]
+        cuts.append(min(near, key=lambda m: abs(m - guess)) if near else lo + int(np.argmin(profile[lo:hi])))
     return cuts + [H]
 
 

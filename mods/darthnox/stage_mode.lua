@@ -7,9 +7,12 @@
 -- module is replaced whole (manifest "replace="). When OpenLF2 updates
 -- stage.lua, copy it again and redo the lines marked DoD (STAGE_FILE, SWAPS).
 local STAGE_FILE = "mods/darthnox/stage.dat"
--- Second change: fighters replaced by our own per stage group (0 = stage 1-1..1-5),
--- applied to every spawn, the random Bandit/Hunter picks (id 3000/3001) included.
-local SWAPS = {[0] = {[30] = 72}}   -- stage 1: every Bandit is EVS Fanboy
+-- Second change: per stage group (0 = stage 1-1..1-5), a stock grunt takes our data file
+-- (sprites, name) but keeps its own id, so the engine still treats it as that grunt: no
+-- invincible blink after getting up, no "Com" label, the stock AI (Hunter's bow).
+-- Applies to every spawn, the random Bandit/Hunter picks (id 3000/3001) included.
+local SWAPS = {[0] = {[30] = "mods/darthnox/evsfan.txt",    -- stage 1: every Bandit is EVS Fanboy
+                      [31] = "mods/darthnox/evshunt.txt"}}  --          every Hunter is EVS Hunter
 
 local constants = require("base/game/constants")
 local character_frames = constants.character_frames
@@ -107,9 +110,15 @@ local function spawn(state, run, entry, runtime, slot)
             id = random(2) + constants.fighter_ids.bandit
         end
     end
-    -- DoD: stand-ins per stage group (SWAPS), after random picks are made
+    -- DoD: per stage group, give this grunt id our data (SWAPS), once per match
     local swap = SWAPS[cdiv(run.id, 10)]
-    if swap and swap[id] then id = swap[id] end
+    state.records = state.records or {}
+    if swap and swap[id] and state.records[id] == nil then
+        local entry = require("base/game/catalog").objects().by_id[id]
+        if entry then
+            state.records[id] = require("base/game/item").record(entry, require("base/game/object_data").load(swap[id]))
+        end
+    end
     if not objects.record(state, id) then
         runtime.ids[slot] = -1
         return

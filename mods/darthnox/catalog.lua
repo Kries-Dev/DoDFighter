@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: MIT
--- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63, Cod1eh 68, EVS Fanboy 72), the objects their
+-- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63, Cod1eh 68; grunts EVS Fanboy 72, EVS Hunter 73), the objects their
 -- moves spawn (62, 64-67, 69-71) and our stages without editing base scripts.
 
 return function(base)
@@ -9,7 +9,10 @@ return function(base)
         {id = 61, path = "mods/darthnox/darthnox.txt"},
         {id = 63, path = "mods/darthnox/mathilde.txt"},
         {id = 68, path = "mods/darthnox/cod1eh.txt"},
-        {id = 72, path = "mods/darthnox/evsfan.txt"},   -- EVS Fanboy: Bandit with the user's sprites
+        -- grunts: hidden from character select like Bandit and Hunter; stage 1 uses their data for
+        -- Bandit (30) and Hunter (31) themselves (stage_mode.lua SWAPS), so they stay grunts there
+        {id = 72, path = "mods/darthnox/evsfan.txt", hidden = true},    -- EVS Fanboy: Bandit with the user's sprites
+        {id = 73, path = "mods/darthnox/evshunt.txt", hidden = true},   -- EVS Hunter: Hunter with the user's sprites
     }
     local spawned = {
         {id = 62, kind = 3, path = "mods/darthnox/crescent.txt"},   -- DarthNox's crescent
@@ -50,7 +53,7 @@ return function(base)
                 end
                 assert(record, fighter.path .. " is missing from the object list")
                 fighters[#fighters + 1] = {id = fighter.id, record = record, name = name,
-                    portrait = portrait, path = fighter.path, hidden = false}
+                    portrait = portrait, path = fighter.path, hidden = fighter.hidden or false}
             end
             added_fighter = true
         end
