@@ -18,7 +18,7 @@ local complete = constants.combo_states.complete
 local kinds = constants.record_kinds
 local states = constants.frame_states
 
-local DARTHNOX, MATHILDE, COD1EH, IRONHIDE, URRBOT = 61, 63, 68, 74, 76
+local DARTHNOX, MATHILDE, COD1EH, IRONHIDE, URRBOT, DSS = 61, 63, 68, 74, 76, 80
 local FACING_RIGHT = 0
 
 local function random(range) return engine.random(range) end
@@ -186,6 +186,21 @@ local function urrbot(state, S, T, dx, dz, skill)
     elseif dx > 70 and dx < 280 and dz < 15 and mp >= 150 and (hurt(T) or chance(20, skill)) then forward(S, T, false) end
 end
 
+-- DSS (computer-only, Jack's data): D>A ball at range, DvA kick combo up close,
+-- D^A flip when the target is right in front, and A late in the flip for the second.
+local function dss(state, S, T, dx, dz, skill)
+    local mp, f = S.mp, S.frame
+    if f == 304 or f == 305 then
+        if dx < 170 and dz < 25 and mp >= 75 and chance(2, skill) then tap(S, "attack") end
+        return
+    end
+    if not ready(S) then return end
+    local ahead = facing_target(S, T)
+    if dx < 70 and dz < 12 and mp >= 200 and ahead and chance(6, skill) then start(S, combo.up_attack)   -- MP for both flips
+    elseif dx < 80 and dz < 10 and mp >= 50 and ahead and chance(mp >= 200 and 30 or 10, skill) then start(S, combo.down_attack)
+    elseif dx > 120 and dx < 450 and dz < 30 and mp >= 50 and chance(18, skill) then forward(S, T, true) end
+end
+
 return function(base)
     local control = base.control
 
@@ -193,7 +208,7 @@ return function(base)
         local result = control(state, index, mode, context)
         local S = state.items[index]
         local id = S and S.record.id
-        if (id == DARTHNOX or id == MATHILDE or id == COD1EH or id == IRONHIDE or id == URRBOT) and S.hp > 0 and not S.human then
+        if (id == DARTHNOX or id == MATHILDE or id == COD1EH or id == IRONHIDE or id == URRBOT or id == DSS) and S.hp > 0 and not S.human then
             local T = nearest_enemy(state, S)
             if T then
                 local dx, dz = math.abs(T.x_int - S.x_int), math.abs(T.z_int - S.z_int)
@@ -202,6 +217,7 @@ return function(base)
                 elseif id == MATHILDE then mathilde(state, S, T, dx, dz, skill)
                 elseif id == IRONHIDE then ironhide(state, S, T, dx, dz, skill)
                 elseif id == URRBOT then urrbot(state, S, T, dx, dz, skill)
+                elseif id == DSS then dss(state, S, T, dx, dz, skill)
                 else cod1eh(state, S, T, dx, dz, skill) end
             end
         end

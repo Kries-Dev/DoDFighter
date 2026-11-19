@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: MIT
--- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63, Cod1eh 68; grunts EVS Fanboy 72, EVS Hunter 73; computer-only Ironhide 74, Urrbot 76), the objects their
+-- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63, Cod1eh 68; grunts EVS Fanboy 72, EVS Hunter 73; computer-only Ironhide 74, Urrbot 76, DSS 80), the objects their
 -- moves spawn (62, 64-67, 69-71, 75, 77-79) and our stages without editing base scripts.
 
 return function(base)
@@ -16,6 +16,7 @@ return function(base)
         -- computer-only: hidden from select (stage boss / com opponent)
         {id = 74, path = "mods/darthnox/ironhide.txt", hidden = true},  -- Ironhide: Deep's data, the user's sprites, 3 specials
         {id = 76, path = "mods/darthnox/urrbot.txt", hidden = true},    -- Urrbot: Freeze's data, the user's sprites, D>A + D>J
+        {id = 80, path = "mods/darthnox/dss.txt", hidden = true},       -- DSS: Jack's data, the user's sprites, double flip, DvA kicks
     }
     local spawned = {
         {id = 62, kind = 3, path = "mods/darthnox/crescent.txt"},   -- DarthNox's crescent

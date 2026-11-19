@@ -121,3 +121,18 @@ like Ironhide; the computer plays him (`ai.lua`). Everything is Freeze's except
 | D^J whirlwind, DvJ ice sword | — | removed |
 
 He is the boss of stage 1-2 (375 HP).
+
+## DSS (computer-only, id 80)
+
+LF2's Jack with the user's sprites (white "V" shirt, purple trousers; `art/dss/`, both
+sheets at scale 0.54; Jack's second-colour sheets point at the same art), hidden from
+select; the computer plays him (`ai.lua`). Everything is Jack's except
+(`tools/make_dss.py`):
+
+| Input | Move | Change from Jack |
+|---|---|---|
+| D>A | energy ball | unchanged |
+| D^A | flip | A late in the flip (frames 304/305) does a second flip (310-315, 75 MP) that travels forward to reach the launched target; no third |
+| DvA | kick combo (new, 50 MP) | three kicks on the run-attack kick pictures (no knockdown, 25 each), then the ball-throw animation without the ball; its fiery punch knocks down (45) |
+
+He is the boss of stage 1-3 (375 HP).

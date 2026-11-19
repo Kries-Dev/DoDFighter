@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write our stage-mode file from LF2's: which of our stages each sub-stage is fought
 on, and its music. The waves themselves (who, how many, order, HP) stay LF2's, except
-for the sub-stages in CUSTOM (1-1), whose waves are written here.
+for the sub-stages in CUSTOM (1-1 to 1-3), whose waves are written here.
 
     python tools/stage_layout.py tools/lf2_stage.txt mods/darthnox/stage.txt
     python tools/stage_dat.py mods/darthnox/stage.txt mods/darthnox/assets/stage.dat
@@ -75,6 +75,9 @@ CUSTOM = {
     # 1-2 (2026-11-19, the user): the same treatment on the Barracks Yard (wall 1365),
     # grunts 63 HP (+25%), boss Urrbot (76) at 375 HP (Ironhide's 300 +25%)
     1: fortress_waves(63, 1000, 1340, 1365, 76, 375),
+    # 1-3 (2026-11-19, the user): the same again on the Cell Block (wall 1506), grunts 63 HP
+    # (+25%), boss DSS (80) at 375 HP
+    2: fortress_waves(63, 1100, 1480, 1506, 80, 375),
 }
 
 
