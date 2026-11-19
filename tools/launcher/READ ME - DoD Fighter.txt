@@ -1,0 +1,35 @@
+DoD Fighter (Deities of Death Fighter)
+======================================
+
+START
+  Double-click "DoD Fighter.exe".
+
+  The very first time, the game asks for the original Little Fighter 2
+  installer (it reads the base game data from it). Let it download it:
+  one click, about 30 MB, saved in the "config" folder here. After that it
+  starts straight away.
+
+  If Windows shows "Windows protected your PC": click "More info", then
+  "Run anyway" (the launcher isn't signed).
+
+PLAY ONLINE TOGETHER
+  Both players must have this exact same folder (same version of the game
+  and the mod), otherwise the game says "mod profile mismatch".
+
+  1. Get on the same network. Easiest over the internet: both install a free
+     virtual LAN such as Radmin VPN, ZeroTier or Tailscale and join the same
+     network. It gives each PC an IP address the other one can reach.
+     (Or: the host forwards TCP port 12345 on their router to their PC.)
+  2. The host starts the game, picks "Network Game" and hosts.
+     Windows may ask to allow openlf2.exe through the firewall: allow it.
+  3. The other player picks "Network Game", joins, and types the host's IP
+     (the virtual LAN IP from step 1, or the host's internet IP when
+     port-forwarding).
+
+SETTINGS
+  Controls and options are saved in the "config" folder next to the game,
+  so the whole folder can be moved or copied as it is.
+
+Made with OpenLF2 (MIT licence, see the "licenses" folder), a re-implementation
+of Little Fighter 2 by Marti Wong and Starsky Wong. Guest fighters: Clide by
+YinYin Falcon, Leo by Prince Freeza and YinYin Falcon.

@@ -99,6 +99,22 @@ script modelled on `mathilde_moves.py`.
 - **Music:** `tools/to_wma.ps1`. It must be WMA 8.
 - **Stages:** `tools/image_to_stage.py`.
 
+## Sending the game to someone (2026-11-20)
+
+`powershell -ExecutionPolicy Bypass -File tools\make_package.ps1` builds
+`Downloads\DoD Fighter\` and `Downloads\DoD Fighter.zip` (~55 MB): the installed
+OpenLF2 engine (no uninstaller, no other mods), `mods\darthnox` from this repo, and
+`DoD Fighter.exe`, a tiny launcher (`tools/launcher/DoDFighter.cs`, compiled with the
+csc.exe that ships with Windows; icon from `art/ui/logo_circle.webp`) that runs
+`openlf2.exe --mod mods\darthnox --config-dir .\config`. The LF2 installer is not
+bundled: on the first start OpenLF2 asks to download it from archive.org into
+`.\config` (one click). `READ ME - DoD Fighter.txt` explains online play: OpenLF2's
+"Network Game" (TCP 12345; a virtual LAN like Radmin VPN/ZeroTier/Tailscale, or port
+forwarding). Both players need the identical package: OpenLF2 compares the
+engine/scripts/mod profile and refuses a mismatch, so rebuild and resend the zip
+after every change. Seen in the real game: launcher -> download prompt (empty
+config), and with the installer present -> the DoD menu with "network game".
+
 ## Testing: headless probe mods
 
 Scripted menu input doesn't get past the title screen. Instead:
