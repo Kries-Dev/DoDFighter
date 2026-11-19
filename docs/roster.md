@@ -153,3 +153,24 @@ sounds are Clide's, unchanged except for paths and ids (`tools/make_benniwr.py`)
 | D^J | double jump kick (25 MP) |
 
 He is the boss of stage 1-4 (420 HP).
+
+## Eisomarto (computer-only, id 83)
+
+Leo, a full LF2 fan character by Prince Freeza (sprites) and YinYin Falcon (data),
+after Marti Wong's design (the user's `Leo.zip`), with the user's restyled sprites
+(blue suit, purple scarf; `art/eisomarto/`), hidden from select; the computer plays
+him (`ai.lua`; Leo's own AI script needs a ddraw.dll and isn't used). His data, shy
+knife (object 84, a light weapon), bullets (object 85) and sounds are Leo's, unchanged
+except for paths and ids (`tools/make_eisomarto.py`):
+
+| Input | Move |
+|---|---|
+| D>A (+A+A...) | energy bullets, rapid fire |
+| D+J+A (+A...) | bullet storm |
+| DvJ | draw a shy knife to hold |
+| D>J | throw a shy knife; a double knife while holding one |
+| D^A | kick |
+| jump + A | knives thrown from the air |
+
+He is the boss of stage 1-5's second wave (450 HP) and fights again in its last wave
+with every other stage 1 boss.

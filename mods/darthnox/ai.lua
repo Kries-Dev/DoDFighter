@@ -18,7 +18,7 @@ local complete = constants.combo_states.complete
 local kinds = constants.record_kinds
 local states = constants.frame_states
 
-local DARTHNOX, MATHILDE, COD1EH, IRONHIDE, URRBOT, DSS, BENNIWR = 61, 63, 68, 74, 76, 80, 81
+local DARTHNOX, MATHILDE, COD1EH, IRONHIDE, URRBOT, DSS, BENNIWR, EISOMARTO = 61, 63, 68, 74, 76, 80, 81, 83
 local FACING_RIGHT = 0
 
 local function random(range) return engine.random(range) end
@@ -219,6 +219,29 @@ local function benniwr(state, S, T, dx, dz, skill)
     elseif dx > 100 and dx < 220 and dz < 15 and mp >= 25 and ahead and chance(40, skill) then start(S, combo.up_jump) end
 end
 
+-- Eisomarto (computer-only, Leo's data; Leo's own AI needed a ddraw.dll): energy
+-- bullets at range (A again keeps firing), bullet storm (D+J+A, A again for more) when
+-- the target is near, shy knife: D>J throws it (a double knife when he holds one), DvJ
+-- draws one to hold, D^A kick up close.
+local function eisomarto(state, S, T, dx, dz, skill)
+    local mp, f = S.mp, S.frame
+    if f == 235 or f == 238 then                       -- between bullets
+        if dx > 60 and dx < 500 and dz < 30 and mp >= 10 and facing_target(S, T) and chance(2, skill) then tap(S, "attack") end
+        return
+    end
+    if f == 258 or f == 268 or f == 278 then             -- the storm can go on
+        if dx < 350 and mp >= 60 and chance(3, skill) then tap(S, "attack") end
+        return
+    end
+    if not ready(S) then return end
+    local ahead = facing_target(S, T)
+    if dx < 300 and dz < 60 and mp >= 150 and chance(30, skill) then start(S, combo.jump_attack)
+    elseif dx < 70 and dz < 12 and ahead and chance(14, skill) then start(S, combo.up_attack)
+    elseif dx > 140 and dx < 420 and dz < 15 and mp >= 75 and chance(20, skill) then forward(S, T, false)
+    elseif dx > 100 and dx < 500 and dz < 25 and mp >= 10 and chance(10, skill) then forward(S, T, true)
+    elseif S.weapon == 0 and dx > 220 and mp >= 75 and chance(60, skill) then start(S, combo.down_jump) end
+end
+
 return function(base)
     local control = base.control
 
@@ -226,7 +249,7 @@ return function(base)
         local result = control(state, index, mode, context)
         local S = state.items[index]
         local id = S and S.record.id
-        if (id == DARTHNOX or id == MATHILDE or id == COD1EH or id == IRONHIDE or id == URRBOT or id == DSS or id == BENNIWR) and S.hp > 0 and not S.human then
+        if (id == DARTHNOX or id == MATHILDE or id == COD1EH or id == IRONHIDE or id == URRBOT or id == DSS or id == BENNIWR or id == EISOMARTO) and S.hp > 0 and not S.human then
             local T = nearest_enemy(state, S)
             if T then
                 local dx, dz = math.abs(T.x_int - S.x_int), math.abs(T.z_int - S.z_int)
@@ -237,6 +260,7 @@ return function(base)
                 elseif id == URRBOT then urrbot(state, S, T, dx, dz, skill)
                 elseif id == DSS then dss(state, S, T, dx, dz, skill)
                 elseif id == BENNIWR then benniwr(state, S, T, dx, dz, skill)
+                elseif id == EISOMARTO then eisomarto(state, S, T, dx, dz, skill)
                 else cod1eh(state, S, T, dx, dz, skill) end
             end
         end

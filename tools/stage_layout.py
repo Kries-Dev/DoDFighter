@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write our stage-mode file from LF2's: which of our stages each sub-stage is fought
 on, and its music. The waves themselves (who, how many, order, HP) stay LF2's, except
-for the sub-stages in CUSTOM (1-1 to 1-4), whose waves are written here.
+for the sub-stages in CUSTOM (all of stage 1), whose waves are written here.
 
     python tools/stage_layout.py tools/lf2_stage.txt mods/darthnox/stage.txt
     python tools/stage_dat.py mods/darthnox/stage.txt mods/darthnox/assets/stage.dat
@@ -68,6 +68,27 @@ def fortress_waves(hp, line1, line2, wall, boss_id, boss_hp):
     ]
 
 
+def finale_waves(hp, line1, line2, wall, boss_hp):
+    """Stage 1-5 (user, 2026-11-20): Eisomarto is already the boss of the second wave
+    (EVS grunts streaming in while he stands), the usual extra EVS Fanboy in every
+    wave, and the last wave is all of stage 1's bosses once each (Ironhide 74, Urrbot
+    76, DSS 80, BenniWr 81, Eisomarto 83) plus one EVS Fanboy and one EVS Hunter. The
+    bosses don't scale with players; the Fanboy and Hunter do (ratio 1: one each per
+    player)."""
+    g = lambda times, ratio=False: f'id: 3000  hp: {hp}  times: {times}' + ('  ratio: 1.0' if ratio else '')
+    fanboy = f'id: 30  hp: {hp}'
+    bosses = [f'id: {b}  hp: {boss_hp} <boss>' for b in (74, 76, 80, 81, 83)]
+    return [
+        (line1, [fanboy, g(2, True), g(2)]),
+        (line1, [fanboy, f'id: 83  hp: {boss_hp} <boss>', g(2, True) + '     <soldier>', g(2) + '  <soldier>']),
+        (line1, [fanboy, 'id: 122  x: 0  #milk', g(3, True), g(2)]),
+        (line2, [fanboy, g(3, True), g(3)]),
+        (line2, [fanboy, 'id: 123  x: 0  #beer', g(3, True), g(2)]),
+        (wall, ['id: 122  x: 0  #milk', 'id: 123  x: 0  #beer'] + bosses
+               + [f'id: 30  hp: {hp}  ratio: 1.0', f'id: 31  hp: {hp}  ratio: 1.0']),
+    ]
+
+
 CUSTOM = {
     # 1-1 (2026-11-18, the user): Fortress Gate (wall 1523), grunts 60 HP (LF2's 50 +20%),
     # boss Ironhide (74)
@@ -82,6 +103,9 @@ CUSTOM = {
     # +40%), boss BenniWr (81) at 420 HP (Ironhide's 300 +40%); LF2's Mark spawns are gone
     # (only random EVS Fanboy / EVS Hunter and the extra Fanboys)
     3: fortress_waves(70, 1080, 1440, 1471, 81, 420),
+    # 1-5 (2026-11-20, the user): Throne Hall (wall 1471), grunts 75 HP (+50%), every boss
+    # 450 HP (Ironhide's 300 +50%), Eisomarto (83) from wave 2, all five bosses at the end
+    4: finale_waves(75, 1080, 1440, 1471, 450),
 }
 
 
@@ -98,6 +122,14 @@ def layout(text, music_override=None):
                       for b, entries in CUSTOM[sid]]
             if music:
                 phases[0] = phases[0].replace(NL, f'{NL}                music: {music}{NL}', 1)
+            if boss:   # the boss track on every wave with a <boss>, the stage's own again after one
+                was_boss = False
+                for k, (b, entries) in enumerate(CUSTOM[sid]):
+                    is_boss = any('<boss>' in e for e in entries)
+                    track = boss if is_boss else (music if was_boss else None)
+                    if track and k:
+                        phases[k] = phases[k].replace(NL, f'{NL}                music: {track}{NL}', 1)
+                    was_boss = is_boss
             text = text[:i] + head + NL + '        <phase>' + '<phase>'.join(phases).rstrip() + NL + text[j:]
             continue
         phases = block.split('<phase>')
