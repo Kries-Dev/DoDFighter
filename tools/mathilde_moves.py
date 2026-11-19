@@ -4,7 +4,7 @@
     python tools/mathilde_moves.py mods/darthnox/assets
 
 Mathilde (record 63) is a fast jester dancer with a bo staff: very fast, takes
-25% more damage (armor 80, match.lua), short recovery and chaining normals.
+10% more damage (armor 91, match.lua), short recovery and chaining normals.
 Her generic mechanics (getting hit, falls, grabs ...) come from Davis (11);
 everything here is either her own frame (has bdy/itr, or a name Davis doesn't
 use at that number) or a picture-only frame with Davis's exact name.
@@ -62,7 +62,10 @@ MOVEMENT = [                      # very fast: walk/run above everyone in the ma
 HITS = dict(Fa=235, Ua=245, Da=270, Fj=0, Uj=250, Dj=260, ja=0)   # DvA: the staff combo, also on its own
 
 STAFF_DAMAGE = 35                 # homing staff copy (John's disc does 55)
-STAFF_DRAIN = 6                   # its hp lost per frame: ~2.5 s of chasing
+STAFF_DRAIN = 6                   # its hp lost per frame while it chases (John's disc: 7)
+STAFF_LAUNCH = 50                 # its first frame (the throw's opoint action): the launch speed
+STAFF_VREST = 25                  # like John's disc: it flies on through a hit and comes back for another
+EXT_DAMAGE = 38                   # D>A extension and its DJA follow-up: 32 +20% (user, 2026-11-20)
 TORNADO_TICKS = 32                # the tornado object lifts for ~1 s (Henry's flute holds ~3 s)
 TORNADO_SPEED = 4                 # it drifts forward ~130 px while it lifts
 POLE_REACH = 170                  # D>A: the staff shoots out to 200 px (Wukong-style), m_pole.txt
@@ -138,7 +141,7 @@ def diag_staff(length):
         x0, x1 = DIAG_SPAWN[0] + ca * start, DIAG_SPAWN[0] + ca * end
         y0, y1 = DIAG_SPAWN[1] + sa * start, DIAG_SPAWN[1] + sa * end
         boxes += itr(CX + round(x0), CY + round(y0) - 12, round(x1 - x0), round(y1 - y0) + 24,
-                     dvx=6, fall=40, vrest=20, bdefend=30, injury=32)
+                     dvx=6, fall=40, vrest=20, bdefend=30, injury=EXT_DAMAGE)
         start = end
     return boxes
 
@@ -263,9 +266,9 @@ FRAMES = [
     '# holds, and retracts; the hitbox grows with it (90, 150, 200 px). J during it vaults.',
     frame(235, 'staff_ext', EXTEND[0], 3, 2, 236, mp=50),
     frame(236, 'staff_ext', EXTEND[1], 3, 2, 237, sound=STAB_SND, hits={'j': 240, 'ja': 315},
-          extra=opoint(66, CX + POLE_SPAWN[0], CY + POLE_SPAWN[1]) + staff(77, dvx=6, fall=40, vrest=20, bdefend=30, injury=32)),
-    frame(237, 'staff_ext', EXTEND[1], 3, 2, 238, hits={'j': 240, 'ja': 315}, extra=staff(128, dvx=6, fall=40, vrest=20, bdefend=30, injury=32)),
-    frame(238, 'staff_ext', EXTEND[2], 3, 3, 239, hits={'j': 240, 'ja': 315}, extra=staff(POLE_REACH, dvx=6, fall=40, vrest=20, bdefend=30, injury=32)),
+          extra=opoint(66, CX + POLE_SPAWN[0], CY + POLE_SPAWN[1]) + staff(77, dvx=6, fall=40, vrest=20, bdefend=30, injury=EXT_DAMAGE)),
+    frame(237, 'staff_ext', EXTEND[1], 3, 2, 238, hits={'j': 240, 'ja': 315}, extra=staff(128, dvx=6, fall=40, vrest=20, bdefend=30, injury=EXT_DAMAGE)),
+    frame(238, 'staff_ext', EXTEND[2], 3, 3, 239, hits={'j': 240, 'ja': 315}, extra=staff(POLE_REACH, dvx=6, fall=40, vrest=20, bdefend=30, injury=EXT_DAMAGE)),
     frame(239, 'staff_ext', EXTEND[2], 3, 4, 999, hits={'j': 240, 'ja': 315}),   # same staff line as 236-238 while the pole retracts
 
     '# Vault (J after the stab, or at the end of the DvA launcher; 20 MP): a flip,\n'
@@ -313,7 +316,7 @@ FRAMES = [
     '# (m_staff.txt, object 64) after the nearest enemy, like John\'s disc.',
     frame(245, 'staff_throw', CAST[0], 3, 2, 246, mp=75),
     frame(246, 'staff_throw', CAST[1], 3, 2, 247),
-    frame(247, 'staff_throw', CAST[2], 3, 1, 248, sound=STAFF_SND, extra=opoint(64, CX + 28, CY - 48)),
+    frame(247, 'staff_throw', CAST[2], 3, 1, 248, sound=STAFF_SND, extra=opoint(64, CX + 28, CY - 48, action=STAFF_LAUNCH)),
     frame(248, 'staff_throw', CAST[2], 3, 5, 999),
 
     '# D^J  Tornado: she twirls and sends a magic tornado (m_tornado.txt, object 65)\n'
@@ -361,9 +364,18 @@ def ball_frame(n, name, picture, state, nxt, center, dvx=0, hits='hit_a: 0  hit_
 
 def staff_ball():
     c, box = (32, 32), (4, 18, 56, 28)
-    fly = [ball_frame(n, 'flying', n, 3000, n + 1 if n < 3 else 999, c, dvx=11,
-                      hits=f'hit_a: {STAFF_DRAIN}  hit_d: 40  hit_j: 0  hit_Fa: 1',
-                      extra=itr(*box, dvx=9, fall=70, vrest=10, bdefend=16, injury=STAFF_DAMAGE) + bdy(*box)) for n in range(4)]
+    # Like John's disc (2026-11-20, the user never saw it linger or come back): state
+    # 3006 flies on through what it hits (3000 vanished on the first hit) and swings
+    # back for another (vrest 25); when its hp runs out it speeds off (4-7, hit_Fa 10).
+    hit = itr(*box, dvx=9, fall=70, vrest=STAFF_VREST, bdefend=16, injury=STAFF_DAMAGE) + bdy(*box)
+    # The flying frames must not set dvx (that resets the speed every frame and undoes
+    # the steering, so it never turned back): it gets its speed once, from frame 50.
+    fly = [ball_frame(n, 'flying', n, 3006, n + 1 if n < 3 else 999, c,
+                      hits=f'hit_a: {STAFF_DRAIN}  hit_d: 4  hit_j: 0  hit_Fa: 1', extra=hit) for n in range(4)]
+    fly += [ball_frame(STAFF_LAUNCH, 'flying', 0, 3006, 1, c, dvx=11,
+                       hits=f'hit_a: {STAFF_DRAIN}  hit_d: 4  hit_j: 0  hit_Fa: 1', extra=hit)]
+    fly += [ball_frame(4 + n, 'flying', n, 3006, 5 + n if n < 3 else 4, c,
+                       hits='hit_a: 0  hit_d: 0  hit_j: 0  hit_Fa: 10', extra=hit) for n in range(4)]
     ends = [ball_frame(base + i, name, 4 + i if base < 40 else 5 + i, st,
                        1000 if (i == 3 if base < 40 else i == 2) else base + i + 1, c)
             for base, name, st in ((10, 'hiting', 3001), (20, 'hit', 3002), (30, 'rebounding', 3003), (40, 'disappearing', 3004))

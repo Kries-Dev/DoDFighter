@@ -807,7 +807,7 @@ rowing_distance 5.000000
       kind: 1  x: 84  y: 48  action: 0  dvx: 0  dvy: 0  oid: 66  facing: 0
    opoint_end:
    itr:
-      kind: 0  x: 46  y: 33  w: 77  h: 26  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 46  y: 33  w: 77  h: 26  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -817,7 +817,7 @@ rowing_distance 5.000000
 <frame> 237 staff_ext
    pic: 41  state: 3  wait: 2  next: 238  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 240  hit_ja: 315
    itr:
-      kind: 0  x: 46  y: 33  w: 128  h: 26  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 46  y: 33  w: 128  h: 26  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -827,7 +827,7 @@ rowing_distance 5.000000
 <frame> 238 staff_ext
    pic: 42  state: 3  wait: 3  next: 239  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  hit_j: 240  hit_ja: 315
    itr:
-      kind: 0  x: 46  y: 33  w: 170  h: 26  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 46  y: 33  w: 170  h: 26  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -990,10 +990,10 @@ rowing_distance 5.000000
       kind: 1  x: 77  y: 71  action: 0  dvx: 0  dvy: 0  oid: 67  facing: 0
    opoint_end:
    itr:
-      kind: 0  x: 77  y: 59  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 77  y: 59  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    itr:
-      kind: 0  x: 126  y: 93  w: 8  h: 30  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 126  y: 93  w: 8  h: 30  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1003,13 +1003,13 @@ rowing_distance 5.000000
 <frame> 322 air_ext
    pic: 101  state: 3  wait: 2  next: 323  dvx: 550  dvy: 550  dvz: 0  centerx: 44  centery: 89
    itr:
-      kind: 0  x: 77  y: 59  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 77  y: 59  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    itr:
-      kind: 0  x: 126  y: 93  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 126  y: 93  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    itr:
-      kind: 0  x: 175  y: 128  w: 16  h: 35  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 175  y: 128  w: 16  h: 35  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1019,16 +1019,16 @@ rowing_distance 5.000000
 <frame> 323 air_ext
    pic: 102  state: 3  wait: 3  next: 324  dvx: 550  dvy: 550  dvz: 0  centerx: 44  centery: 89
    itr:
-      kind: 0  x: 77  y: 59  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 77  y: 59  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    itr:
-      kind: 0  x: 126  y: 93  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 126  y: 93  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    itr:
-      kind: 0  x: 175  y: 128  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 175  y: 128  w: 49  h: 58  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    itr:
-      kind: 0  x: 224  y: 162  w: 16  h: 35  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 32  effect: 0
+      kind: 0  x: 224  y: 162  w: 16  h: 35  dvx: 6  dvy: 0  fall: 40  vrest: 20  arest: 0  bdefend: 30  injury: 38  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72
@@ -1098,7 +1098,7 @@ rowing_distance 5.000000
 <frame> 247 staff_throw
    pic: 86  state: 3  wait: 1  next: 248  dvx: 0  dvy: 0  dvz: 0  centerx: 44  centery: 89  sound: mods/darthnox/snd/m_staff.wav
    opoint:
-      kind: 1  x: 72  y: 41  action: 0  dvx: 0  dvy: 0  oid: 64  facing: 0
+      kind: 1  x: 72  y: 41  action: 50  dvx: 0  dvy: 0  oid: 64  facing: 0
    opoint_end:
    bdy:
       kind: 0  x: 29  y: 17  w: 30  h: 72

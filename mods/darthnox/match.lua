@@ -1,13 +1,15 @@
 -- SPDX-License-Identifier: MIT
--- DoD Fighter — low defence: DarthNox takes 10% more damage, Mathilde 25% (the
+-- DoD Fighter — low defence: Mathilde takes 10% more damage (the
 -- engine divides every hit by armor/100, and battle mode's defence setting
 -- is scaled the same way). Also: our stages play their own track (MUSIC) instead
 -- of the Versus music pick. Music set to OFF stays off, and the title-screen demo
 -- keeps its own music. In stage mode the run starts on our stage for that
 -- sub-stage (stage.lua) and stage.lua's phase music plays instead.
 
--- armor multipliers: damage taken is x 100/armor, so 0.91 = +10%, 0.80 = +25%
-local DEFENCE = {[61] = 0.91, [63] = 0.80, [68] = 0.87}   -- DarthNox, Mathilde, Cod1eh
+-- armor multipliers: damage taken is x 100/armor, so 0.91 = +10%
+-- (2026-11-20, the user: DarthNox and Cod1eh take normal damage again, Mathilde +10%
+-- instead of +25%)
+local DEFENCE = {[63] = 0.91}   -- Mathilde
 
 -- stage -> its music (WMA 8, tools/to_wma.ps1)
 local MUSIC = {

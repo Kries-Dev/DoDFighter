@@ -8,9 +8,9 @@ weapon_broken_sound: data\020.wav
 # Mathilde's homing staff: hit_Fa 1 = chase the nearest enemy.
 
 <frame> 0 flying
-   pic: 0  state: 3000  wait: 1  next: 1  dvx: 11  dvy: 0  centerx: 32  centery: 32  hit_a: 6  hit_d: 40  hit_j: 0  hit_Fa: 1
+   pic: 0  state: 3006  wait: 1  next: 1  dvx: 0  dvy: 0  centerx: 32  centery: 32  hit_a: 6  hit_d: 4  hit_j: 0  hit_Fa: 1
    itr:
-      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 35  effect: 0
+      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 25  arest: 0  bdefend: 16  injury: 35  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 4  y: 18  w: 56  h: 28
@@ -18,9 +18,9 @@ weapon_broken_sound: data\020.wav
 <frame_end>
 
 <frame> 1 flying
-   pic: 1  state: 3000  wait: 1  next: 2  dvx: 11  dvy: 0  centerx: 32  centery: 32  hit_a: 6  hit_d: 40  hit_j: 0  hit_Fa: 1
+   pic: 1  state: 3006  wait: 1  next: 2  dvx: 0  dvy: 0  centerx: 32  centery: 32  hit_a: 6  hit_d: 4  hit_j: 0  hit_Fa: 1
    itr:
-      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 35  effect: 0
+      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 25  arest: 0  bdefend: 16  injury: 35  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 4  y: 18  w: 56  h: 28
@@ -28,9 +28,9 @@ weapon_broken_sound: data\020.wav
 <frame_end>
 
 <frame> 2 flying
-   pic: 2  state: 3000  wait: 1  next: 3  dvx: 11  dvy: 0  centerx: 32  centery: 32  hit_a: 6  hit_d: 40  hit_j: 0  hit_Fa: 1
+   pic: 2  state: 3006  wait: 1  next: 3  dvx: 0  dvy: 0  centerx: 32  centery: 32  hit_a: 6  hit_d: 4  hit_j: 0  hit_Fa: 1
    itr:
-      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 35  effect: 0
+      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 25  arest: 0  bdefend: 16  injury: 35  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 4  y: 18  w: 56  h: 28
@@ -38,9 +38,59 @@ weapon_broken_sound: data\020.wav
 <frame_end>
 
 <frame> 3 flying
-   pic: 3  state: 3000  wait: 1  next: 999  dvx: 11  dvy: 0  centerx: 32  centery: 32  hit_a: 6  hit_d: 40  hit_j: 0  hit_Fa: 1
+   pic: 3  state: 3006  wait: 1  next: 999  dvx: 0  dvy: 0  centerx: 32  centery: 32  hit_a: 6  hit_d: 4  hit_j: 0  hit_Fa: 1
    itr:
-      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 10  arest: 0  bdefend: 16  injury: 35  effect: 0
+      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 25  arest: 0  bdefend: 16  injury: 35  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 4  y: 18  w: 56  h: 28
+   bdy_end:
+<frame_end>
+
+<frame> 50 flying
+   pic: 0  state: 3006  wait: 1  next: 1  dvx: 11  dvy: 0  centerx: 32  centery: 32  hit_a: 6  hit_d: 4  hit_j: 0  hit_Fa: 1
+   itr:
+      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 25  arest: 0  bdefend: 16  injury: 35  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 4  y: 18  w: 56  h: 28
+   bdy_end:
+<frame_end>
+
+<frame> 4 flying
+   pic: 0  state: 3006  wait: 1  next: 5  dvx: 0  dvy: 0  centerx: 32  centery: 32  hit_a: 0  hit_d: 0  hit_j: 0  hit_Fa: 10
+   itr:
+      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 25  arest: 0  bdefend: 16  injury: 35  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 4  y: 18  w: 56  h: 28
+   bdy_end:
+<frame_end>
+
+<frame> 5 flying
+   pic: 1  state: 3006  wait: 1  next: 6  dvx: 0  dvy: 0  centerx: 32  centery: 32  hit_a: 0  hit_d: 0  hit_j: 0  hit_Fa: 10
+   itr:
+      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 25  arest: 0  bdefend: 16  injury: 35  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 4  y: 18  w: 56  h: 28
+   bdy_end:
+<frame_end>
+
+<frame> 6 flying
+   pic: 2  state: 3006  wait: 1  next: 7  dvx: 0  dvy: 0  centerx: 32  centery: 32  hit_a: 0  hit_d: 0  hit_j: 0  hit_Fa: 10
+   itr:
+      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 25  arest: 0  bdefend: 16  injury: 35  effect: 0
+   itr_end:
+   bdy:
+      kind: 0  x: 4  y: 18  w: 56  h: 28
+   bdy_end:
+<frame_end>
+
+<frame> 7 flying
+   pic: 3  state: 3006  wait: 1  next: 4  dvx: 0  dvy: 0  centerx: 32  centery: 32  hit_a: 0  hit_d: 0  hit_j: 0  hit_Fa: 10
+   itr:
+      kind: 0  x: 4  y: 18  w: 56  h: 28  dvx: 9  dvy: 0  fall: 70  vrest: 25  arest: 0  bdefend: 16  injury: 35  effect: 0
    itr_end:
    bdy:
       kind: 0  x: 4  y: 18  w: 56  h: 28

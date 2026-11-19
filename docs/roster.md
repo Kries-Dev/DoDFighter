@@ -7,8 +7,9 @@ Read from the game data by a headless probe (OpenLF2 + the DarthNox mod,
 
 - **HP 500, MP 500** for every fighter in Versus (`points.full`); LF2 has no
   per-character health. MP regenerates on its own (faster at low HP).
-- **Defence** is the same for everyone except DarthNox (takes 10% more
-  damage, `armor` 91) and the three armored characters below.
+- **Defence** is the same for everyone except Mathilde (takes 10% more
+  damage, `armor` 91) and the three armored characters below. DarthNox deals
+  10% more damage with everything.
 - **Rolling** (run + D) is invulnerable for everyone except Julian and Knight.
 - Jump height is the launch speed; peak height in pixels is about
   86 × (speed / 16.3)² (Davis: 16.3 → 86 px, measured).

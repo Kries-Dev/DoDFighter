@@ -30,7 +30,9 @@ local SWORD_SOUNDS = {["data\\007.wav"] = "data\\008.wav", ["data\\014.wav"] = "
 
 -- Our fighters and the stock fighter each one inherits its mechanics from.
 local FIGHTERS = {
-    ["mods/darthnox/darthnox.txt"] = {base = 1, sounds = SWORD_SOUNDS},   -- DarthNox over Deep
+    -- damage: every attack box (itr kind 0) of the whole fighter, inherited frames too,
+    -- hits this much harder (DarthNox +10%, the user, 2026-11-20)
+    ["mods/darthnox/darthnox.txt"] = {base = 1, sounds = SWORD_SOUNDS, damage = 1.10},   -- DarthNox over Deep
     ["mods/darthnox/mathilde.txt"] = {base = 11},   -- Mathilde over Davis
     -- Cod1eh over Rudolf: Rudolf's A already throws shurikens. own_inputs: his
     -- standing/walking/defend frames replace Rudolf's special-move inputs even
@@ -38,6 +40,25 @@ local FIGHTERS = {
     ["mods/darthnox/cod1eh.txt"] = {base = 5, sounds = SWORD_SOUNDS, own_inputs = true},
 }
 local INPUT_STATES = {[0] = true, [1] = true, [7] = true}   -- standing, walking, defend
+-- Objects that hit harder than written, with their owner (DarthNox's crescent).
+local OBJECT_DAMAGE = {["mods/darthnox/crescent.txt"] = 1.10}
+
+-- Attack boxes (kind 0) of every frame hit `factor` times as hard. Boxes are copied
+-- first: an inherited frame shares them with the stock fighter's own data.
+local function scale_damage(frames, factor)
+    for _, frame in pairs(frames) do
+        local scaled = {}
+        for i, area in ipairs(frame.interactions or {}) do
+            local copy = {}
+            for key, value in pairs(area) do copy[key] = value end
+            if (copy.kind or 0) == 0 and (copy.injury or 0) > 0 then
+                copy.injury = math.floor(copy.injury * factor + 0.5)
+            end
+            scaled[i] = copy
+        end
+        frame.interactions = scaled
+    end
+end
 
 -- Stock fighters with restyled sheets: their data stays stock, only the listed
 -- sheets (by position in the file: 1 = pictures 0-69) come from the mod.
@@ -64,6 +85,21 @@ return function(base)
 
     function base.load(path)
         if RESTYLED[path] then return restyle(load(path), RESTYLED[path]) end
+        if OBJECT_DAMAGE[path] then
+            if cache[path] then return cache[path] end
+            local data = load(path)
+            local copy = {}
+            for key, value in pairs(data) do copy[key] = value end
+            copy.frames = {}
+            for index, frame in pairs(data.frames) do
+                local own = {}
+                for key, value in pairs(frame) do own[key] = value end
+                copy.frames[index] = own
+            end
+            scale_damage(copy.frames, OBJECT_DAMAGE[path])
+            cache[path] = copy
+            return copy
+        end
         local fighter = FIGHTERS[path]
         if not fighter then return load(path) end
         if cache[path] then return cache[path] end
@@ -165,8 +201,13 @@ return function(base)
         end
         -- Frames Deep doesn't have at all come straight from darthnox.txt.
         for index, mine in pairs(authored.frames) do
-            if not copy.frames[index] and mine.name ~= "" then copy.frames[index] = mine end
+            if not copy.frames[index] and mine.name ~= "" then
+                local own = {}
+                for key, value in pairs(mine) do own[key] = value end
+                copy.frames[index] = own
+            end
         end
+        if fighter.damage then scale_damage(copy.frames, fighter.damage) end
 
         return copy
     end
