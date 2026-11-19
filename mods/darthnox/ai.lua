@@ -18,7 +18,7 @@ local complete = constants.combo_states.complete
 local kinds = constants.record_kinds
 local states = constants.frame_states
 
-local DARTHNOX, MATHILDE, COD1EH, IRONHIDE, URRBOT, DSS = 61, 63, 68, 74, 76, 80
+local DARTHNOX, MATHILDE, COD1EH, IRONHIDE, URRBOT, DSS, BENNIWR = 61, 63, 68, 74, 76, 80, 81
 local FACING_RIGHT = 0
 
 local function random(range) return engine.random(range) end
@@ -201,6 +201,24 @@ local function dss(state, S, T, dx, dz, skill)
     elseif dx > 120 and dx < 450 and dz < 30 and mp >= 50 and chance(18, skill) then forward(S, T, true) end
 end
 
+-- BenniWr (computer-only, Clide's data): D>A ball at range, DvA combo up close (its
+-- end can go on into the D>J slide or D^A blast), D>J slide at mid range, D^A blast
+-- when it can afford it, D^J double kick to jump in.
+local function benniwr(state, S, T, dx, dz, skill)
+    local mp, f = S.mp, S.frame
+    if f >= 272 and f <= 276 then
+        if dx < 160 and dz < 15 and mp >= 75 and chance(4, skill) then forward(S, T, false) end
+        return
+    end
+    if not ready(S) then return end
+    local ahead = facing_target(S, T)
+    if dx < 120 and dz < 15 and mp >= 250 and ahead and chance(20, skill) then start(S, combo.up_attack)
+    elseif dx < 75 and dz < 10 and mp >= 75 and ahead and chance(10, skill) then start(S, combo.down_attack)
+    elseif dx > 90 and dx < 260 and dz < 12 and mp >= 75 and chance(18, skill) then forward(S, T, false)
+    elseif dx > 140 and dx < 450 and dz < 30 and mp >= 65 and chance(16, skill) then forward(S, T, true)
+    elseif dx > 100 and dx < 220 and dz < 15 and mp >= 25 and ahead and chance(40, skill) then start(S, combo.up_jump) end
+end
+
 return function(base)
     local control = base.control
 
@@ -208,7 +226,7 @@ return function(base)
         local result = control(state, index, mode, context)
         local S = state.items[index]
         local id = S and S.record.id
-        if (id == DARTHNOX or id == MATHILDE or id == COD1EH or id == IRONHIDE or id == URRBOT or id == DSS) and S.hp > 0 and not S.human then
+        if (id == DARTHNOX or id == MATHILDE or id == COD1EH or id == IRONHIDE or id == URRBOT or id == DSS or id == BENNIWR) and S.hp > 0 and not S.human then
             local T = nearest_enemy(state, S)
             if T then
                 local dx, dz = math.abs(T.x_int - S.x_int), math.abs(T.z_int - S.z_int)
@@ -218,6 +236,7 @@ return function(base)
                 elseif id == IRONHIDE then ironhide(state, S, T, dx, dz, skill)
                 elseif id == URRBOT then urrbot(state, S, T, dx, dz, skill)
                 elseif id == DSS then dss(state, S, T, dx, dz, skill)
+                elseif id == BENNIWR then benniwr(state, S, T, dx, dz, skill)
                 else cod1eh(state, S, T, dx, dz, skill) end
             end
         end

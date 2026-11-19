@@ -136,3 +136,20 @@ select; the computer plays him (`ai.lua`). Everything is Jack's except
 | DvA | kick combo (new, 50 MP) | three kicks on the run-attack kick pictures (no knockdown, 25 each), then the ball-throw animation without the ball; its fiery punch knocks down (45) |
 
 He is the boss of stage 1-3 (390 HP).
+
+## BenniWr (computer-only, id 81)
+
+Clide, a full LF2 fan character by YinYin Falcon (the user's copy), with the user's
+restyled sprites (purple hair, white gi with purple belt; `art/benniwr/`), hidden from
+select; the computer plays him (`ai.lua`). His data, ball (object 82), explosion and
+sounds are Clide's, unchanged except for paths and ids (`tools/make_benniwr.py`):
+
+| Input | Move |
+|---|---|
+| D>A | ball (65 MP) |
+| DvA | punch-and-kick combo (75 MP); its end can go on into D>J or D^A |
+| D>J | slide with a ground blast (75 MP) |
+| D^A | point-blank blast (250 MP; the blast hits for 300, ~360 with the punch) |
+| D^J | double jump kick (25 MP) |
+
+He is the boss of stage 1-4 (420 HP).
