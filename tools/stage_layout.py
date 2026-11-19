@@ -47,24 +47,34 @@ LAYOUT = {
 # Sub-stages whose waves are ours instead of LF2's (bounds already in our stage's pixels).
 # id 3000 = a random Bandit or Hunter each spawn; in stage 1 those are EVS Fanboy / EVS
 # Hunter (stage_mode.lua SWAPS). times = how many in all, ratio 1 = scales with players.
-HP = 60                                    # LF2's grunts have 50: +20%
-FANBOY = f'id: 30  hp: {HP}'                # one extra EVS Fanboy (Bandit 30 in stage 1) in every 1-1 wave
+def fortress_waves(hp, line1, line2, wall, boss_id, boss_hp):
+    """Six waves under two shared lines, then a boss: about twice LF2's enemies (~25 for
+    one player instead of ~12, ratio 1 entries scale with players), random EVS grunts
+    plus one extra EVS Fanboy (Bandit 30 in stage 1) in every wave, drinks along the way
+    (stage_mode.lua drops them inside the camera view), EVS grunts streaming in
+    (<soldier>) while the boss stands. A wave's bound is a wall until it is cleared, so
+    waves share bounds (the next starts at once, no GO arrow; only the last phase needs
+    a bound of its own): six rising bounds felt like invisible walls every few steps."""
+    g = lambda times, ratio=False: f'id: 3000  hp: {hp}  times: {times}' + ('  ratio: 1.0' if ratio else '')
+    fanboy = f'id: 30  hp: {hp}'
+    return [
+        (line1, [fanboy, g(2, True), g(2)]),
+        (line1, [fanboy, g(3, True), g(2)]),
+        (line1, [fanboy, 'id: 122  x: 0  #milk', g(3, True), g(2)]),
+        (line2, [fanboy, g(3, True), g(3)]),
+        (line2, [fanboy, 'id: 123  x: 0  #beer', g(3, True), g(2)]),
+        (wall, [fanboy, 'id: 122  x: 0  #milk', f'id: {boss_id}  hp: {boss_hp} <boss>',
+                g(2, True) + '     <soldier>', g(2) + '  <soldier>']),
+    ]
+
+
 CUSTOM = {
-    # 1-1 (2026-11-18, the user): about twice LF2's enemies (~28 instead of ~12 for one
-    # player) in six waves across the Fortress Gate (wall 1523), Ironhide (74) as the
-    # boss with EVS grunts streaming in while he stands. A wave's bound is a wall until
-    # it is cleared, so waves share bounds (the next starts at once, no GO arrow; only
-    # the last phase needs a bound of its own): two lines in the whole stage, not six
-    # (six rising bounds felt like invisible walls every few steps)
-    0: [
-        (1100, [FANBOY, f'id: 3000  hp: {HP}  times: 2  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
-        (1100, [FANBOY, f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
-        (1100, [FANBOY, 'id: 122  x: 1000  #milk', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
-        (1500, [FANBOY, f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 3']),
-        (1500, [FANBOY, 'id: 123  x: 1300  #beer', f'id: 3000  hp: {HP}  times: 3  ratio: 1.0', f'id: 3000  hp: {HP}  times: 2']),
-        (1523, [FANBOY, 'id: 122  x: 1450  #milk', 'id: 74  hp: 300 <boss>',
-                f'id: 3000  hp: {HP}  times: 2  ratio: 1.0     <soldier>', f'id: 3000  hp: {HP}  times: 2  <soldier>']),
-    ],
+    # 1-1 (2026-11-18, the user): Fortress Gate (wall 1523), grunts 60 HP (LF2's 50 +20%),
+    # boss Ironhide (74)
+    0: fortress_waves(60, 1100, 1500, 1523, 74, 300),
+    # 1-2 (2026-11-19, the user): the same treatment on the Barracks Yard (wall 1365),
+    # grunts 63 HP (+25%), boss Urrbot (76) at 375 HP (Ironhide's 300 +25%)
+    1: fortress_waves(63, 1000, 1340, 1365, 76, 375),
 }
 
 

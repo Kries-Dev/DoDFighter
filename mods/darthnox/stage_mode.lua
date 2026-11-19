@@ -143,6 +143,14 @@ local function spawn(state, run, entry, runtime, slot)
     if value.x_int >= state.stage_bound then
         value.x_int = math.min(value.x_int, (state.camera or 0) + constants.screen.width + 40 + random(150))
     end
+    -- DoD: drinks and other items (not fighters) fall inside the camera view, wherever the
+    -- stage file put them (LF2's spots are often off-screen, far ahead or behind)
+    local placed = value.record.kind
+    if placed ~= record_kinds.character and placed ~= record_kinds.prisoner then
+        local left = (state.camera or 0) + 60
+        local right = (state.camera or 0) + constants.screen.width - 60
+        if value.x_int < left or value.x_int > right then value.x_int = left + random(right - left) end
+    end
     value.lives, value.join_hp, value.join_lives = entry.reserve, entry.join, entry.join_reserve
     value.x, value.z = value.x_int, value.z_int
     value.mp = constants.points.full

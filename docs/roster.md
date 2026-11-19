@@ -119,3 +119,5 @@ like Ironhide; the computer plays him (`ai.lua`). Everything is Freeze's except
 | D>A | ice ball | flies 60% faster (object 77) |
 | D>J | icicle row | a fourth spike after Freeze's three, 1.4x his largest (objects 79 row, 78 spike) |
 | D^J whirlwind, DvJ ice sword | — | removed |
+
+He is the boss of stage 1-2 (375 HP).
