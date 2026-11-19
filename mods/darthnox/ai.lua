@@ -18,7 +18,7 @@ local complete = constants.combo_states.complete
 local kinds = constants.record_kinds
 local states = constants.frame_states
 
-local DARTHNOX, MATHILDE, COD1EH, IRONHIDE = 61, 63, 68, 74
+local DARTHNOX, MATHILDE, COD1EH, IRONHIDE, URRBOT = 61, 63, 68, 74, 76
 local FACING_RIGHT = 0
 
 local function random(range) return engine.random(range) end
@@ -177,6 +177,15 @@ local function ironhide(state, S, T, dx, dz, skill)
     elseif dx > 60 and dx < 180 and dz < 10 and mp >= 100 and (hurt(T) or chance(25, skill)) then forward(S, T, false) end
 end
 
+-- Urrbot (computer-only, Freeze's data): D>A ice ball at range, D>J icicle row at
+-- mid range (it travels along the floor toward the target).
+local function urrbot(state, S, T, dx, dz, skill)
+    if not ready(S) then return end
+    local mp = S.mp
+    if dx > 100 and dx < 450 and dz < 30 and mp >= 100 and chance(15, skill) then forward(S, T, true)
+    elseif dx > 70 and dx < 280 and dz < 15 and mp >= 150 and (hurt(T) or chance(20, skill)) then forward(S, T, false) end
+end
+
 return function(base)
     local control = base.control
 
@@ -184,7 +193,7 @@ return function(base)
         local result = control(state, index, mode, context)
         local S = state.items[index]
         local id = S and S.record.id
-        if (id == DARTHNOX or id == MATHILDE or id == COD1EH or id == IRONHIDE) and S.hp > 0 and not S.human then
+        if (id == DARTHNOX or id == MATHILDE or id == COD1EH or id == IRONHIDE or id == URRBOT) and S.hp > 0 and not S.human then
             local T = nearest_enemy(state, S)
             if T then
                 local dx, dz = math.abs(T.x_int - S.x_int), math.abs(T.z_int - S.z_int)
@@ -192,6 +201,7 @@ return function(base)
                 if id == DARTHNOX then darthnox(state, S, T, dx, dz, skill)
                 elseif id == MATHILDE then mathilde(state, S, T, dx, dz, skill)
                 elseif id == IRONHIDE then ironhide(state, S, T, dx, dz, skill)
+                elseif id == URRBOT then urrbot(state, S, T, dx, dz, skill)
                 else cod1eh(state, S, T, dx, dz, skill) end
             end
         end

@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: MIT
--- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63, Cod1eh 68; grunts EVS Fanboy 72, EVS Hunter 73; computer-only Ironhide 74), the objects their
--- moves spawn (62, 64-67, 69-71, 75) and our stages without editing base scripts.
+-- DoD Fighter — adds our fighters (DarthNox 61, Mathilde 63, Cod1eh 68; grunts EVS Fanboy 72, EVS Hunter 73; computer-only Ironhide 74, Urrbot 76), the objects their
+-- moves spawn (62, 64-67, 69-71, 75, 77-79) and our stages without editing base scripts.
 
 return function(base)
     -- Our fighters (object type 0) and the objects their frames spawn (opoint
@@ -15,6 +15,7 @@ return function(base)
         {id = 73, path = "mods/darthnox/evshunt.txt", hidden = true},   -- EVS Hunter: Hunter with the user's sprites
         -- computer-only: hidden from select (stage boss / com opponent)
         {id = 74, path = "mods/darthnox/ironhide.txt", hidden = true},  -- Ironhide: Deep's data, the user's sprites, 3 specials
+        {id = 76, path = "mods/darthnox/urrbot.txt", hidden = true},    -- Urrbot: Freeze's data, the user's sprites, D>A + D>J
     }
     local spawned = {
         {id = 62, kind = 3, path = "mods/darthnox/crescent.txt"},   -- DarthNox's crescent
@@ -26,6 +27,9 @@ return function(base)
         {id = 70, kind = 3, path = "mods/darthnox/c_smoke.txt"},    -- Cod1eh's smoke (D^J cloud, DvJ puff)
         {id = 71, kind = 3, path = "mods/darthnox/c_rope.txt"},     -- Cod1eh's rope blade (DvA, visual)
         {id = 75, kind = 3, path = "mods/darthnox/ih_wave.txt"},    -- Ironhide's wave (D>A, two per blast)
+        {id = 77, kind = 3, path = "mods/darthnox/ub_ball.txt"},    -- Urrbot's ice ball (D>A, 60% faster than Freeze's)
+        {id = 78, kind = 3, path = "mods/darthnox/ub_spike.txt"},   -- Urrbot's large spike (the 4th of his D>J row)
+        {id = 79, kind = 3, path = "mods/darthnox/ub_column.txt"},  -- Urrbot's icicle row (D>J: Freeze's three + the large one)
     }
     -- Our stages (bg ids must not clash with the stock list; see docs/STAGES.md).
     local stages_added = {

@@ -107,3 +107,15 @@ He keeps Deep's voice. His three sheets were drawn at different sizes; they are 
 fixed scales (0.61 / 0.59 / 0.44) so he stays one size (~74 px standing, like Deep).
 
 He is the boss of stage 1-1 (300 HP).
+
+## Urrbot (computer-only, id 76)
+
+LF2's Freeze with the user's sprites (purple suit, blond; `art/urrbot/`), hidden from select
+like Ironhide; the computer plays him (`ai.lua`). Everything is Freeze's except
+(`tools/make_urrbot.py`):
+
+| Input | Move | Change from Freeze |
+|---|---|---|
+| D>A | ice ball | flies 60% faster (object 77) |
+| D>J | icicle row | a fourth spike after Freeze's three, 1.4x his largest (objects 79 row, 78 spike) |
+| D^J whirlwind, DvJ ice sword | — | removed |
