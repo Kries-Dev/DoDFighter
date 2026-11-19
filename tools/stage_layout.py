@@ -75,9 +75,9 @@ CUSTOM = {
     # 1-2 (2026-11-19, the user): the same treatment on the Barracks Yard (wall 1365),
     # grunts 63 HP (+25%), boss Urrbot (76) at 375 HP (Ironhide's 300 +25%)
     1: fortress_waves(63, 1000, 1340, 1365, 76, 375),
-    # 1-3 (2026-11-19, the user): the same again on the Cell Block (wall 1506), grunts 63 HP
-    # (+25%), boss DSS (80) at 375 HP
-    2: fortress_waves(63, 1100, 1480, 1506, 80, 375),
+    # 1-3 (2026-11-19, the user): the same again on the Cell Block (wall 1506), grunts 65 HP
+    # (LF2's 50 +30%), boss DSS (80) at 390 HP (Ironhide's 300 +30%)
+    2: fortress_waves(65, 1100, 1480, 1506, 80, 390),
 }
 
 
