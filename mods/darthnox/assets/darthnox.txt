@@ -579,7 +579,7 @@ rowing_distance 4.000000
 <frame_end>
 
 <frame> 236 crescent
-   pic: 33  state: 3  wait: 1  next: 237  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89  sound: data\045.wav
+   pic: 33  state: 3  wait: 1  next: 237  dvx: 0  dvy: 0  dvz: 0  centerx: 71  centery: 89  sound: data\095.wav
    bdy:
       kind: 0  x: 54  y: 17  w: 34  h: 72
    bdy_end:

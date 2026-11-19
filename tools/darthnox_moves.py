@@ -42,7 +42,7 @@ RISING_LAUNCH = 16                # D^A launch speed (absolute): peak ~98 px, 10
 #  * entering frame 212 (jump) from a move re-runs the jump launch; end airborne
 #    moves with next: 999, which the engine turns into a plain fall.
 ABSOLUTE = 550
-SWISH = 'data\\045.wav'           # LF2's sword-dash swish (Deep's D>J)
+DAVIS_SHOUT = 'data\\095.wav'     # D>A: Davis's shout (his D^A); was Deep's 045, the user asked for Davis's voice (2026-11-20)
 SWORD = 'data\\054.wav'           # LF2's sword-special sound (Deep's jump/dash sword)
 SLASH = 'data\\008.wav'           # LF2's weapon-swing swish (object_data.lua also swaps Deep's punch sound for it)
 
@@ -93,7 +93,7 @@ def lunge_blade():
 MOVES = [
     '# D>A  Crescent: a horizontal swing that launches a fast, light sword wave (crescent.txt)',
     frame(235, 'crescent', 32, 3, 2, 236, mp=60),
-    frame(236, 'crescent', 33, 3, 1, 237, sound=SWISH),
+    frame(236, 'crescent', 33, 3, 1, 237, sound=DAVIS_SHOUT),
     frame(237, 'crescent', 34, 3, 1, 238,
           extra=f'   opoint:\n      kind: 1  x: {CX + 30}  y: {CY - 42}  action: 0  dvx: 0  dvy: 0  oid: 62  facing: 0\n   opoint_end:\n'),
     frame(238, 'crescent', 34, 3, 5, 999),
