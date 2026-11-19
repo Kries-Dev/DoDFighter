@@ -7,8 +7,7 @@ user's copy) with the user's sprites. Boss of stage 1-4.
 CLIDE_DIR holds the character as the user gave it: clide.dat, clide_ball.dat (LF2's
 encryption), clide_ball.bmp, clide_explode.bmp and the sounds hit.wav, s.wav,
 s2.wav, xyell.wav. The fighter sheets are the user's restyle (art/benniwr/), put
-on Clide's grid by import_sheet.py after their grid lines were removed (see
-HANDOFF.md). Writes benniwr.txt, bw_ball.txt, bw_ball.bmp, bw_explode.bmp, the
+on Clide's grid by tools/import_gridded.py (sheet 0 upscaled, 1 and 2 `native`). Writes benniwr.txt, bw_ball.txt, bw_ball.bmp, bw_explode.bmp, the
 sounds as snd/bw_*.wav, and stand-in portraits benniwr_f.bmp / benniwr_s.bmp
 (idle-frame crops of the new art).
 
